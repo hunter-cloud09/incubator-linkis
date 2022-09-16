@@ -19,7 +19,10 @@ package org.apache.linkis.manager.engineplugin.jdbc.executor
 
 import org.apache.linkis.common.utils.{JsonUtils, Logging, Utils}
 import org.apache.linkis.datasource.client.impl.LinkisDataSourceRemoteClient
-import org.apache.linkis.datasource.client.request.GetInfoPublishedByDataSourceNameAction
+import org.apache.linkis.datasource.client.request.{
+  GetInfoByDataSourceNameAction,
+  GetInfoPublishedByDataSourceNameAction
+}
 import org.apache.linkis.datasourcemanager.common.domain.DataSource
 import org.apache.linkis.manager.engineplugin.jdbc.JdbcAuthType
 import org.apache.linkis.manager.engineplugin.jdbc.constant.JDBCEngineConnConstant

@@ -111,6 +111,7 @@ private[conf] object BDPConfiguration extends Logging {
   }
 
   def getOption(key: String): Option[String] = {
+
     if (extractConfig.containsKey(key)) {
       return Some(extractConfig.getProperty(key))
     }

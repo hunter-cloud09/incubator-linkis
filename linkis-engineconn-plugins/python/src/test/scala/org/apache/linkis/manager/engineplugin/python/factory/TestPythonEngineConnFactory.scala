@@ -28,11 +28,10 @@ class TestPythonEngineConnFactory {
 
   @Test
   def testCreateExecutor: Unit = {
-    System.setProperty("pythonVersion", "python")
+
     val engineConnFactory: PythonEngineConnFactory = new PythonEngineConnFactory
     val engineCreationContext: EngineCreationContext = new DefaultEngineCreationContext
     val jMap = new java.util.HashMap[String, String]()
-    jMap.put("python.version", "python")
     engineCreationContext.setOptions(jMap)
     val engineConn = engineConnFactory.createEngineConn(engineCreationContext)
     val executor = engineConnFactory.newExecutor(1, engineCreationContext, engineConn)

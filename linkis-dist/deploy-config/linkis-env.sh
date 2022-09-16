@@ -24,7 +24,9 @@
 # SSH_PORT=22
 
 ### deploy user
-deployUser=hadoop
+deployUser=${LINKIS_DEPLOY_USER:-"hadoop"}
+deployUserGroup=${LINKIS_DEPLOY_USER_GROUP:-"hadoop"}
+
 ##If you don't set it, a random password string will be generated during installation
 deployPwd=
 
@@ -51,7 +53,7 @@ RESULT_SET_ROOT_PATH=hdfs:///tmp/linkis
 
 ##YARN REST URL  spark engine required
 # Active resourcemanager address needed. Recommended to add all ha addresses. eg YARN_RESTFUL_URL="http://127.0.0.1:8088;http://127.0.0.2:8088"
-YARN_RESTFUL_URL="http://127.0.0.1:8088"
+YARN_RESTFUL_URL=${YARN_RESTFUL_URL:-"http://127.0.0.1:8088"}
 
 ## request Yarn resource restful interface When Yarn need auth by user
 ## If your environment yarn interface can be accessed directly, ignore it
@@ -73,28 +75,23 @@ YARN_RESTFUL_URL="http://127.0.0.1:8088"
 #         You can also set these variables as system environment in ~/.bashrc file
 
 #HADOOP
-HADOOP_HOME=/appcom/Install/hadoop
-HADOOP_CONF_DIR=/appcom/config/hadoop-config
-#HADOOP_KERBEROS_ENABLE=true
-#HADOOP_KEYTAB_PATH=/appcom/keytab/
+HADOOP_HOME=${HADOOP_HOME:-"/appcom/Install/hadoop"}
+HADOOP_CONF_DIR=${HADOOP_CONF_DIR:-"/appcom/config/hadoop-config"}
+HADOOP_KERBEROS_ENABLE=${HADOOP_KERBEROS_ENABLE:-"false"}
+HADOOP_KEYTAB_PATH=${HADOOP_KEYTAB_PATH:-"/appcom/keytab/"}
 
 #Hive
-HIVE_HOME=/appcom/Install/hive
-HIVE_CONF_DIR=/appcom/config/hive-config
+HIVE_HOME=${HIVE_HOME:-"/appcom/Install/hive"}
+HIVE_CONF_DIR=${HIVE_CONF_DIR:-"/appcom/config/hive-config"}
+HIVE_VERSION=${HIVE_VERSION:-"3.1.3"}
 
 #Spark
-SPARK_HOME=/appcom/Install/spark
-SPARK_CONF_DIR=/appcom/config/spark-config
+SPARK_HOME=${SPARK_HOME:-"/appcom/Install/spark"}
+SPARK_CONF_DIR=${SPARK_CONF_DIR:-"/appcom/config/spark-config"}
+SPARK_VERSION=${SPARK_VERSION:-"3.2.1"}
 
-
-## Engine version conf
-#SPARK_VERSION
-#SPARK_VERSION=2.4.3
-
-##HIVE_VERSION
-#HIVE_VERSION=2.3.3
-
-#PYTHON_VERSION=python2
+#Python
+PYTHON_VERSION=${PYTHON_VERSION:-"python3"}
 
 ################### The install Configuration of all Micro-Services #####################
 #

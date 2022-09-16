@@ -27,7 +27,6 @@
   <artifactId>linkis-engineplugin-sqoop</artifactId>
   <properties>
     <sqoop.version>1.4.6</sqoop.version>
-    <hive.version>3.1.2</hive.version>
   </properties>
 
   <dependencies>
@@ -70,12 +69,6 @@
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-mapreduce-client-core</artifactId>
       <version>${hadoop.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>javax.servlet</groupId>
-          <artifactId>servlet-api</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.linkis</groupId>
@@ -172,7 +165,7 @@
         </exclusion>
         <exclusion>
           <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-hdfs</artifactId>
+          <artifactId>${hadoop-hdfs-client.artifact}</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -208,7 +201,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-
   </dependencies>
 
   <build>

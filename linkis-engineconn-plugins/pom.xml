@@ -36,7 +36,6 @@
     <module>pipeline</module>
     <module>jdbc</module>
     <module>flink</module>
-    <module>sqoop</module>
     <module>presto</module>
     <module>trino</module>
     <module>elasticsearch</module>

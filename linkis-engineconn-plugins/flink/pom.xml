@@ -27,7 +27,6 @@
   <artifactId>linkis-engineconn-plugin-flink</artifactId>
   <properties>
     <flink.version>1.12.2</flink.version>
-    <hive.version>2.3.3</hive.version>
   </properties>
 
   <dependencies>
@@ -358,12 +357,10 @@
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-common</artifactId>
         </exclusion>
-
         <exclusion>
           <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-hdfs</artifactId>
+          <artifactId>${hadoop-hdfs-client.artifact}</artifactId>
         </exclusion>
-
         <exclusion>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-auth</artifactId>
@@ -463,7 +460,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-deploy-plugin</artifactId>
       </plugin>
-
       <plugin>
         <groupId>net.alchim31.maven</groupId>
         <artifactId>scala-maven-plugin</artifactId>

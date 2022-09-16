@@ -19,7 +19,7 @@ package org.apache.linkis.manager.engineplugin.python.conf
 
 import org.apache.linkis.common.conf.TimeType
 
-import org.junit.jupiter.api.{Assertions, Order, Test}
+import org.junit.jupiter.api.{Assertions, Test}
 
 class TestPythonEngineConfiguration {
 

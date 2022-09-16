@@ -23,19 +23,11 @@ public class BaseBO {
   private String database;
   private String name;
   private String alias;
-  private Boolean isPartitionTable;
+  private Boolean partitionTable;
   private String creator;
   private String comment;
   private Date createTime;
   private Date latestAccessTime;
-
-  public Date getLatestAccessTime() {
-    return latestAccessTime;
-  }
-
-  public void setLatestAccessTime(Date latestAccessTime) {
-    this.latestAccessTime = latestAccessTime;
-  }
 
   public String getDatabase() {
     return database;
@@ -62,11 +54,11 @@ public class BaseBO {
   }
 
   public Boolean getPartitionTable() {
-    return isPartitionTable;
+    return partitionTable;
   }
 
   public void setPartitionTable(Boolean partitionTable) {
-    isPartitionTable = partitionTable;
+    this.partitionTable = partitionTable;
   }
 
   public String getCreator() {
@@ -91,5 +83,13 @@ public class BaseBO {
 
   public void setCreateTime(Date createTime) {
     this.createTime = createTime;
+  }
+
+  public Date getLatestAccessTime() {
+    return latestAccessTime;
+  }
+
+  public void setLatestAccessTime(Date latestAccessTime) {
+    this.latestAccessTime = latestAccessTime;
   }
 }

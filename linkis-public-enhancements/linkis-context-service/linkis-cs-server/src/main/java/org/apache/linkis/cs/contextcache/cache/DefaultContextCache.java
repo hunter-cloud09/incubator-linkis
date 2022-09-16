@@ -103,7 +103,7 @@ public class DefaultContextCache implements ContextCache, CSIDListener {
     } catch (Exception e) {
       String errorMsg =
           String.format("Failed to get contextIDValue of ContextID(%s)", contextID.getContextId());
-      logger.error(errorMsg);
+      logger.warn(errorMsg);
       throw new CSErrorException(97001, errorMsg, e);
     }
   }
@@ -174,7 +174,7 @@ public class DefaultContextCache implements ContextCache, CSIDListener {
       contextIDMetric.addCount();
       getContextCacheMetric().addCount();
     } catch (CSErrorException e) {
-      logger.error("Failed to deal CSIDAccess event csid is {}", contextID.getContextId());
+      logger.warn("Failed to deal CSIDAccess event csid is {}", contextID.getContextId());
     }
   }
 

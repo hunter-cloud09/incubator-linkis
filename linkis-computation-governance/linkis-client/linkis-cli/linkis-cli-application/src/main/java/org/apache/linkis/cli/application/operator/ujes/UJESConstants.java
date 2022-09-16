@@ -42,5 +42,5 @@ public class UJESConstants {
   public static final int DEFAULT_PAGE_SIZE = 500;
 
   public static final String DEFAULT_SPARK_ENGINE = "spark-2.4.3";
-  public static final String DEFAULT_HIVE_ENGINE = "hive-1.2.1";
+  public static final String DEFAULT_HIVE_ENGINE = "hive-2.3.3";
 }

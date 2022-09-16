@@ -46,7 +46,6 @@ if [ "$LINKIS_CONF_DIR" = "" ]; then
   export LINKIS_CONF_DIR=$LINKIS_HOME/conf
 fi
 
-
 # get pid directory
 if [ "$LINKIS_PID_DIR" = "" ]; then
   export LINKIS_PID_DIR="$LINKIS_HOME/pid"
@@ -54,6 +53,10 @@ fi
 if [ ! -w "$LINKIS_PID_DIR" ] ; then
   mkdir -p "$LINKIS_PID_DIR"
 fi
+
+export HADOOP_CONFIG_DIR=${HADOOP_CONFIG_DIR:-"/ldp/etc/hadoop"}
+export HIVE_CONFIG_DIR=${HIVE_CONFIG_DIR:-"/ldp/etc/hive"}
+export SPARK_CONFIG_DIR=${SPARK_CONFIG_DIR:-"/ldp/etc/spark"}
 
 function start()
 {

@@ -89,13 +89,11 @@ object SparkConfiguration extends Logging {
 
   val SPARK_CONF_DIR = CommonVars[String](
     "spark.config.dir",
-    CommonVars[String]("SPARK_CONF_DIR", "/appcom/config/spark-config").getValue
+    CommonVars[String]("SPARK_CONF_DIR", "/ldp/etc/spark").getValue
   )
 
-  val SPARK_HOME = CommonVars[String](
-    "spark.home",
-    CommonVars[String]("SPARK_HOME", "/appcom/Install/spark").getValue
-  )
+  val SPARK_HOME =
+    CommonVars[String]("spark.home", CommonVars[String]("SPARK_HOME", "/ldp/opt/spark").getValue)
 
   val SQL_EXTENSION_TIMEOUT = CommonVars("wds.linkis.dws.ujes.spark.extension.timeout", 3000L)
   val SPARK_NF_FRACTION_LENGTH = CommonVars[Int]("wds.linkis.engine.spark.fraction.length", 30)
@@ -109,7 +107,7 @@ object SparkConfiguration extends Logging {
     CommonVars("wds.linkis.spark.engineconn.fatal.log", "error writing class;OutOfMemoryError")
 
   val PYSPARK_PYTHON3_PATH =
-    CommonVars[String]("pyspark.python3.path", "/appcom/Install/anaconda3/bin/python")
+    CommonVars[String]("pyspark.python3.path", "/ldp/opt/anaconda3/bin/python")
 
   val ENABLE_REPLACE_PACKAGE_NAME =
     CommonVars("wds.linkis.spark.engine.scala.replace_package_header.enable", true)

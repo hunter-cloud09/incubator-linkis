@@ -27,7 +27,7 @@ import org.apache.linkis.manager.engineplugin.common.resource.{
 import org.apache.linkis.manager.engineplugin.python.factory.PythonEngineConnFactory
 import org.apache.linkis.manager.engineplugin.python.launch.PythonProcessEngineConnLaunchBuilder
 import org.apache.linkis.manager.label.entity.Label
-import org.apache.linkis.manager.label.entity.engine.{EngineType, EngineTypeLabel}
+import org.apache.linkis.manager.label.entity.engine.EngineType
 import org.apache.linkis.manager.label.utils.EngineTypeLabelCreator
 
 import java.util

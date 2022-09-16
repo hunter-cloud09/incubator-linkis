@@ -165,7 +165,7 @@ public class MethodInterceptorImpl implements MethodInterceptor {
     }
     if (StringUtils.isNumeric(contextID.getContextId())) {
       if (HAContextID.class.isInstance(contextID)) {
-        logger.error(
+        logger.warn(
             "ContextId of HAContextID instance cannot be numberic. contextId : "
                 + gson.toJson(contextID));
         throw new CSErrorException(

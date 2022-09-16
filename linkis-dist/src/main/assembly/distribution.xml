@@ -119,6 +119,16 @@
             </includes>
         </fileSet>
 
+        <!--pipeline-->
+        <fileSet>
+            <directory>
+                ../linkis-engineconn-plugins/pipeline/target/out/
+            </directory>
+            <outputDirectory>linkis-package/lib/linkis-engineconn-plugins/</outputDirectory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+        </fileSet>
 
         <!--lib-->
         <!--linkis-spring-cloud-services-->
@@ -231,13 +241,60 @@
 
         <!--lib-->
         <!--linkis-public-enhancements-->
-        <!--bml-->
         <fileSet>
             <directory>
                 ../linkis-public-enhancements/target/out/lib
             </directory>
             <outputDirectory>
                 linkis-package/lib/linkis-public-enhancements/linkis-ps-publicservice
+            </outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
+        <!-- hive metadata query -->
+        <fileSet>
+            <directory>
+                ../linkis-public-enhancements/linkis-datasource/linkis-metadata-query/service/hive/target/out/lib
+            </directory>
+            <outputDirectory>
+                linkis-package/lib/linkis-public-enhancements/linkis-ps-metadataquery/service/hive
+            </outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
+        <!-- mysql metadata query -->
+        <fileSet>
+            <directory>
+                ../linkis-public-enhancements/linkis-datasource/linkis-metadata-query/service/mysql/target/out/lib
+            </directory>
+            <outputDirectory>
+                linkis-package/lib/linkis-public-enhancements/linkis-ps-metadataquery/service/mysql
+            </outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
+        <!-- kafka metadata query -->
+        <fileSet>
+            <directory>
+                ../linkis-public-enhancements/linkis-datasource/linkis-metadata-query/service/kafka/target/out/lib
+            </directory>
+            <outputDirectory>
+                linkis-package/lib/linkis-public-enhancements/linkis-ps-metadataquery/service/kafka
+            </outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
+        <!-- elasticsearch metadata query -->
+        <fileSet>
+            <directory>
+                ../linkis-public-enhancements/linkis-datasource/linkis-metadata-query/service/elasticsearch/target/out/lib
+            </directory>
+            <outputDirectory>
+                linkis-package/lib/linkis-public-enhancements/linkis-ps-metadataquery/service/elasticsearch
             </outputDirectory>
             <includes>
                 <include>*.jar</include>

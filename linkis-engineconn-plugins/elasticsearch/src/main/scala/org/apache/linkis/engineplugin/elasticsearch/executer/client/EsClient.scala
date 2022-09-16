@@ -19,7 +19,6 @@ package org.apache.linkis.engineplugin.elasticsearch.executer.client
 
 import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.engineplugin.elasticsearch.conf.ElasticSearchConfiguration._
-import org.apache.linkis.server.JMap
 
 import org.apache.commons.codec.binary.Base64
 import org.apache.commons.lang3.StringUtils

@@ -21,7 +21,8 @@ public class ModelBO {
   private Integer lifecycle;
   private Integer modelLevel;
   private Integer useWay;
-  private Boolean isExternalUse;
+  private Boolean externalTable;
+  private String tblProperties;
 
   public Integer getLifecycle() {
     return lifecycle;
@@ -47,11 +48,19 @@ public class ModelBO {
     this.useWay = useWay;
   }
 
-  public Boolean getExternalUse() {
-    return isExternalUse;
+  public Boolean getExternalTable() {
+    return externalTable;
   }
 
-  public void setExternalUse(Boolean externalUse) {
-    isExternalUse = externalUse;
+  public void setExternalTable(Boolean externalTable) {
+    this.externalTable = externalTable;
+  }
+
+  public String getTblProperties() {
+    return tblProperties;
+  }
+
+  public void setTblProperties(String tblProperties) {
+    this.tblProperties = tblProperties;
   }
 }

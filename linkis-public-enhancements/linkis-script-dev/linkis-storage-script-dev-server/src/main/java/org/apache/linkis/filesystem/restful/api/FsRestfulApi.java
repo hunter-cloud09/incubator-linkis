@@ -45,7 +45,11 @@ import org.apache.linkis.storage.excel.ExcelFsWriter;
 import org.apache.linkis.storage.excel.ExcelStorageReader;
 import org.apache.linkis.storage.excel.StorageMultiExcelWriter;
 import org.apache.linkis.storage.fs.FileSystem;
-import org.apache.linkis.storage.script.*;
+import org.apache.linkis.storage.script.ScriptFsWriter;
+import org.apache.linkis.storage.script.ScriptMetaData;
+import org.apache.linkis.storage.script.ScriptRecord;
+import org.apache.linkis.storage.script.Variable;
+import org.apache.linkis.storage.script.VariableParser;
 import org.apache.linkis.storage.source.FileSource;
 import org.apache.linkis.storage.source.FileSource$;
 import org.apache.linkis.storage.utils.StorageUtils;
@@ -53,20 +57,38 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import static org.apache.linkis.filesystem.conf.WorkSpaceConfiguration.*;
-import static org.apache.linkis.filesystem.constant.WorkSpaceConstants.*;
+import static org.apache.linkis.filesystem.conf.WorkSpaceConfiguration.FILESYSTEM_PATH_CHECK_TRIGGER;
+import static org.apache.linkis.filesystem.conf.WorkSpaceConfiguration.HDFS_USER_ROOT_PATH_PREFIX;
+import static org.apache.linkis.filesystem.conf.WorkSpaceConfiguration.HDFS_USER_ROOT_PATH_SUFFIX;
+import static org.apache.linkis.filesystem.conf.WorkSpaceConfiguration.LOCAL_USER_ROOT_PATH;
+import static org.apache.linkis.filesystem.conf.WorkSpaceConfiguration.RESULT_SET_DOWNLOAD_IS_LIMIT;
+import static org.apache.linkis.filesystem.conf.WorkSpaceConfiguration.RESULT_SET_DOWNLOAD_MAX_SIZE_CSV;
+import static org.apache.linkis.filesystem.conf.WorkSpaceConfiguration.RESULT_SET_DOWNLOAD_MAX_SIZE_EXCEL;
+import static org.apache.linkis.filesystem.constant.WorkSpaceConstants.BLANK;
+import static org.apache.linkis.filesystem.constant.WorkSpaceConstants.DEFAULT_DATE_TYPE;
+import static org.apache.linkis.filesystem.constant.WorkSpaceConstants.LOCAL_RETURN_TYPE;
+import static org.apache.linkis.filesystem.constant.WorkSpaceConstants.XLSX_RESPONSE_CONTENT_TYPE;
 
 @Api(tags = "file system")
 @RestController
@@ -140,16 +162,13 @@ public class FsRestfulApi {
                 LOGGER.warn("User {} not exist in linkis node.", userName);
                 throw WorkspaceExceptionManager.createException(80031);
             }
-            if (FILESYSTEM_PATH_AUTO_CREATE.getValue()) {
-                try {
-                    fileSystem.mkdirs(fsPath);
-                    return Message.ok().data(String.format("user%sRootPath", returnType), path);
-                } catch (IOException e) {
-                    LOGGER.error(e.getMessage(), e);
-                    throw WorkspaceExceptionManager.createException(80030);
-                }
+            try {
+                fileSystem.mkdirs(fsPath);
+                return Message.ok().data(String.format("user%sRootPath", returnType), path);
+            } catch (IOException e) {
+                LOGGER.error(e.getMessage(), e);
+                throw WorkspaceExceptionManager.createException(80030);
             }
-            throw WorkspaceExceptionManager.createException(80003);
         }
         return Message.ok().data(String.format("user%sRootPath", returnType), path);
     }

@@ -27,10 +27,13 @@ trait SQLConst {
 
   val COMMA: String = ","
   val SPACE: String = " "
+  val EQ: String = "="
 
   val COMMENT: String = "comment"
 
   val CREATE_TABLE = "create table if not exists "
+
+  val CREATE_EXTERNAL_TABLE = "create external table if not exists "
 
   val PARTITIONED_BY = "partitioned by"
 
@@ -43,6 +46,14 @@ trait SQLConst {
   val STORED_AS = "stored as"
 
   val SEMICOLON = """;"""
+
+  val ICEBERG_TYPE = "USING ICEBERG"
+
+  val TBLPROPERTIES = "TBLPROPERTIES"
+
+  val BUCKET = "bucket"
+
+  val TRUNCATE = "truncate"
 
 }
 

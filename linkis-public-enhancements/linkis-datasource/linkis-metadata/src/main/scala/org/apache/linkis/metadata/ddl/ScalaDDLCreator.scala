@@ -18,13 +18,13 @@
 package org.apache.linkis.metadata.ddl
 
 import org.apache.linkis.common.utils.Logging
-import org.apache.linkis.metadata.conf.MdqConfiguration
 import org.apache.linkis.metadata.domain.mdq.bo.{MdqTableBO, MdqTableFieldsInfoBO}
 import org.apache.linkis.metadata.exception.MdqIllegalParamException
 
 import org.apache.commons.lang3.StringUtils
 
 import scala.collection.JavaConverters._
+import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
 object ScalaDDLCreator extends DDLCreator with SQLConst with Logging {
@@ -34,8 +34,15 @@ object ScalaDDLCreator extends DDLCreator with SQLConst with Logging {
     val dbName = tableInfo.getTableBaseInfo.getBase.getDatabase
     val tableName = tableInfo.getTableBaseInfo.getBase.getName
     val fields = tableInfo.getTableFieldsInfo
-    val createTableCode = new StringBuilder
-    createTableCode.append(SPARK_SQL).append(LEFT_PARENTHESES).append(MARKS).append(CREATE_TABLE)
+    val lifecycle: Integer = tableInfo.getTableBaseInfo.getModel.getLifecycle
+    val tblPropInfo: String = tableInfo.getTableBaseInfo.getModel.getTblProperties
+    val createTableCode = new mutable.StringBuilder
+    createTableCode.append(SPARK_SQL).append(LEFT_PARENTHESES).append(MARKS)
+
+    if (tableInfo.getTableBaseInfo.getModel.getExternalTable) {
+      createTableCode.append(CREATE_EXTERNAL_TABLE)
+    } else { createTableCode.append(CREATE_TABLE) }
+
     createTableCode.append(dbName).append(".").append(tableName)
     createTableCode.append(LEFT_PARENTHESES)
     val partitions = new ArrayBuffer[MdqTableFieldsInfoBO]()
@@ -53,7 +60,12 @@ object ScalaDDLCreator extends DDLCreator with SQLConst with Logging {
         }
       }
     }
-    createTableCode.append(fieldsArray.mkString(COMMA)).append(RIGHT_PARENTHESES).append(SPACE)
+    createTableCode
+      .append(fieldsArray.mkString(COMMA))
+      .append(RIGHT_PARENTHESES)
+      .append(SPACE)
+      .append(ICEBERG_TYPE)
+      .append(SPACE)
     if (partitions.nonEmpty) {
       val partitionArr = new ArrayBuffer[String]()
       partitions foreach { p =>
@@ -70,25 +82,28 @@ object ScalaDDLCreator extends DDLCreator with SQLConst with Logging {
         .append(partitionArr.mkString(COMMA))
         .append(RIGHT_PARENTHESES)
         .append(SPACE)
+    } else {
+      throw MdqIllegalParamException("Partition field is not allowed to be empty")
     }
-    // 如果是分区表，但是没有分区字段，默认是用ds做分区
-    if (partitions.isEmpty && tableInfo.getTableBaseInfo.getBase.getPartitionTable) {
-      val partition = MdqConfiguration.DEFAULT_PARTITION_NAME.getValue
-      val _type = "string"
-      createTableCode
-        .append(PARTITIONED_BY)
-        .append(LEFT_PARENTHESES)
-        .append(partition)
-        .append(SPACE)
-        .append(_type)
-        .append(RIGHT_PARENTHESES)
-        .append(SPACE)
+    // TBL-PROPERTIES
+    val tabPropArray = new ArrayBuffer[String]()
+
+    if (lifecycle != null && lifecycle > 0) {
+      tabPropArray += ("'data.ttl'=" + SINGLE_MARK + lifecycle + SINGLE_MARK)
+      val strings: Array[String] = tblPropInfo.split(COMMA)
+      strings.foreach(kv => {
+        val strings1: Array[String] = kv.split(EQ)
+        tabPropArray += (SINGLE_MARK + strings1.apply(0) + SINGLE_MARK + EQ + SINGLE_MARK + strings1
+          .apply(1) + SINGLE_MARK)
+      })
+    } else {
+      val strings: Array[String] = tblPropInfo.split(COMMA)
+      strings.foreach(kv => {
+        val strings1: Array[String] = kv.split(EQ)
+        tabPropArray += (SINGLE_MARK + strings1.apply(0) + SINGLE_MARK + EQ + SINGLE_MARK + strings1
+          .apply(1) + SINGLE_MARK)
+      })
     }
-    createTableCode
-      .append(STORED_AS)
-      .append(SPACE)
-      .append(MdqConfiguration.DEFAULT_STORED_TYPE.getValue)
-      .append(SPACE)
     if (StringUtils.isNotBlank(tableInfo.getTableBaseInfo.getBase.getComment)) {
       createTableCode
         .append(COMMENT)

@@ -26,21 +26,13 @@ public class MdqTableFieldsInfoBO {
   private String alias;
   private String express;
   private Boolean isPrimary;
-  private Boolean isPartitionField;
+  private Boolean partitionField;
   private String rule;
   private String comment;
-
   private String partitionsValue;
+  private String partitionsFunc;
 
   private Map<String, Object> modeInfo;
-
-  public Map<String, Object> getModeInfo() {
-    return modeInfo;
-  }
-
-  public void setModeInfo(Map<String, Object> modeInfo) {
-    this.modeInfo = modeInfo;
-  }
 
   public String getName() {
     return name;
@@ -91,11 +83,11 @@ public class MdqTableFieldsInfoBO {
   }
 
   public Boolean getPartitionField() {
-    return isPartitionField;
+    return partitionField;
   }
 
   public void setPartitionField(Boolean partitionField) {
-    isPartitionField = partitionField;
+    this.partitionField = partitionField;
   }
 
   public String getRule() {
@@ -120,5 +112,21 @@ public class MdqTableFieldsInfoBO {
 
   public void setPartitionsValue(String partitionsValue) {
     this.partitionsValue = partitionsValue;
+  }
+
+  public String getPartitionsFunc() {
+    return partitionsFunc;
+  }
+
+  public void setPartitionsFunc(String partitionsFunc) {
+    this.partitionsFunc = partitionsFunc;
+  }
+
+  public Map<String, Object> getModeInfo() {
+    return modeInfo;
+  }
+
+  public void setModeInfo(Map<String, Object> modeInfo) {
+    this.modeInfo = modeInfo;
   }
 }

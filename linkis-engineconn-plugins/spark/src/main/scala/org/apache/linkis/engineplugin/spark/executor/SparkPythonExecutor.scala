@@ -139,8 +139,7 @@ class SparkPythonExecutor(val sparkEngineSession: SparkEngineSession, val id: In
       s"spark.python.version => ${engineCreationContext.getOptions.get("spark.python.version")}"
     )
     val userDefinePythonVersion = engineCreationContext.getOptions
-      .getOrDefault("spark.python.version", "python")
-      .toString
+      .getOrDefault("spark.python.version", "python3")
       .toLowerCase()
     val sparkPythonVersion =
       if (
