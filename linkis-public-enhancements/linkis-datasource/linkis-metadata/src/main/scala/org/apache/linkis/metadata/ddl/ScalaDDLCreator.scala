@@ -87,7 +87,6 @@ object ScalaDDLCreator extends DDLCreator with SQLConst with Logging {
     }
     // TBL-PROPERTIES
     val tabPropArray = new ArrayBuffer[String]()
-
     if (lifecycle != null && lifecycle > 0) {
       tabPropArray += ("'data.ttl'=" + SINGLE_MARK + lifecycle + SINGLE_MARK)
       val strings: Array[String] = tblPropInfo.split(COMMA)
@@ -97,7 +96,7 @@ object ScalaDDLCreator extends DDLCreator with SQLConst with Logging {
           .apply(1) + SINGLE_MARK)
       })
     } else {
-      if (tabPropArray.nonEmpty) {
+      if (tblPropInfo.nonEmpty) {
         val strings: Array[String] = tblPropInfo.split(COMMA)
         strings.foreach(kv => {
           val strings1: Array[String] = kv.split(EQ)
@@ -106,6 +105,16 @@ object ScalaDDLCreator extends DDLCreator with SQLConst with Logging {
         })
       }
     }
+    if (tabPropArray.nonEmpty) {
+      createTableCode
+        .append(TBLPROPERTIES)
+        .append(SPACE)
+        .append(LEFT_PARENTHESES)
+        .append(tabPropArray.mkString(","))
+        .append(RIGHT_PARENTHESES)
+        .append(SPACE)
+    }
+
     if (StringUtils.isNotBlank(tableInfo.getTableBaseInfo.getBase.getComment)) {
       createTableCode
         .append(COMMENT)
