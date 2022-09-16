@@ -100,7 +100,9 @@ object ScalaDDLCreator extends DDLCreator with SQLConst with Logging {
         val strings: Array[String] = tblPropInfo.split(COMMA)
         strings.foreach(kv => {
           val strings1: Array[String] = kv.split(EQ)
-          tabPropArray += (SINGLE_MARK + strings1.apply(0) + SINGLE_MARK + EQ + SINGLE_MARK + strings1
+          tabPropArray += (SINGLE_MARK + strings1.apply(
+            0
+          ) + SINGLE_MARK + EQ + SINGLE_MARK + strings1
             .apply(1) + SINGLE_MARK)
         })
       }
