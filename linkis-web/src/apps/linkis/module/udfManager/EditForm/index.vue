@@ -61,7 +61,7 @@ export default {
         {
           type: 'input',
           title: "用户名",
-          field: 'user_name',
+          field: 'userName',
           value: '',
           props: {
             placeholder: "",
