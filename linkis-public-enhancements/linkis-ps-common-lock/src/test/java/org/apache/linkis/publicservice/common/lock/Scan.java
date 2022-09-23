@@ -15,8 +15,12 @@
  * limitations under the License.
  */
 
-package org.apache.linkis.cs.client.exception
+package org.apache.linkis.publicservice.common.lock;
 
-import org.apache.linkis.common.exception.ErrorException
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
-case class ProtocolNotMatchException(errMsg: String) extends ErrorException(70059, errMsg)
+import org.mybatis.spring.annotation.MapperScan;
+
+@EnableAutoConfiguration
+@MapperScan(" org.apache.linkis.publicservice.common.lock")
+public class Scan {}
