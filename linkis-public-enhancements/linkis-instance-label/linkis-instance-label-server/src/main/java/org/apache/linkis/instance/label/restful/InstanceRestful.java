@@ -60,6 +60,8 @@ import java.util.Set;
 
 import static org.apache.linkis.instance.label.errorcode.LinkisInstanceLabelErrorCodeSummary.*;
 
+import static org.apache.linkis.instance.label.errorcode.LinkisInstanceLabelErrorCodeSummary.*;
+
 @Api(tags = "instance restful")
 @RestController
 @RequestMapping(path = "/microservice")
