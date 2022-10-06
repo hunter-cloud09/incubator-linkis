@@ -44,13 +44,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -58,9 +51,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import static org.apache.linkis.instance.label.errorcode.LinkisInstanceLabelErrorCodeSummary.*;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 
-import static org.apache.linkis.instance.label.errorcode.LinkisInstanceLabelErrorCodeSummary.*;
+import static org.apache.linkis.instance.label.errorcode.LinkisInstanceLabelErrorCodeSummary.INCLUDE_REPEAT;
+import static org.apache.linkis.instance.label.errorcode.LinkisInstanceLabelErrorCodeSummary.ONLY_ADMIN_CAN_MODIFY;
+import static org.apache.linkis.instance.label.errorcode.LinkisInstanceLabelErrorCodeSummary.ONLY_ADMIN_CAN_VIEW;
 
 @Api(tags = "instance restful")
 @RestController
