@@ -39,6 +39,7 @@
     <module>presto</module>
     <module>trino</module>
     <module>elasticsearch</module>
+    <module>sqoop</module>
   </modules>
 
 </project>
