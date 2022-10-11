@@ -130,6 +130,17 @@
             </includes>
         </fileSet>
 
+        <!--pipeline-->
+        <fileSet>
+            <directory>
+                ../linkis-engineconn-plugins/flink/target/out/
+            </directory>
+            <outputDirectory>linkis-package/lib/linkis-engineconn-plugins/</outputDirectory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+        </fileSet>
+
         <!--lib-->
         <!--linkis-spring-cloud-services-->
         <!--linkis-gateway-->
