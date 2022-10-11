@@ -81,11 +81,6 @@
       <artifactId>Dm8JdbcDriver18</artifactId>
       <version>${dm8-jdbc.version}</version>
     </dependency>
-    <dependency>
-      <groupId>kingbase</groupId>
-      <artifactId>kingbase8</artifactId>
-      <version>${kingbase8.version}</version>
-    </dependency>
   </dependencies>
 
   <build>
