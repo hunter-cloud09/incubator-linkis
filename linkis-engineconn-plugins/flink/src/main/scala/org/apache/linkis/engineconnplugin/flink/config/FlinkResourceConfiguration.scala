@@ -30,7 +30,7 @@ object FlinkResourceConfiguration {
     CommonVars[Int]("flink.jobmanager.memory", 1024) // Unit: M(单位为M)
 
   val LINKIS_FLINK_TASK_MANAGER_MEMORY =
-    CommonVars[Int]("flink.taskmanager.memory", 4096) // Unit: M(单位为M)
+    CommonVars[Int]("flink.taskmanager.memory", 2048) // Unit: M(单位为M)
   val LINKIS_FLINK_TASK_SLOTS = CommonVars[Int]("flink.taskmanager.numberOfTaskSlots", 2)
   val LINKIS_FLINK_TASK_MANAGER_CPU_CORES = CommonVars[Int]("flink.taskmanager.cpu.cores", 2)
   val LINKIS_FLINK_CONTAINERS = CommonVars[Int]("flink.container.num", 2)

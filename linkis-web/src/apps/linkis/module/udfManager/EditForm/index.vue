@@ -44,7 +44,7 @@ export default {
           type: 'hidden',
           title: "id",
           field: 'id',
-          value: '',
+          value: null,
           props: {
             placeholder: "",
           },

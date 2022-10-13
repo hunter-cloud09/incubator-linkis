@@ -73,10 +73,16 @@ functions: [] # empty list
 
 catalogs: [] # empty list
 # A typical catalog definition looks like:
-#  - name: myhive
-#    type: hive
-#    hive-conf-dir: /opt/hive_conf/
-#    default-database: ...
+  - name: ldp_hive
+    type: hive
+    hive-conf-dir: /ldp/etc/hive
+    property-version: 1
+  - name: default_catalog
+    type: iceberg
+    catalog-type: hive
+    hive-conf-dir: /ldp/etc/hive
+    clients: 5
+    property-version: 1
 
 #==============================================================================
 # Modules
