@@ -32,7 +32,7 @@ object ClassUtil {
     if (classes.length <= 1) defaultValue
     else if (classes.length == 2) {
       val realClass = if (classes(0) == defaultValue.getClass) classes(1) else classes(0);
-      Utils.tryThrow(realClass.newInstance) { t =>
+      Utils.tryThrow(realClass.getDeclaredConstructor().newInstance()) { t =>
         new JobExecutionException(s"New a instance of ${clazz.getSimpleName} failed!", t);
       }
     } else {

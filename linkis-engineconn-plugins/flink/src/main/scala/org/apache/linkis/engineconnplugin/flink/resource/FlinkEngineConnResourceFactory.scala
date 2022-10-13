@@ -30,7 +30,7 @@ import org.apache.linkis.manager.engineplugin.common.resource.AbstractEngineReso
 class FlinkEngineConnResourceFactory extends AbstractEngineResourceFactory {
 
   override def getRequestResource(properties: java.util.Map[String, String]): Resource = {
-    val containers = if (properties.containsKey(LINKIS_FLINK_CONTAINERS)) {
+    val containers = if (properties.containsKey(LINKIS_FLINK_CONTAINERS.key)) {
       val containers = LINKIS_FLINK_CONTAINERS.getValue(properties)
       properties.put(
         FLINK_APP_DEFAULT_PARALLELISM.key,
@@ -39,8 +39,8 @@ class FlinkEngineConnResourceFactory extends AbstractEngineResourceFactory {
       containers
     } else {
       math.round(
-        FLINK_APP_DEFAULT_PARALLELISM.getValue(properties) * 1.0f / LINKIS_FLINK_TASK_SLOTS
-          .getValue(properties)
+        FLINK_APP_DEFAULT_PARALLELISM.getValue(properties) * 1.0f
+          / LINKIS_FLINK_TASK_SLOTS.getValue(properties)
       )
     }
     val yarnMemory = ByteTimeUtils.byteStringAsBytes(

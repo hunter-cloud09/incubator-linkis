@@ -358,13 +358,7 @@ class FlinkEngineConnFactory extends MultiExecutorEngineConnFactory with Logging
       executionContext.getTableEnvironment // This line is need to initialize the StreamExecutionEnvironment.
       executionContext.getStreamExecutionEnvironment.enableCheckpointing(checkpointInterval)
       val checkpointConfig = executionContext.getStreamExecutionEnvironment.getCheckpointConfig
-      checkpointMode match {
-        case "EXACTLY_ONCE" =>
-          checkpointConfig.setCheckpointingMode(CheckpointingMode.EXACTLY_ONCE)
-        case "AT_LEAST_ONCE" =>
-          checkpointConfig.setCheckpointingMode(CheckpointingMode.AT_LEAST_ONCE)
-        case _ => throw new FlinkInitFailedException(s"Unknown checkpoint mode $checkpointMode.")
-      }
+      checkpointConfig.setCheckpointingMode(CheckpointingMode.valueOf(checkpointMode))
       checkpointConfig.setCheckpointTimeout(checkpointTimeout)
       checkpointConfig.setMinPauseBetweenCheckpoints(checkpointMinPause)
       checkpointConfig.enableExternalizedCheckpoints(
@@ -401,7 +395,7 @@ object FlinkEngineConnFactory extends Logging {
     .getSubTypesOf(classOf[Settings])
     .asScala
     .filterNot(ClassUtils.isInterfaceOrAbstract)
-    .map(_.newInstance())
+    .map(_.getDeclaredConstructor().newInstance())
     .toList
 
   logger.info(s"Settings list: ${settings.map(_.getClass.getSimpleName)}.")

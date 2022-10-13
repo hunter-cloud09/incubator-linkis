@@ -40,31 +40,14 @@
             <useTransitiveFiltering>true</useTransitiveFiltering>
 
             <excludes>
-                <exclude>antlr:antlr:jar</exclude>
                 <exclude>aopalliance:aopalliance:jar</exclude>
                 <exclude>asm:asm:jar</exclude>
-                <exclude>cglib:cglib:jar</exclude>
-                <exclude>com.amazonaws:aws-java-sdk-autoscaling:jar</exclude>
-                <exclude>com.amazonaws:aws-java-sdk-core:jar</exclude>
-                <exclude>com.amazonaws:aws-java-sdk-ec2:jar</exclude>
-                <exclude>com.amazonaws:aws-java-sdk-route53:jar</exclude>
-                <exclude>com.amazonaws:aws-java-sdk-sts:jar</exclude>
-                <exclude>com.amazonaws:jmespath-java:jar</exclude>
                 <exclude>com.fasterxml.jackson.core:jackson-annotations:jar</exclude>
                 <exclude>com.fasterxml.jackson.core:jackson-core:jar</exclude>
                 <exclude>com.fasterxml.jackson.core:jackson-databind:jar</exclude>
-                <exclude>com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:jar</exclude>
-                <exclude>com.fasterxml.jackson.datatype:jackson-datatype-jdk8:jar</exclude>
-                <exclude>com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar</exclude>
                 <exclude>com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:jar</exclude>
                 <exclude>com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:jar</exclude>
                 <exclude>com.fasterxml.jackson.module:jackson-module-jaxb-annotations:jar</exclude>
-                <exclude>com.fasterxml.jackson.module:jackson-module-parameter-names:jar</exclude>
-                <exclude>com.fasterxml.jackson.module:jackson-module-paranamer:jar</exclude>
-                <exclude>com.fasterxml.jackson.module:jackson-module-scala_2.11:jar</exclude>
-                <exclude>com.github.andrewoma.dexx:dexx-collections:jar</exclude>
-                <exclude>com.github.vlsi.compactmap:compactmap:jar</exclude>
-                <exclude>com.google.code.findbugs:annotations:jar</exclude>
                 <exclude>com.google.code.findbugs:jsr305:jar</exclude>
                 <exclude>com.google.code.gson:gson:jar</exclude>
                 <exclude>com.google.guava:guava:jar</exclude>
@@ -74,27 +57,7 @@
                 <exclude>com.netflix.eureka:eureka-client:jar</exclude>
                 <exclude>com.netflix.eureka:eureka-core:jar</exclude>
                 <exclude>com.netflix.hystrix:hystrix-core:jar</exclude>
-                <exclude>com.netflix.netflix-commons:netflix-commons-util:jar</exclude>
-                <exclude>com.netflix.netflix-commons:netflix-eventbus:jar</exclude>
-                <exclude>com.netflix.netflix-commons:netflix-infix:jar</exclude>
-                <exclude>com.netflix.netflix-commons:netflix-statistics:jar</exclude>
-                <exclude>com.netflix.ribbon:ribbon:jar</exclude>
-                <exclude>com.netflix.ribbon:ribbon-core:jar</exclude>
-                <exclude>com.netflix.ribbon:ribbon-eureka:jar</exclude>
-                <exclude>com.netflix.ribbon:ribbon-httpclient:jar</exclude>
-                <exclude>com.netflix.ribbon:ribbon-loadbalancer:jar</exclude>
-                <exclude>com.netflix.ribbon:ribbon-transport:jar</exclude>
-                <exclude>com.netflix.servo:servo-core:jar</exclude>
-                <exclude>com.ning:async-http-client:jar</exclude>
-                <exclude>com.sun.jersey.contribs:jersey-apache-client4:jar</exclude>
-                <exclude>com.sun.jersey:jersey-client:jar</exclude>
-                <exclude>com.sun.jersey:jersey-core:jar</exclude>
-                <exclude>com.sun.jersey:jersey-json:jar</exclude>
-                <exclude>com.sun.jersey:jersey-server:jar</exclude>
-                <exclude>com.sun.jersey:jersey-servlet:jar</exclude>
-                <exclude>com.sun.xml.bind:jaxb-impl:jar</exclude>
                 <exclude>com.thoughtworks.paranamer:paranamer:jar</exclude>
-                <exclude>com.thoughtworks.xstream:xstream:jar</exclude>
                 <exclude>org.apache.linkis:linkis-common:jar</exclude>
                 <exclude>org.apache.linkis:linkis-module:jar</exclude>
                 <exclude>commons-beanutils:commons-beanutils:jar</exclude>
@@ -247,32 +210,6 @@
                 <exclude>org.scala-lang:scalap:jar</exclude>
                 <exclude>org.slf4j:jul-to-slf4j:jar</exclude>
                 <exclude>org.slf4j:slf4j-api:jar</exclude>
-                <exclude>org.springframework.boot:spring-boot:jar</exclude>
-                <exclude>org.springframework.boot:spring-boot-actuator:jar</exclude>
-                <exclude>org.springframework.boot:spring-boot-actuator-autoconfigure:jar</exclude>
-                <exclude>org.springframework.boot:spring-boot-autoconfigure:jar</exclude>
-                <exclude>org.springframework.boot:spring-boot-starter:jar</exclude>
-                <exclude>org.springframework.boot:spring-boot-starter-actuator:jar</exclude>
-                <exclude>org.springframework.boot:spring-boot-starter-aop:jar</exclude>
-                <exclude>org.springframework.boot:spring-boot-starter-jetty:jar</exclude>
-                <exclude>org.springframework.boot:spring-boot-starter-json:jar</exclude>
-                <exclude>org.springframework.boot:spring-boot-starter-log4j2:jar</exclude>
-                <exclude>org.springframework.boot:spring-boot-starter-web:jar</exclude>
-                <exclude>org.springframework.cloud:spring-cloud-commons:jar</exclude>
-                <exclude>org.springframework.cloud:spring-cloud-config-client:jar</exclude>
-                <exclude>org.springframework.cloud:spring-cloud-context:jar</exclude>
-                <exclude>org.springframework.cloud:spring-cloud-netflix-archaius:jar</exclude>
-                <exclude>org.springframework.cloud:spring-cloud-netflix-core:jar</exclude>
-                <exclude>org.springframework.cloud:spring-cloud-netflix-eureka-client:jar</exclude>
-                <exclude>org.springframework.cloud:spring-cloud-netflix-ribbon:jar</exclude>
-                <exclude>org.springframework.cloud:spring-cloud-starter:jar</exclude>
-                <exclude>org.springframework.cloud:spring-cloud-starter-config:jar</exclude>
-                <exclude>org.springframework.cloud:spring-cloud-starter-eureka:jar</exclude>
-                <exclude>org.springframework.cloud:spring-cloud-starter-netflix-archaius:jar</exclude>
-                <exclude>org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:jar</exclude>
-                <exclude>org.springframework.cloud:spring-cloud-starter-netflix-ribbon:jar</exclude>
-                <exclude>org.springframework.security:spring-security-crypto:jar</exclude>
-                <exclude>org.springframework.security:spring-security-rsa:jar</exclude>
                 <exclude>org.springframework:spring-aop:jar</exclude>
                 <exclude>org.springframework:spring-beans:jar</exclude>
                 <exclude>org.springframework:spring-context:jar</exclude>
@@ -283,11 +220,6 @@
                 <exclude>org.springframework:spring-webmvc:jar</exclude>
                 <exclude>org.tukaani:xz:jar</exclude>
                 <exclude>org.yaml:snakeyaml:jar</exclude>
-                <exclude>software.amazon.ion:ion-java:jar</exclude>
-                <exclude>xerces:xercesImpl:jar</exclude>
-                <exclude>xmlenc:xmlenc:jar</exclude>
-                <exclude>xmlpull:xmlpull:jar</exclude>
-                <exclude>xpp3:xpp3_min:jar</exclude>
             </excludes>
         </dependencySet>
     </dependencySets>
