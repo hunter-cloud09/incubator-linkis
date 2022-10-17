@@ -15,12 +15,20 @@
  * limitations under the License.
  */
 
-package org.apache.linkis.entrance.exception
+package org.apache.linkis.manager;
 
-import org.apache.linkis.common.exception.ErrorException
-import org.apache.linkis.entrance.errorcode.EntranceErrorCodeSummary._
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.ComponentScan;
 
-case class SensitiveTablesCheckException(errorMsg: String) extends ErrorException(50079, errorMsg)
+@EnableAutoConfiguration
+@ServletComponentScan
+@ComponentScan
+public class WebApplicationServer extends SpringBootServletInitializer {
 
-case class DangerousGramsCheckException(errorMsg: String)
-    extends ErrorException(JOB_HISTORY_FAILED_ID.getErrorCode, errorMsg)
+  public static void main(String[] args) {
+    new SpringApplicationBuilder(WebApplicationServer.class).run(args);
+  }
+}

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *    http://www.apache.org/licenses/LICENSE-2.0
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,12 +15,17 @@
  * limitations under the License.
  */
 
-package org.apache.linkis.entrance.exception
+package org.apache.linkis.manager.dao;
 
-import org.apache.linkis.common.exception.ErrorException
-import org.apache.linkis.entrance.errorcode.EntranceErrorCodeSummary._
+import org.apache.linkis.manager.Scan;
 
-case class SensitiveTablesCheckException(errorMsg: String) extends ErrorException(50079, errorMsg)
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
-case class DangerousGramsCheckException(errorMsg: String)
-    extends ErrorException(JOB_HISTORY_FAILED_ID.getErrorCode, errorMsg)
+@SpringBootTest(classes = Scan.class)
+@Transactional
+@Rollback(true)
+@EnableTransactionManagement
+public class BaseDaoTest {}
