@@ -22,26 +22,22 @@ import org.apache.linkis.engineconnplugin.flink.client.config.entries.ExecutionE
 
 object FlinkEnvConfiguration {
 
-  val SPARK_LIB_PATH = CommonVars(
-    "spark.lib.path",
-    CommonVars("SPARK_HOME", "/appcom/Install/spark").getValue + "/jars"
-  )
+  val SPARK_LIB_PATH =
+    CommonVars("spark.lib.path", CommonVars("SPARK_HOME", "/ldp/opt/spark").getValue + "/jars")
 
   val FLINK_HOME_ENV = "FLINK_HOME"
   val FLINK_CONF_DIR_ENV = "FLINK_CONF_DIR"
-  val FLINK_VERSION = CommonVars("flink.version", "1.12.2")
+  val FLINK_VERSION = CommonVars("flink.version", "1.12.7")
 
   val FLINK_HOME =
-    CommonVars("flink.home", CommonVars(FLINK_HOME_ENV, "/appcom/Install/flink").getValue)
+    CommonVars("flink.home", CommonVars(FLINK_HOME_ENV, "/ldp/opt/flink").getValue)
 
-  val FLINK_CONF_DIR = CommonVars(
-    "flink.conf.dir",
-    CommonVars(FLINK_CONF_DIR_ENV, "/appcom/config/flink-config").getValue
-  )
+  val FLINK_CONF_DIR =
+    CommonVars("flink.conf.dir", CommonVars(FLINK_CONF_DIR_ENV, "/ldp/etc/flink").getValue)
 
   val FLINK_DIST_JAR_PATH = CommonVars(
     "flink.dist.jar.path",
-    FLINK_HOME.getValue + s"/lib/flink-dist_2.11-${FLINK_VERSION.getValue}.jar"
+    FLINK_HOME.getValue + s"/lib/flink-dist_2.12-${FLINK_VERSION.getValue}.jar"
   )
 
   val FLINK_PROVIDED_LIB_PATH = CommonVars("flink.lib.path", "")
@@ -51,13 +47,13 @@ object FlinkEnvConfiguration {
 
   val FLINK_LIB_LOCAL_PATH = CommonVars(
     "flink.local.lib.path",
-    "/appcom/Install/flink/lib",
+    "/ldp/opt/flink/lib",
     "The local lib path of Flink EngineConn."
   )
 
   val FLINK_USER_LIB_LOCAL_PATH = CommonVars(
     "flink.user.local.lib.path",
-    "/appcom/Install/flink/lib",
+    "/ldp/opt/flink/lib",
     "The local lib path of each user in Flink EngineConn."
   )
 
