@@ -25,13 +25,10 @@ class ServiceInstance {
   def setInstance(instance: String): Unit = this.instance = instance
   def getInstance: String = instance
 
-  def canEqual(other: Any): Boolean = other.isInstanceOf[ServiceInstance]
-
   override def equals(other: Any): Boolean = other match {
     case that: ServiceInstance =>
-      (that canEqual this) &&
-        applicationName == that.applicationName &&
-        instance == that.instance
+      applicationName == that.applicationName &&
+      instance == that.instance
     case _ => false
   }
 
