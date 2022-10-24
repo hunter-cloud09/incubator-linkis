@@ -21,9 +21,9 @@ import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.metadata.domain.mdq.bo.{MdqTableBO, MdqTableFieldsInfoBO}
 import org.apache.linkis.metadata.errorcode.LinkisMetadataErrorCodeSummary.PARTITION_IS_NULL
 import org.apache.linkis.metadata.exception.MdqIllegalParamException
-
 import org.apache.commons.lang3.StringUtils
 
+import java.util
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
@@ -32,9 +32,9 @@ object ScalaDDLCreator extends DDLCreator with SQLConst with Logging {
 
   override def createDDL(tableInfo: MdqTableBO, user: String): String = {
     logger.info(s"begin to generate ddl for user $user using ScalaDDLCreator")
-    val dbName = tableInfo.getTableBaseInfo.getBase.getDatabase
-    val tableName = tableInfo.getTableBaseInfo.getBase.getName
-    val fields = tableInfo.getTableFieldsInfo
+    val dbName: String = tableInfo.getTableBaseInfo.getBase.getDatabase
+    val tableName: String = tableInfo.getTableBaseInfo.getBase.getName
+    val fields: util.List[MdqTableFieldsInfoBO] = tableInfo.getTableFieldsInfo
     val lifecycle: Integer = tableInfo.getTableBaseInfo.getModel.getLifecycle
     val tblPropInfo: String = tableInfo.getTableBaseInfo.getModel.getTblProperties
     val createTableCode = new mutable.StringBuilder
@@ -51,9 +51,9 @@ object ScalaDDLCreator extends DDLCreator with SQLConst with Logging {
     fields.asScala foreach { field =>
       if (field.getPartitionField != null && field.getPartitionField == true) partitions += field
       else {
-        val name = field.getName
-        val _type = field.getType
-        val desc = field.getComment
+        val name: String = field.getName
+        val _type: String = field.getType
+        val desc: String = field.getComment
         if (StringUtils.isNotEmpty(desc)) {
           fieldsArray += (name + SPACE + _type + SPACE + COMMENT + SPACE + SINGLE_MARK + desc + SINGLE_MARK)
         } else {
@@ -67,15 +67,20 @@ object ScalaDDLCreator extends DDLCreator with SQLConst with Logging {
       .append(SPACE)
       .append(ICEBERG_TYPE)
       .append(SPACE)
+
     if (partitions.nonEmpty) {
       val partitionArr = new ArrayBuffer[String]()
       partitions foreach { p =>
-        val name = p.getName
-        val _type = p.getType
-        if (StringUtils.isEmpty(name) || StringUtils.isEmpty(_type)) {
+        val name: String = p.getName
+        val func: String = p.getPartitionsFunc
+        if (StringUtils.isEmpty(name)) {
           throw MdqIllegalParamException(PARTITION_IS_NULL.getErrorDesc)
         }
-        partitionArr += (name + SPACE + _type)
+        if (func.equalsIgnoreCase(BUCKET) || func.equalsIgnoreCase(TRUNCATE)) {
+          partitionArr += (func + LEFT_PARENTHESES + p.getLength + COMMA + name + RIGHT_PARENTHESES)
+        } else {
+          partitionArr += (func + LEFT_PARENTHESES + name + RIGHT_PARENTHESES)
+        }
       }
       createTableCode
         .append(PARTITIONED_BY)
@@ -90,14 +95,18 @@ object ScalaDDLCreator extends DDLCreator with SQLConst with Logging {
     val tabPropArray = new ArrayBuffer[String]()
     if (lifecycle != null && lifecycle > 0) {
       tabPropArray += ("'data.ttl'=" + SINGLE_MARK + lifecycle + SINGLE_MARK)
-      val strings: Array[String] = tblPropInfo.split(COMMA)
-      strings.foreach(kv => {
-        val strings1: Array[String] = kv.split(EQ)
-        tabPropArray += (SINGLE_MARK + strings1.apply(0) + SINGLE_MARK + EQ + SINGLE_MARK + strings1
-          .apply(1) + SINGLE_MARK)
-      })
+      if (tblPropInfo != null && tblPropInfo.nonEmpty) {
+        val strings: Array[String] = tblPropInfo.split(COMMA)
+        strings.foreach(kv => {
+          val strings1: Array[String] = kv.split(EQ)
+          tabPropArray += (SINGLE_MARK + strings1.apply(
+            0
+          ) + SINGLE_MARK + EQ + SINGLE_MARK + strings1
+            .apply(1) + SINGLE_MARK)
+        })
+      }
     } else {
-      if (tblPropInfo.nonEmpty) {
+      if (tblPropInfo != null && tblPropInfo.nonEmpty) {
         val strings: Array[String] = tblPropInfo.split(COMMA)
         strings.foreach(kv => {
           val strings1: Array[String] = kv.split(EQ)
@@ -108,7 +117,7 @@ object ScalaDDLCreator extends DDLCreator with SQLConst with Logging {
         })
       }
     }
-    if (tabPropArray.nonEmpty) {
+    if (tabPropArray != null && tabPropArray.nonEmpty) {
       createTableCode
         .append(TBLPROPERTIES)
         .append(SPACE)
@@ -129,7 +138,7 @@ object ScalaDDLCreator extends DDLCreator with SQLConst with Logging {
     }
     createTableCode.append(MARKS)
     createTableCode.append(RIGHT_PARENTHESES)
-    val finalCode = createTableCode.toString()
+    val finalCode: String = createTableCode.toString()
     logger.info(s"End to create ddl code, code is $finalCode")
     finalCode
   }
