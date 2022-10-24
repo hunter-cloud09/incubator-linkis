@@ -31,6 +31,7 @@ import org.apache.linkis.manager.engineplugin.jdbc.exception.JDBCParamsIllegalEx
 
 import org.apache.commons.lang3.StringUtils
 
+import java.text.MessageFormat
 import java.util
 
 import scala.collection.JavaConverters._
@@ -69,14 +70,14 @@ object JDBCMultiDatasourceParser extends Logging {
     if (strObjIsBlank(dataSource)) {
       throw JDBCParamsIllegalException(
         DATA_SOURCE_INFO_NOT_FOUND.getErrorCode,
-        DATA_SOURCE_INFO_NOT_FOUND.getErrorDesc.concat(" ").concat(s"[$datasourceName]")
+        MessageFormat.format(DATA_SOURCE_INFO_NOT_FOUND.getErrorDesc, datasourceName)
       )
     }
 
     if (dataSource.getPublishedVersionId == null || dataSource.getPublishedVersionId <= 0) {
       throw JDBCParamsIllegalException(
         DATA_SOURCE_NOT_PUBLISHED.getErrorCode,
-        DATA_SOURCE_NOT_PUBLISHED.getErrorDesc.concat(" ").concat(s"[$datasourceName]")
+        MessageFormat.format(DATA_SOURCE_NOT_PUBLISHED.getErrorDesc, datasourceName)
       )
     }
 
@@ -89,7 +90,7 @@ object JDBCMultiDatasourceParser extends Logging {
     if (dataSource.isExpire) {
       throw JDBCParamsIllegalException(
         DATA_SOURCE_EXPIRED.getErrorCode,
-        DATA_SOURCE_EXPIRED.getErrorDesc.concat(" ").concat(s"[$datasourceName]")
+        MessageFormat.format(DATA_SOURCE_EXPIRED.getErrorDesc, datasourceName)
       )
     }
 
@@ -235,10 +236,9 @@ object JDBCMultiDatasourceParser extends Logging {
       case _ =>
         throw JDBCParamsIllegalException(
           UNSUPPORTED_AUTHENTICATION_TYPE.getErrorCode,
-          UNSUPPORTED_AUTHENTICATION_TYPE.getErrorDesc
-            .concat(" ")
-            .concat(s"${authType.getAuthType}")
+          MessageFormat.format(UNSUPPORTED_AUTHENTICATION_TYPE.getErrorDesc, authType.getAuthType)
         )
+
     }
     dsConnInfo.put(JDBCEngineConnConstant.JDBC_AUTH_TYPE, authType.getAuthType)
     dsConnInfo
