@@ -401,8 +401,8 @@ class YarnResource(
 
   override def toJson: String =
     s"""{"queueName":"$queueName","queueMemory":"${ByteTimeUtils.bytesToString(
-        queueMemory
-      )}", "queueCpu":$queueCores, "instance":$queueInstances}"""
+      queueMemory
+    )}", "queueCpu":$queueCores, "instance":$queueInstances}"""
 
   override def toString: String =
     s"Queue name(队列名)：$queueName，Queue memory(队列内存)：${ByteTimeUtils.bytesToString(queueMemory)}，Queue core number(队列核数)：$queueCores, Number of queue instances(队列实例数)：${queueInstances}"
