@@ -21,9 +21,11 @@ import org.apache.linkis.common.utils.Logging
 import org.apache.linkis.metadata.domain.mdq.bo.{MdqTableBO, MdqTableFieldsInfoBO}
 import org.apache.linkis.metadata.errorcode.LinkisMetadataErrorCodeSummary.PARTITION_IS_NULL
 import org.apache.linkis.metadata.exception.MdqIllegalParamException
+
 import org.apache.commons.lang3.StringUtils
 
 import java.util
+
 import scala.collection.JavaConverters._
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
