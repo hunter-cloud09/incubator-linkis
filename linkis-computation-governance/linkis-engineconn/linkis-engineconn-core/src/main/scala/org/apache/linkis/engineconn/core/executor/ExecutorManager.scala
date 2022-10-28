@@ -28,10 +28,7 @@ import org.apache.linkis.engineconn.executor.conf.EngineConnExecutorConfiguratio
 import org.apache.linkis.engineconn.executor.entity.{Executor, LabelExecutor, SensibleExecutor}
 import org.apache.linkis.manager.engineplugin.common.EngineConnPlugin
 import org.apache.linkis.manager.engineplugin.common.creation._
-import org.apache.linkis.manager.engineplugin.common.exception.{
-  EngineConnPluginErrorCode,
-  EngineConnPluginErrorException
-}
+import org.apache.linkis.manager.engineplugin.common.exception.EngineConnPluginErrorException
 import org.apache.linkis.manager.engineplugin.errorcode.EngineconnCoreErrorCodeSummary._
 import org.apache.linkis.manager.label.entity.Label
 import org.apache.linkis.manager.label.utils.LabelUtil
@@ -80,10 +77,10 @@ class LabelExecutorManagerImpl extends LabelExecutorManager with Logging {
 
   protected val (factories, defaultFactory): (Array[ExecutorFactory], ExecutorFactory) =
     engineConnPlugin.getEngineConnFactory match {
-      case engineConnFactory: SingleExecutorEngineConnFactory =>
-        (Array.empty, engineConnFactory)
       case engineConnFactory: SingleLabelExecutorEngineConnFactory =>
         (Array(engineConnFactory), engineConnFactory)
+      case engineConnFactory: SingleExecutorEngineConnFactory =>
+        (Array.empty, engineConnFactory)
       case engineConnFactory: MultiExecutorEngineConnFactory =>
         (engineConnFactory.getExecutorFactories, engineConnFactory.getDefaultExecutorFactory)
       case engineConnFactory =>
