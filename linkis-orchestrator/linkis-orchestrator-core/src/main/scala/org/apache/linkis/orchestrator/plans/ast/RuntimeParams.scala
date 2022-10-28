@@ -97,9 +97,7 @@ class RuntimeParamsImpl(
   override def getJobs: util.Map[String, AnyRef] = jobs
 
   override def getMap(key: String): util.Map[String, AnyRef] = runtimeMap.get(key) match {
-    case map: util.Map[String, AnyRef] => map
-    case map: util.Map[String, Any] => map.asInstanceOf[util.Map[String, AnyRef]]
-    case map: util.Map[String, Object] => map
+    case map: util.Map[_, _] => map.asInstanceOf[util.Map[String, AnyRef]]
     case _ => new util.HashMap[String, AnyRef]
   }
 

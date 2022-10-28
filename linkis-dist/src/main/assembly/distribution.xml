@@ -297,7 +297,7 @@
     <dependencySets>
         <dependencySet>
             <outputDirectory>linkis-package/lib/linkis-commons/public-module/</outputDirectory>
-            <useProjectArtifact>true</useProjectArtifact>
+            <useProjectArtifact>false</useProjectArtifact>
             <useTransitiveDependencies>true</useTransitiveDependencies>
             <unpack>false</unpack>
             <useStrictFiltering>false</useStrictFiltering>
