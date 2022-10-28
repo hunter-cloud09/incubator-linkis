@@ -94,7 +94,6 @@
       <groupId>org.apache.thrift</groupId>
       <artifactId>libthrift</artifactId>
       <version>0.15.0</version>
-      <type>pom</type>
     </dependency>
 
     <dependency>
