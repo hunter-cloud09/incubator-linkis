@@ -15,12 +15,8 @@
  * limitations under the License.
 */
 
-SET @PRESTO_LABEL="presto-0.234";
 SET @IO_FILE_LABEL="io_file-1.0";
 
-
-SET @PRESTO_ALL=CONCAT('*-*,',@PRESTO_LABEL);
-SET @PRESTO_IDE=CONCAT('*-IDE,',@PRESTO_LABEL);
 
 SET @IO_FILE_ALL=CONCAT('*-*,',@IO_FILE_LABEL);
 SET @IO_FILE_IDE=CONCAT('*-IDE,',@IO_FILE_LABEL);
