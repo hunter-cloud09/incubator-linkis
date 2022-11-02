@@ -24,10 +24,11 @@
     <relativePath>../../../../../pom.xml</relativePath>
   </parent>
 
-  <artifactId>linkis-metadata-query-service-mysql</artifactId>
+  <artifactId>linkis-metadata-query-service-jdbc</artifactId>
 
   <properties>
     <postgresql.version>42.3.7</postgresql.version>
+    <clickhouse.version>0.3.2-patch11</clickhouse.version>
     <dm8-jdbc.version>8.1.1.49</dm8-jdbc.version>
     <kingbase8.version>8</kingbase8.version>
   </properties>
@@ -55,11 +56,25 @@
         </exclusion>
       </exclusions>
     </dependency>
+
+    <dependency>
+      <groupId>com.clickhouse</groupId>
+      <artifactId>clickhouse-jdbc</artifactId>
+      <version>${clickhouse.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>${postgresql.version}</version>
     </dependency>
+
     <dependency>
       <groupId>com.oracle.database.jdbc</groupId>
       <artifactId>ojdbc8</artifactId>
@@ -107,6 +122,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.2.0</version>
         <inherited>false</inherited>
         <configuration>
           <skipAssembly>false</skipAssembly>

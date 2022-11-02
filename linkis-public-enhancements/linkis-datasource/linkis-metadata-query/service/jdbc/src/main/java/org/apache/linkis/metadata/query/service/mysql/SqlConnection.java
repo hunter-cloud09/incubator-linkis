@@ -15,31 +15,37 @@
  * limitations under the License.
  */
 
-package org.apache.linkis.metadata.query.service.oracle;
+package org.apache.linkis.metadata.query.service.mysql;
 
 import org.apache.linkis.common.conf.CommonVars;
 import org.apache.linkis.metadata.query.common.domain.MetaColumnInfo;
 
-import org.apache.commons.lang.StringUtils;
-
 import java.io.Closeable;
 import java.io.IOException;
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SqlConnection implements Closeable {
+
   private static final Logger LOG = LoggerFactory.getLogger(SqlConnection.class);
 
   private static final CommonVars<String> SQL_DRIVER_CLASS =
-      CommonVars.apply(
-          "wds.linkis.server.mdm.service.oracle.driver", "oracle.jdbc.driver.OracleDriver");
+      CommonVars.apply("wds.linkis.server.mdm.service.sql.driver", "com.mysql.jdbc.Driver");
 
   private static final CommonVars<String> SQL_CONNECT_URL =
-      CommonVars.apply("wds.linkis.server.mdm.service.oracle.url", "jdbc:oracle:thin:@%s:%s:%s");
+      CommonVars.apply("wds.linkis.server.mdm.service.sql.url", "jdbc:mysql://%s:%s/%s");
+
+  private static final CommonVars<Integer> SQL_CONNECT_TIMEOUT =
+      CommonVars.apply("wds.linkis.server.mdm.service.sql.connect.timeout", 3000);
+
+  private static final CommonVars<Integer> SQL_SOCKET_TIMEOUT =
+      CommonVars.apply("wds.linkis.server.mdm.service.sql.socket.timeout", 6000);
 
   private Connection conn;
 
@@ -66,11 +72,9 @@ public class SqlConnection implements Closeable {
     ResultSet rs = null;
     try {
       stmt = conn.createStatement();
-      rs =
-          stmt.executeQuery(
-              "select username from sys.dba_users WHERE default_tablespace not in ('SYSTEM','SYSAUX') and ACCOUNT_STATUS = 'OPEN'\n");
+      rs = stmt.executeQuery("SHOW DATABASES");
       while (rs.next()) {
-        dataBaseName.add(rs.getString("username"));
+        dataBaseName.add(rs.getString(1));
       }
     } finally {
       closeResource(null, stmt, rs);
@@ -78,17 +82,15 @@ public class SqlConnection implements Closeable {
     return dataBaseName;
   }
 
-  public List<String> getAllTables(String schemaname) throws SQLException {
+  public List<String> getAllTables(String database) throws SQLException {
     List<String> tableNames = new ArrayList<>();
     Statement stmt = null;
     ResultSet rs = null;
     try {
       stmt = conn.createStatement();
-      rs =
-          stmt.executeQuery(
-              "SELECT table_name FROM sys.dba_tables WHERE owner = '" + schemaname + "'");
+      rs = stmt.executeQuery("SHOW TABLES FROM `" + database + "`");
       while (rs.next()) {
-        tableNames.add(rs.getString("TABLE_NAME"));
+        tableNames.add(rs.getString(1));
       }
       return tableNames;
     } finally {
@@ -96,17 +98,15 @@ public class SqlConnection implements Closeable {
     }
   }
 
-  public List<MetaColumnInfo> getColumns(String schemaname, String table)
+  public List<MetaColumnInfo> getColumns(String database, String table)
       throws SQLException, ClassNotFoundException {
     List<MetaColumnInfo> columns = new ArrayList<>();
-    String columnSql = "SELECT * FROM " + schemaname + "." + table + " WHERE 1 = 2";
+    String columnSql = "SELECT * FROM `" + database + "`.`" + table + "` WHERE 1 = 2";
     PreparedStatement ps = null;
     ResultSet rs = null;
-    ResultSetMetaData meta;
+    ResultSetMetaData meta = null;
     try {
-      List<String> primaryKeys =
-          getPrimaryKeys(/*getDBConnection(connectMessage, schemaname),  */ table);
-      Map<String, String> columnCommentMap = getColumnComment(schemaname, table);
+      List<String> primaryKeys = getPrimaryKeys(getDBConnection(connectMessage, database), table);
       ps = conn.prepareStatement(columnSql);
       rs = ps.executeQuery();
       meta = rs.getMetaData();
@@ -114,19 +114,11 @@ public class SqlConnection implements Closeable {
       for (int i = 1; i < columnCount + 1; i++) {
         MetaColumnInfo info = new MetaColumnInfo();
         info.setIndex(i);
-        info.setLength(meta.getColumnDisplaySize(i));
         info.setName(meta.getColumnName(i));
         info.setType(meta.getColumnTypeName(i));
         if (primaryKeys.contains(meta.getColumnName(i))) {
           info.setPrimaryKey(true);
         }
-        String colComment = columnCommentMap.get(meta.getColumnName(i));
-        if (StringUtils.isNotBlank(colComment)) {
-          info.setColComment(colComment);
-        } else {
-          info.setColComment(StringUtils.EMPTY);
-        }
-
         columns.add(info);
       }
     } finally {
@@ -136,40 +128,28 @@ public class SqlConnection implements Closeable {
   }
 
   /**
-   * Get primary keys // * @param connection connection
+   * Get primary keys
    *
+   * @param connection connection
    * @param table table name
    * @return
    * @throws SQLException
    */
-  private List<String> getPrimaryKeys(
-      /*Connection connection, */ String table) throws SQLException {
+  private List<String> getPrimaryKeys(Connection connection, String table) throws SQLException {
     ResultSet rs = null;
     List<String> primaryKeys = new ArrayList<>();
-    DatabaseMetaData dbMeta = conn.getMetaData();
-    rs = dbMeta.getPrimaryKeys(null, null, table);
-    while (rs.next()) {
-      primaryKeys.add(rs.getString("column_name"));
+    try {
+      DatabaseMetaData dbMeta = connection.getMetaData();
+      rs = dbMeta.getPrimaryKeys(null, null, table);
+      while (rs.next()) {
+        primaryKeys.add(rs.getString("column_name"));
+      }
+      return primaryKeys;
+    } finally {
+      if (null != rs) {
+        closeResource(connection, null, rs);
+      }
     }
-    return primaryKeys;
-  }
-  /**
-   * Get Column Comment
-   *
-   * @param table table name
-   * @return
-   * @throws SQLException
-   */
-  private Map<String, String> getColumnComment(String schema, String table) throws SQLException {
-    ResultSet rs = null;
-    Map<String, String> columnComment = new HashMap();
-
-    DatabaseMetaData dbMeta = conn.getMetaData();
-    rs = dbMeta.getColumns(null, schema, table, "%");
-    while (rs.next()) {
-      columnComment.put(rs.getString("COlUMN_NAME"), rs.getString("REMARKS"));
-    }
-    return columnComment;
   }
 
   /**
@@ -219,11 +199,7 @@ public class SqlConnection implements Closeable {
     if (!connectMessage.extraParams.isEmpty()) {
       url += "?" + extraParamString;
     }
-    Properties prop = new Properties();
-    prop.put("user", connectMessage.username);
-    prop.put("password", connectMessage.password);
-    prop.put("remarksReporting", "true");
-    return DriverManager.getConnection(url, prop);
+    return DriverManager.getConnection(url, connectMessage.username, connectMessage.password);
   }
 
   /** Connect message */
@@ -249,6 +225,8 @@ public class SqlConnection implements Closeable {
       this.username = username;
       this.password = password;
       this.extraParams = extraParams;
+      this.extraParams.put("connectTimeout", SQL_CONNECT_TIMEOUT.getValue());
+      this.extraParams.put("socketTimeout", SQL_SOCKET_TIMEOUT.getValue());
     }
   }
 }
