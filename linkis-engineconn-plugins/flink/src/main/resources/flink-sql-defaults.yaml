@@ -71,8 +71,7 @@ functions: [] # empty list
 
 # Define catalogs here.
 
-catalogs: [] # empty list
-# A typical catalog definition looks like:
+catalogs:
   - name: ldp_hive
     type: hive
     hive-conf-dir: /ldp/etc/hive
@@ -83,6 +82,12 @@ catalogs: [] # empty list
     hive-conf-dir: /ldp/etc/hive
     clients: 5
     property-version: 1
+
+# A typical catalog definition looks like:
+#  - name: myhive
+#    type: hive
+#    hive-conf-dir: /opt/hive_conf/
+#    default-database: ...
 
 #==============================================================================
 # Modules
