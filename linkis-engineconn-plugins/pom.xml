@@ -40,6 +40,7 @@
     <module>trino</module>
     <module>elasticsearch</module>
     <module>sqoop</module>
+    <module>seatunnel</module>
   </modules>
 
 </project>

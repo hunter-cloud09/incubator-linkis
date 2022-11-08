@@ -470,6 +470,9 @@ scala-reflect-2.12.17.jar
 scala-xml_2.12-2.1.0.jar
 scalap-2.12.17.jar
 scopt_2.12-3.5.0.jar
+seatunnel-core-flink-2.1.2.jar
+seatunnel-core-flink-sql-2.1.2.jar
+seatunnel-core-spark-2.1.2.jar
 security-0.191.jar
 security-0.193.jar
 servo-core-0.12.21.jar
@@ -575,6 +578,7 @@ websocket-common-9.4.48.v20220622.jar
 websocket-server-9.4.48.v20220622.jar
 websocket-servlet-9.4.48.v20220622.jar
 woodstox-core-6.4.0.jar
+xml-apis-1.4.01.jar
 xmlbeans-5.1.1.jar
 xstream-1.4.19.jar
 xz-1.5.jar
