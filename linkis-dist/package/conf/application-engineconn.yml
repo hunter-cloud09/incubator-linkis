@@ -12,7 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
+spring:
+  application:
+    name: linkis-cg-engineconn
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+      file-size-threshold: 50MB
 eureka:
   instance:
     # prefer-ip-address: true
@@ -39,18 +46,3 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: countSql
-
-spring:
-  servlet:
-    multipart:
-      max-file-size: 500MB
-      max-request-size: 500MB
-      file-size-threshold: 50MB
-#ribbon:
-#  ReadTimeout: 10000
-#  ConnectTimeout: 10000
-
-##disable  kinif4j.production when you want to use apidoc during development
-knife4j:
-  enable: true
-  production: true

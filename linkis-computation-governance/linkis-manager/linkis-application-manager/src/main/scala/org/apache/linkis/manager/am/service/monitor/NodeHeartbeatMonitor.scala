@@ -160,7 +160,7 @@ class NodeHeartbeatMonitor extends ManagerMonitor with Logging {
         if (null == engineNode.getNodeStatus) {
           if (!existingEngineInstances.contains(engineNode.getServiceInstance) && engineIsStarted) {
             logger.warn(
-              s"Failed to find instance ${engineNode.getServiceInstance} from eureka prepare to kill, engineIsStarted"
+              s"Failed to find instance ${engineNode.getServiceInstance} from Service Registry prepare to kill, engineIsStarted"
             )
             clearECSet.add(engineNode.getServiceInstance)
           }
@@ -200,7 +200,7 @@ class NodeHeartbeatMonitor extends ManagerMonitor with Logging {
         val isExistingECMInstances = Sender.getInstances(ecmName).contains(ecm.getServiceInstance)
         if (!isExistingECMInstances && isUpdateOverdue) {
           logger.warn(
-            s"Failed to find ecm instance ${ecm.getServiceInstance} from eureka Registry to kill"
+            s"Failed to find ecm instance ${ecm.getServiceInstance} from Service Registry to kill"
           )
           Utils.tryAndWarnMsg(triggerEMSuicide(ecm.getServiceInstance))(
             s"ecm ${ecm.getServiceInstance} clear failed"

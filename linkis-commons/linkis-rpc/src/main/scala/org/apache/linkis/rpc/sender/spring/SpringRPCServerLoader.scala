@@ -15,34 +15,35 @@
  * limitations under the License.
  */
 
-package org.apache.linkis.rpc.sender.eureka
+package org.apache.linkis.rpc.sender.spring
 
 import org.apache.linkis.common.ServiceInstance
-import org.apache.linkis.common.utils.Utils
 import org.apache.linkis.rpc.conf.RPCConfiguration
 import org.apache.linkis.rpc.interceptor.AbstractRPCServerLoader
-
-import org.springframework.cloud.netflix.eureka.EurekaServiceInstance
 
 import java.util.Locale
 
 import scala.concurrent.duration.Duration
 
-class EurekaRPCServerLoader extends AbstractRPCServerLoader {
+import org.slf4j.LoggerFactory
 
-  override def refreshAllServers(): Unit =
-    Utils.tryAndWarn(EurekaClientRefreshUtils().refreshEurekaClient())
+class SpringRPCServerLoader extends AbstractRPCServerLoader {
+
+  private val logger = LoggerFactory.getLogger(classOf[SpringRPCServerLoader])
+
+  override def refreshAllServers(): Unit = {}
 
   override val refreshMaxWaitTime: Duration =
     RPCConfiguration.BDP_RPC_EUREKA_SERVICE_REFRESH_MAX_WAIT_TIME.getValue.toDuration
 
-  override def getDWCServiceInstance(serviceInstance: SpringCloudServiceInstance): ServiceInstance =
-    serviceInstance match {
-      case instance: EurekaServiceInstance =>
-        val applicationName = instance.getInstanceInfo.getAppName
-        val instanceId = instance.getInstanceInfo.getInstanceId
-        ServiceInstance(applicationName, getInstance(applicationName, instanceId))
-    }
+  override def getDWCServiceInstance(
+      serviceInstance: SpringCloudServiceInstance
+  ): ServiceInstance = {
+    val applicationName = serviceInstance.getServiceId
+    val instanceId = serviceInstance.getInstanceId
+    logger.info("service name: {}, instance id: {}", applicationName, instanceId)
+    ServiceInstance(applicationName, getInstance(applicationName, instanceId))
+  }
 
   private[rpc] def getInstance(applicationName: String, instanceId: String): String =
     if (
