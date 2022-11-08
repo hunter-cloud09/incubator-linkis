@@ -25,11 +25,7 @@ import java.util.Locale
 
 import scala.concurrent.duration.Duration
 
-import org.slf4j.LoggerFactory
-
 class SpringRPCServerLoader extends AbstractRPCServerLoader {
-
-  private val logger = LoggerFactory.getLogger(classOf[SpringRPCServerLoader])
 
   override def refreshAllServers(): Unit = {}
 
@@ -41,7 +37,7 @@ class SpringRPCServerLoader extends AbstractRPCServerLoader {
   ): ServiceInstance = {
     val applicationName = serviceInstance.getServiceId
     val instanceId = serviceInstance.getInstanceId
-    logger.info("service name: {}, instance id: {}", applicationName, instanceId)
+    logger.info("service name: {}, instance id: {}", applicationName: Any, instanceId: Any)
     ServiceInstance(applicationName, getInstance(applicationName, instanceId))
   }
 

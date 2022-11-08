@@ -111,7 +111,7 @@ class ECTaskEntranceInfoAccess extends ConnectionInfoAccess with Logging {
   ): ServiceInstance = {
     val applicationName = serviceInstance.getServiceId
     val instanceId = serviceInstance.getInstanceId
-    logger.info("service name: {}, instance id: {}", applicationName, instanceId)
+    logger.info("service name: {}, instance id: {}", applicationName: Any, instanceId: Any)
     ServiceInstance(
       applicationName.toLowerCase(Locale.getDefault),
       getInstance(applicationName, instanceId)
