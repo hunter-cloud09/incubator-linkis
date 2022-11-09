@@ -50,6 +50,11 @@
       </exclusions>
     </dependency>
 
+    <dependency>
+      <groupId>com.sun.jersey.contribs</groupId>
+      <artifactId>jersey-apache-client4</artifactId>
+    </dependency>
+
   </dependencies>
   <build>
     <finalName>${project.artifactId}-${project.version}</finalName>
