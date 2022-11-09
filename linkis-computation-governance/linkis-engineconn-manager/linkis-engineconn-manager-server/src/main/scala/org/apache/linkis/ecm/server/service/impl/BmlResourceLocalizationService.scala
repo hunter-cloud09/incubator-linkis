@@ -103,7 +103,7 @@ class BmlResourceLocalizationService extends ResourceLocalizationService with Lo
                 hostName = springEnv.getProperty("spring.cloud.client.ip-address")
                 logger.info("hostName:" + hostName)
                 logger.info(
-                  "using ip address replace hostname,beacause eureka.instance.prefer-ip-address:" + eurekaPreferIp
+                  "using ip address replace hostname, because eureka.instance.prefer-ip-address:" + eurekaPreferIp
                 )
               }
               hostName
@@ -113,8 +113,7 @@ class BmlResourceLocalizationService extends ResourceLocalizationService with Lo
                 "server.port"
               )
             override val linkDirs: mutable.HashMap[String, String] = linkDirsP
-            override val properties: Map[String, String] =
-              Map("eureka.client.serviceUrl.defaultZone" -> ECM_EUREKA_DEFAULTZONE)
+            override val properties: Map[String, String] = Map()
           }
         )
       case _ =>

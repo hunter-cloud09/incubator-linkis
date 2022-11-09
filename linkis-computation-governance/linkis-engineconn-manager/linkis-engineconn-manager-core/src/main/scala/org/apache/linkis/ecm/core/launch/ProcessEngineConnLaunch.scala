@@ -47,7 +47,6 @@ trait ProcessEngineConnLaunch extends EngineConnLaunch with Logging {
 
   private var request: ProcessEngineConnLaunchRequest = _
   private var engineConnManagerEnv: EngineConnManagerEnv = _
-  private var discoveryMsgGenerator: DiscoveryMsgGenerator = _
   private var processBuilder: ProcessEngineCommandBuilder = _
   private var preparedExecFile: String = _
   private var process: Process = _
@@ -75,9 +74,6 @@ trait ProcessEngineConnLaunch extends EngineConnLaunch with Logging {
     this.engineConnManagerEnv = engineConnManagerEnv
 
   override def getEngineConnManagerEnv(): EngineConnManagerEnv = this.engineConnManagerEnv
-
-  def setDiscoveryMsgGenerator(discoveryMsgGenerator: DiscoveryMsgGenerator): Unit =
-    this.discoveryMsgGenerator = discoveryMsgGenerator
 
   def getEngineConnLaunchRequest: EngineConnLaunchRequest = request
 
@@ -169,16 +165,13 @@ trait ProcessEngineConnLaunch extends EngineConnLaunch with Logging {
     engineConnPort = PortUtils
       .findAvailPortByRange(GovernanceCommonConf.ENGINE_CONN_PORT_RANGE.getValue)
       .toString
-    var springConf = Map(
-      "server.port" -> engineConnPort,
-      "spring.profiles.active" -> "engineconn"
-    ) ++: discoveryMsgGenerator.generate(engineConnManagerEnv).asScala
+    var springConf = Map("server.port" -> engineConnPort, "spring.profiles.active" -> "engineconn")
 
     request.creationDesc.properties.asScala.filter(_._1.startsWith("spring.")).foreach {
       case (k, v) =>
-        springConf = springConf += (k -> v)
+        springConf = springConf + (k -> v)
     }
-    arguments.addSpringConf(springConf.toMap)
+    arguments.addSpringConf(springConf)
     var engineConnConf = Map("ticketId" -> request.ticketId, "user" -> request.user)
     engineConnConf = engineConnConf ++: request.labels.asScala
       .map(l => EngineConnArgumentsParser.LABEL_PREFIX + l.getLabelKey -> l.getStringValue)
