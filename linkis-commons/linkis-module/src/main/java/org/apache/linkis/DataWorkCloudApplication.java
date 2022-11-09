@@ -156,7 +156,7 @@ public class DataWorkCloudApplication extends SpringBootServletInitializer {
     if (eurekaPreferIp) {
       hostName = applicationContext.getEnvironment().getProperty("spring.cloud.client.ip-address");
       logger.info(
-          "using ip address replace hostname,beacause eureka.instance.prefer-ip-address:"
+          "using ip address replace hostname, because eureka.instance.prefer-ip-address:"
               + eurekaPreferIp);
     }
     serviceInstance = new ServiceInstance();

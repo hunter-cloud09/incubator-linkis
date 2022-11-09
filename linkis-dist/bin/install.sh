@@ -280,10 +280,7 @@ if test -z "$EUREKA_INSTALL_IP"
 then
   export EUREKA_INSTALL_IP=$SERVER_IP
 fi
-if [ "true" != "$EUREKA_PREFER_IP" ]
-then
-  export EUREKA_HOSTNAME=$EUREKA_INSTALL_IP
-fi
+
 export EUREKA_URL=http://$EUREKA_INSTALL_IP:$EUREKA_PORT/eureka/
 
 if test -z "$GATEWAY_INSTALL_IP"
@@ -297,6 +294,19 @@ sed -i ${txt}  "s#port:.*#port: $EUREKA_PORT#g" $LINKIS_HOME/conf/application-eu
 
 ##server application.yml
 sed -i ${txt}  "s#defaultZone:.*#defaultZone: $EUREKA_URL#g" $LINKIS_HOME/conf/application-linkis.yml
+sed -i ${txt}  "s#defaultZone:.*#defaultZone: $EUREKA_URL#g" $LINKIS_HOME/conf/application-engineconn.yml
+
+if [ "$EUREKA_PREFER_IP" == "true" ]; then
+  sed -i ${txt}  "s/# prefer-ip-address:/prefer-ip-address:/g" $LINKIS_HOME/conf/application-eureka.yml
+
+  sed -i ${txt}  "s/# prefer-ip-address:/prefer-ip-address:/g" $LINKIS_HOME/conf/application-linkis.yml
+  sed -i ${txt}  "s/# instance-id:/instance-id:/g" $LINKIS_HOME/conf/application-linkis.yml
+
+  sed -i ${txt}  "s/# prefer-ip-address:/prefer-ip-address:/g" $LINKIS_HOME/conf/application-engineconn.yml
+  sed -i ${txt}  "s/# instance-id:/instance-id:/g" $LINKIS_HOME/conf/application-linkis.yml
+fi
+
+
 
 echo "update conf $common_conf"
 sed -i ${txt}  "s#wds.linkis.server.version.*#wds.linkis.server.version=$LINKIS_SERVER_VERSION#g" $common_conf

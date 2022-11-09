@@ -23,6 +23,8 @@ server:
 
 eureka:
   instance:
+    # prefer-ip-address: true
+    hostname: ${spring.cloud.client.ip-address}
     metadata-map:
       prometheus.path: ${prometheus.path:/actuator/prometheus}
   client:
