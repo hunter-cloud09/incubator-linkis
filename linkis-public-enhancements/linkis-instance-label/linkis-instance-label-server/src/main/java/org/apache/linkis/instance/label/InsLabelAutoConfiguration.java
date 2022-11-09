@@ -51,6 +51,7 @@ public class InsLabelAutoConfiguration {
   }
 
   @ConditionalOnMissingBean({InsLabelServiceAdapter.class})
+  @Bean
   public InsLabelServiceAdapter insLabelServiceAdapter(List<InsLabelAccessService> accessServices) {
     LOG.info("Discover instance label accessServices: [" + accessServices.size() + "]");
     InsLabelServiceAdapter insLabelServiceAdapter = new DefaultInsLabelServiceAdapter();
