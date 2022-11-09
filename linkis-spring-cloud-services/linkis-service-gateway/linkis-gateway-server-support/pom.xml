@@ -94,40 +94,15 @@
       <artifactId>jackson-databind</artifactId>
     </dependency>
 
-    <!-- https://mavenlibs.com/maven/dependency/com.webank.wedatasphere.dss/dss-gateway-support -->
-    <dependency>
-      <groupId>com.webank.wedatasphere.dss</groupId>
-      <artifactId>dss-gateway-support</artifactId>
-      <version>${dss.version}</version>
-    </dependency>
-
   </dependencies>
 
   <build>
     <finalName>${project.artifactId}-${project.version}</finalName>
-    <resources>
-      <resource>
-        <directory>${basedir}/src/main/resources</directory>
-      </resource>
-      <resource>
-        <directory>src/main/java</directory>
-        <includes>
-          <include>**/*.xml</include>
-        </includes>
-      </resource>
-      <resource>
-        <directory>src/main/scala</directory>
-        <includes>
-          <include>**/*.xml</include>
-        </includes>
-      </resource>
-    </resources>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-deploy-plugin</artifactId>
       </plugin>
-
       <plugin>
         <groupId>net.alchim31.maven</groupId>
         <artifactId>scala-maven-plugin</artifactId>
@@ -135,34 +110,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <inherited>false</inherited>
-        <configuration>
-          <skipAssembly>false</skipAssembly>
-          <finalName>out</finalName>
-          <appendAssemblyId>false</appendAssemblyId>
-          <attach>false</attach>
-          <descriptors>
-            <descriptor>/src/main/assembly/distribution.xml</descriptor>
-          </descriptors>
-        </configuration>
-        <executions>
-          <execution>
-            <id>make-assembly</id>
-            <goals>
-              <goal>single</goal>
-            </goals>
-            <phase>package</phase>
-            <configuration>
-              <descriptors>
-                <descriptor>/src/main/assembly/distribution.xml</descriptor>
-              </descriptors>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
