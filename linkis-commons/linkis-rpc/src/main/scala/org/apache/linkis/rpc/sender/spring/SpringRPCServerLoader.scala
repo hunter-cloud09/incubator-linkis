@@ -21,8 +21,6 @@ import org.apache.linkis.common.ServiceInstance
 import org.apache.linkis.rpc.conf.RPCConfiguration
 import org.apache.linkis.rpc.interceptor.AbstractRPCServerLoader
 
-import java.util.Locale
-
 import scala.concurrent.duration.Duration
 
 class SpringRPCServerLoader extends AbstractRPCServerLoader {
@@ -38,17 +36,10 @@ class SpringRPCServerLoader extends AbstractRPCServerLoader {
     val applicationName = serviceInstance.getServiceId
     val instanceId = serviceInstance.getInstanceId
     logger.info("service name: {}, instance id: {}", applicationName: Any, instanceId: Any)
-    ServiceInstance(applicationName, getInstance(applicationName, instanceId))
+    ServiceInstance(applicationName, getInstance(serviceInstance))
   }
 
-  private[rpc] def getInstance(applicationName: String, instanceId: String): String =
-    if (
-        instanceId
-          .toLowerCase(Locale.getDefault)
-          .indexOf(":" + applicationName.toLowerCase(Locale.getDefault) + ":") > 0
-    ) {
-      val instanceInfos = instanceId.split(":")
-      instanceInfos(0) + ":" + instanceInfos(2)
-    } else instanceId
+  private[rpc] def getInstance(serviceInstance: SpringCloudServiceInstance): String =
+    s"${serviceInstance.getHost}:${serviceInstance.getPort}"
 
 }

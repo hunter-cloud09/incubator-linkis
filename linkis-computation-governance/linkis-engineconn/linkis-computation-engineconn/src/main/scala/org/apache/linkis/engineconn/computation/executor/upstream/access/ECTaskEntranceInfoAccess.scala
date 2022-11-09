@@ -112,21 +112,11 @@ class ECTaskEntranceInfoAccess extends ConnectionInfoAccess with Logging {
     val applicationName = serviceInstance.getServiceId
     val instanceId = serviceInstance.getInstanceId
     logger.info("service name: {}, instance id: {}", applicationName: Any, instanceId: Any)
-    ServiceInstance(
-      applicationName.toLowerCase(Locale.getDefault),
-      getInstance(applicationName, instanceId)
-    )
+    ServiceInstance(applicationName.toLowerCase(Locale.getDefault), getInstance(serviceInstance))
   }
 
-  private def getInstance(applicationName: String, instanceId: String): String =
-    if (
-        instanceId
-          .toLowerCase(Locale.getDefault)
-          .indexOf(applicationName.toLowerCase(Locale.getDefault)) > 0
-    ) {
-      val instanceInfos = instanceId.split(":")
-      instanceInfos(0) + ":" + instanceInfos(2)
-    } else instanceId
+  private def getInstance(serviceInstance: SpringCloudServiceInstance): String =
+    s"${serviceInstance.getHost}:${serviceInstance.getPort}"
 
   private def isConnectionAlive(
       instance: ServiceInstance,
