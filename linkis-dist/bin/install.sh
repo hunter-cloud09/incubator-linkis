@@ -417,6 +417,7 @@ then
   sed -i ${txt}  "s#\#wds.linkis.prometheus.enable.*#wds.linkis.prometheus.enable=true#g" $common_conf
   sed -i ${txt}  's#include: refresh,info.*#include: refresh,info,health,metrics,prometheus#g' $LINKIS_HOME/conf/application-linkis.yml
   sed -i ${txt}  's#include: refresh,info.*#include: refresh,info,health,metrics,prometheus#g' $LINKIS_HOME/conf/application-eureka.yml
+  sed -i ${txt}  's#include: refresh,info.*#include: refresh,info,health,metrics,prometheus#g' $LINKIS_HOME/conf/application-engineconn.yml
 fi
 
 echo "preveliges linkis command shells"
