@@ -97,13 +97,13 @@ class BmlResourceLocalizationService extends ResourceLocalizationService with Lo
             override val engineConnTempDirs: String = tmpDirs
             override val engineConnManagerHost: String = {
               var hostName = Utils.getComputerName
-              val eurekaPreferIp = Configuration.EUREKA_PREFER_IP
-              logger.info("eurekaPreferIp:" + eurekaPreferIp)
-              if (eurekaPreferIp) {
+              val preferIpAddress = Configuration.PREFER_IP_ADDRESS
+              logger.info("preferIpAddress:" + preferIpAddress)
+              if (preferIpAddress) {
                 hostName = springEnv.getProperty("spring.cloud.client.ip-address")
                 logger.info("hostName:" + hostName)
                 logger.info(
-                  "using ip address replace hostname, because eureka.instance.prefer-ip-address:" + eurekaPreferIp
+                  "using ip address replace hostname, because linkis.discovery.prefer-ip-address: true"
                 )
               }
               hostName

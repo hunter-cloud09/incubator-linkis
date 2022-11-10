@@ -151,17 +151,17 @@ public class InstanceRestful {
         return Message.ok("success").data("labels", labels);
     }
 
-    @ApiOperation(value = "listAllModifiableLabelKey", notes = "list all modifiable label key", response = Message.class)
+    @ApiOperation(value = "listAllModifiableLabelKey", response = Message.class)
     @RequestMapping(path = "/modifiableLabelKey", method = RequestMethod.GET)
     public Message listAllModifiableLabelKey(HttpServletRequest req) {
         Set<String> keyList = LabelUtils.listAllUserModifiableLabel();
         return Message.ok().data("keyList", keyList);
     }
 
-    @ApiOperation(value = "getEurekaURL", notes = "get eureka URL", response = Message.class)
-    @RequestMapping(path = "/eurekaURL", method = RequestMethod.GET)
-    public Message getEurekaURL(HttpServletRequest request) throws Exception {
-        String eurekaURL = insLabelService.getEurekaURL();
-        return Message.ok().data("url", eurekaURL);
+    @ApiOperation(value = "getServiceRegistryURL", response = Message.class)
+    @RequestMapping(path = "/serviceRegistryURL", method = RequestMethod.GET)
+    public Message getServiceRegistryURL(HttpServletRequest request) throws Exception {
+        String serviceRegistryURL = insLabelService.getServiceRegistryURL();
+        return Message.ok().data("url", serviceRegistryURL);
     }
 }

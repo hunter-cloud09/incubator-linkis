@@ -102,8 +102,8 @@ trait ProcessEngineConnLaunch extends EngineConnLaunch with Logging {
       case JAVA_HOME => putIfExists(JAVA_HOME)
       case RANDOM_PORT =>
         environment.put(RANDOM_PORT.toString, PortUtils.findAvailPort().toString)
-      case EUREKA_PREFER_IP =>
-        environment.put(EUREKA_PREFER_IP.toString, Configuration.EUREKA_PREFER_IP.toString)
+      case PREFER_IP_ADDRESS =>
+        environment.put(PREFER_IP_ADDRESS.toString, Configuration.PREFER_IP_ADDRESS.toString)
       case ENGINECONN_ENVKEYS =>
         environment.put(ENGINECONN_ENVKEYS.toString, GovernanceCommonConf.ENGINECONN_ENVKEYS)
       case _ =>

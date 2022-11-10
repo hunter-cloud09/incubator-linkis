@@ -47,7 +47,7 @@
           $t("message.linkis.find")
         }}</Button>
         <!-- 跳转 -->
-        <Button class="jump" type="primary" @click="handleTabsJump">{{ $t("message.linkis.eurekaRegisterCenter") }}</Button>
+        <Button class="jump" type="primary" @click="handleTabsJump">{{ $t("message.linkis.serviceRegistryCenter") }}</Button>
       </Col>
     </Row>
     <Table
@@ -256,7 +256,7 @@ export default {
     },
     //跳转到微服务
     handleTabsJump() {
-      api.fetch("/microservice/eurekaURL", "get").then((rst) => {
+      api.fetch("/microservice/serviceRegistryURL", "get").then((rst) => {
         window.open(rst.url, "_blank");
       });
     },
