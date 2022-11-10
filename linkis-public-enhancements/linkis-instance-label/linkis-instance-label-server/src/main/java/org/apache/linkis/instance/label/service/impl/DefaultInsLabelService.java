@@ -260,7 +260,7 @@ public class DefaultInsLabelService implements InsLabelAccessService {
     String hostname = uri.getHost();
     InetAddress address = InetAddress.getByName(hostname);
     if (InetAddresses.isInetAddress(hostname)) {
-      if(address.isLoopbackAddress()) {
+      if (address.isLoopbackAddress()) {
         return url.replace(hostname, Utils.getLocalHostname());
       } else {
         return url;
