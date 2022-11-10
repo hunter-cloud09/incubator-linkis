@@ -28,7 +28,7 @@ class SpringRPCServerLoader extends AbstractRPCServerLoader {
   override def refreshAllServers(): Unit = {}
 
   override val refreshMaxWaitTime: Duration =
-    RPCConfiguration.BDP_RPC_EUREKA_SERVICE_REFRESH_MAX_WAIT_TIME.getValue.toDuration
+    RPCConfiguration.BDP_RPC_SERVICE_REFRESH_MAX_WAIT_TIME.getValue.toDuration
 
   override def getDWCServiceInstance(
       serviceInstance: SpringCloudServiceInstance
