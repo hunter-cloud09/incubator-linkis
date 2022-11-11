@@ -37,7 +37,7 @@ public class MybatisConfiguration {
       CommonVars.apply("wds.linkis.server.mybatis.datasource.password", "");
   public static final CommonVars<String> BDP_SERVER_MYBATIS_DATASOURCE_DRIVER_CLASS_NAME =
       CommonVars.apply(
-          "wds.linkis.server.mybatis.datasource.driver-class-name", "com.mysql.jdbc.Driver");
+          "wds.linkis.server.mybatis.datasource.driver-class-name", "com.mysql.cj.jdbc.Driver");
   public static final CommonVars<Integer> BDP_SERVER_MYBATIS_DATASOURCE_INITIALSIZE =
       CommonVars.apply("wds.linkis.server.mybatis.datasource.initialSize", 1);
   public static final CommonVars<Integer> BDP_SERVER_MYBATIS_DATASOURCE_MINIDLE =

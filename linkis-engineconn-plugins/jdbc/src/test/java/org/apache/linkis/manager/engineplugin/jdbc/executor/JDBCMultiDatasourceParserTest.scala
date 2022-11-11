@@ -39,7 +39,7 @@ class JDBCMultiDatasourceParserTest {
     dbConnParams.put(JDBCEngineConnConstant.DS_JDBC_USERNAME, "username")
     dbConnParams.put(JDBCEngineConnConstant.DS_JDBC_PASSWORD, "password")
     dbConnParams.put(JDBCEngineConnConstant.DS_JDBC_DB_NAME, "dbName")
-    dbConnParams.put(JDBCEngineConnConstant.DS_JDBC_DRIVER, "com.mysql.jdbc.Driver")
+    dbConnParams.put(JDBCEngineConnConstant.DS_JDBC_DRIVER, "com.mysql.cj.jdbc.Driver")
     dbConnParams.put(JDBCEngineConnConstant.DS_JDBC_PARAMS, "{\"useSSL\": \"false\"}")
     dbConnParams.put(JDBCEngineConnConstant.DS_JDBC_ENABLE_KERBEROS, "false")
     dbConnParams.put(JDBCEngineConnConstant.DS_JDBC_KERBEROS_PRINCIPAL, "hadoop@com")
@@ -123,7 +123,7 @@ class JDBCMultiDatasourceParserTest {
     executorProperties.put(JDBCEngineConnConstant.JDBC_URL, "jdbc:mysql://localhost:3306/dbName?useSSL=false")
     executorProperties.put(JDBCEngineConnConstant.JDBC_USERNAME, "leo1")
     executorProperties.put(JDBCEngineConnConstant.JDBC_PASSWORD, "pwd2")
-    executorProperties.put(JDBCEngineConnConstant.JDBC_DRIVER, "com.mysql.jdbc.Driver")
+    executorProperties.put(JDBCEngineConnConstant.JDBC_DRIVER, "com.mysql.cj.jdbc.Driver")
     // engine console global config
     val globalConfig: util.Map[String, String] = new util.HashMap[String, String]()
     globalConfig.put(JDBCEngineConnConstant.JDBC_URL, "jdbc:mysql://127.0.0.1:3306/dbName?useSSL=false")

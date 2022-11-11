@@ -36,7 +36,7 @@ public class SqlConnection implements Closeable {
   private static final Logger LOG = LoggerFactory.getLogger(SqlConnection.class);
 
   private static final CommonVars<String> SQL_DRIVER_CLASS =
-      CommonVars.apply("wds.linkis.server.mdm.service.sql.driver", "com.mysql.jdbc.Driver");
+      CommonVars.apply("wds.linkis.server.mdm.service.sql.driver", "com.mysql.cj.jdbc.Driver");
 
   private static final CommonVars<String> SQL_CONNECT_URL =
       CommonVars.apply("wds.linkis.server.mdm.service.sql.url", "jdbc:mysql://%s:%s/%s");

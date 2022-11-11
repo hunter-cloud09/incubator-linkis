@@ -53,7 +53,7 @@ public class FlinkOnceJobTest {
             + "  'connector' = 'jdbc',\n"
             + "  'url' = 'jdbc:mysql://${ip}:port/${database}',\n"
             + " 'table-name' = '${tablename}',\n"
-            + "  'driver' = 'com.mysql.jdbc.Driver',\n"
+            + "  'driver' = 'com.mysql.cj.jdbc.Driver',\n"
             + "  'username' = '${username}',\n"
             + "  'password' = '${password}'\n"
             + ");\n"
