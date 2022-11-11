@@ -587,7 +587,6 @@ See licenses/ for text of these licenses.
     (Apache License, version 2.0) Apache ZooKeeper - Server (org.apache.zookeeper:zookeeper:3.4.6 - https://zookeeper.apache.org/)
     (Apache License, version 2.0) Apache twill (org.apache.twill:* - https://twill.apache.org/)
     (Apache License, version 2.0) Apache tephra (co.cask.tephra:* - https://tephra.apache.org/)
-    (Apache License, version 2.0) Apache Sqoop - Server (org.apache.sqoop:sqoop:1.4.6 - https://github.com/apache/sqoop/)
     (Apache License, version 2.0) bootstrap (com.facebook.airlift:bootstrap:0.191 - https://github.com/prestodb/airlift/bootstrap)
     (Apache License, version 2.0) Apache BVal :: bval-jsr (org.apache.bval:bval-jsr:2.0.0 - http://bval.apache.org/bval-jsr/)
     (Apache License, version 2.0) cglib-nodep (cglib:cglib-nodep:3.2.5 - https://github.com/cglib/cglib/cglib-nodep)

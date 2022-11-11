@@ -63,9 +63,6 @@ public class LabelCommonConfig {
   public static final CommonVars<String> FLINK_ENGINE_VERSION =
       CommonVars.apply("wds.linkis.flink.engine.version", "1.12.2");
 
-  public static final CommonVars<String> SQOOP_ENGINE_VERSION =
-      CommonVars.apply("wds.linkis.sqoop.engine.version", "1.4.6");
-
   public static final CommonVars<String> DATAX_ENGINE_VERSION =
       CommonVars.apply("wds.linkis.datax.engine.version", "3.0.0");
 

@@ -229,10 +229,7 @@ public class LinkisOnceSubmitValidator implements Validator {
           .append(System.lineSeparator());
       ok = false;
     }
-    if (StringUtils.isBlank((String) submitDesc.getExecutionMap().get(LinkisKeys.KEY_CODE))
-        && StringUtils.indexOfIgnoreCase(
-                (String) submitDesc.getLabelMap().get(LinkisKeys.KEY_ENGINETYPE), "sqoop")
-            == -1) {
+    if (StringUtils.isBlank((String) submitDesc.getExecutionMap().get(LinkisKeys.KEY_CODE))) {
       reasonSb
           .append(LinkisKeys.KEY_CODE)
           .append(" cannot be empty or blank")

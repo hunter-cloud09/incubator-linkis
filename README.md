@@ -67,7 +67,7 @@ Since the first release of Linkis in 2019, it has accumulated more than **700** 
 # Features
 
 - **Support for diverse underlying computation storage engines**  
-  - Currently supported computation/storage engines: Spark、Hive、Flink、Python、Pipeline、Sqoop、openLooKeng、Presto、ElasticSearch、JDBC, Shell, etc
+  - Currently supported computation/storage engines: Spark、Hive、Flink、Python、Pipeline、openLooKeng、Presto、ElasticSearch、JDBC, Shell, etc
   - Computation/storage engines to be supported: Trino (planned 1.3.1), SeaTunnel (planned 1.3.1), etc
   - Supported scripting languages: SparkSQL、HiveQL、Python、Shell、Pyspark、R、Scala and JDBC, etc
 
@@ -93,7 +93,6 @@ Since the first release of Linkis in 2019, it has accumulated more than **700** 
 |Flink |Flink >= 1.12.2, <br/>(default Apache Flink 1.12.2)|\>=1.0.3|No |Flink EngineConn, supports FlinkSQL code, also supports starting a new Yarn in the form of Flink Jar Application |
 |Pipeline|-|\>=1.0.3|No|Pipeline EngineConn, supports file import and export|
 |openLooKeng|openLooKeng >= 1.5.0, <br/>(default openLookEng 1.5.0)|\>=1.1.1|No|openLooKeng EngineConn, supports querying data virtualization engine with Sql openLooKeng|
-|Sqoop| Sqoop >= 1.4.6, <br/>(default Apache Sqoop 1.4.6)|\>=1.1.2|No|Sqoop EngineConn, support data migration tool Sqoop engine|
 |Presto|Presto >= 0.180, <br/>(default Presto 0.234)|\>=1.2.0|-|Presto EngineConn, supports Presto SQL code|
 |ElasticSearch|ElasticSearch >=6.0, <br/>(default ElasticSearch 7.6.2)|\>=1.2.0|-|ElasticSearch EngineConn, supports SQL and DSL code|
 |Impala|Impala >= 3.2.0, CDH >=6.3.0|ongoing|-|Impala EngineConn, supports Impala SQL code|

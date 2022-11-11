@@ -67,7 +67,7 @@ Linkis 自 2019 年开源发布以来，已累计积累了 700 多家试验企�
 ## 核心特点
 
 - **丰富的底层计算存储引擎支持**  
-  - **目前支持的计算存储引擎** Spark、Hive、Flink、Python、Pipeline、Sqoop、openLooKeng、Presto、ElasticSearch、JDBC 和 Shell 等  
+  - **目前支持的计算存储引擎** Spark、Hive、Flink、Python、Pipeline、openLooKeng、Presto、ElasticSearch、JDBC 和 Shell 等  
   - **正在支持中的计算存储引擎** Trino(计划 1.3.1)、SeaTunnel(计划 1.3.1) 等  
   - **支持的脚本语言** SparkSQL、HiveQL、Python、Shell、Pyspark、R、Scala 和 JDBC 等
 - **强大的计算治理能力** 基于 Orchestrator、Label Manager 和定制的 Spring Cloud Gateway 等服务，Linkis 能够提供基于多级标签的跨集群/跨 IDC 细粒度路由、负载均衡、多租户、流量控制、资源控制和编排策略 (如双活、主备等) 支持能力  
@@ -90,7 +90,6 @@ Linkis 自 2019 年开源发布以来，已累计积累了 700 多家试验企�
 |Flink |Flink >= 1.12.2, <br/>(默认 Apache Flink 1.12.2)|\>=1.0.3|否|Flink EngineConn， 支持 FlinkSQL 代码，也支持以 Flink Jar 形式启动一个新的 Yarn 应用程序|
 |Pipeline|-|\>=1.0.3|否|Pipeline EngineConn， 支持文件的导入和导出|
 |openLooKeng|openLooKeng >= 1.5.0, <br/>(默认 openLookEng 1.5.0)|\>=1.1.1|否|openLooKeng EngineConn， 支持用 Sql 查询数据虚拟化引擎 openLooKeng|
-|Sqoop| Sqoop >= 1.4.6, <br/>(默认 Apache Sqoop 1.4.6)|\>=1.1.2|否|Sqoop EngineConn， 支持 数据迁移工具 Sqoop 引擎|
 |Presto|Presto >= 0.180, <br/>(默认 Presto 0.234)|\>=1.2.0|否|Presto EngineConn， 支持 Presto SQL 代码|
 |ElasticSearch|ElasticSearch >=6.0, <br/>((默认 ElasticSearch 7.6.2)|\>=1.2.0|否|ElasticSearch EngineConn， 支持 SQL 和 DSL 代码|
 |Impala|Impala >= 3.2.0, CDH >=6.3.0|ongoing|-|Impala EngineConn，支持 Impala SQL 代码|

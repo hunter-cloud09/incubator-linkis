@@ -148,7 +148,7 @@ object EntranceConfiguration {
 
   val SHELL_WHITE_USAGE = CommonVars(
     "wds.linkis.shell.white.usage",
-    "sqoop,cd,ll,ls,echo,cat,tree,diff,who,grep,whoami,set,pwd,cut,file,head,less,if,while"
+    "cd,ll,ls,echo,cat,tree,diff,who,grep,whoami,set,pwd,cut,file,head,less,if,while"
   )
 
   val FLOW_EXECUTION_CREATOR = CommonVars("wds.linkis.entrance.flow.creator", "nodeexecution")

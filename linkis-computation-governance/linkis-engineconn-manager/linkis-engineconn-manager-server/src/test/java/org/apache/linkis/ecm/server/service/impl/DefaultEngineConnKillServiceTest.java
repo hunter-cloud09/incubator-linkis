@@ -38,7 +38,7 @@ public class DefaultEngineConnKillServiceTest {
   public void testParseYarnAppId() {
     String log =
         "2022-07-14 14:08:46.854 INFO  [Linkis-Default-Scheduler-Thread-1] org.apache.hadoop.mapreduce.Job 1294 submit - The url to track the job: http://hadoop:8088/proxy/application_1645869964061_2740/";
-    String regex = EngineConnConf.SQOOP_ENGINE_CONN_YARN_APP_ID_PARSE_REGEX().getValue();
+    String regex = EngineConnConf.HIVE_ENGINE_CONN_YARN_APP_ID_PARSE_REGEX().getValue();
     Pattern pattern = Pattern.compile(regex);
     Matcher mApp = pattern.matcher(log);
     if (mApp.find()) {

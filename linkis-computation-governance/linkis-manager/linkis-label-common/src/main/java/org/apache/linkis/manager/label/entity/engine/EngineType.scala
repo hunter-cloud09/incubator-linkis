@@ -5,16 +5,16 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package org.apache.linkis.manager.label.entity.engine
 
 import org.apache.linkis.common.utils.Logging
@@ -49,8 +49,6 @@ object EngineType extends Enumeration with Logging {
 
   val APPCONN = Value("appconn")
 
-  val SQOOP = Value("sqoop")
-
   val DATAX = Value("datax")
 
   val OPENLOOKENG = Value("openlookeng")
@@ -68,7 +66,9 @@ object EngineType extends Enumeration with Logging {
       case "hdfs" =>
         EngineType.IO_ENGINE_HDFS.toString
       case _ =>
-        logger.error(s"In method mapFsTypeToEngineType(): Invalid fsType : ${fsType}, will not convert.")
+        logger.error(
+          s"In method mapFsTypeToEngineType(): Invalid fsType : ${fsType}, will not convert."
+        )
         fsType
     }
   }
@@ -89,7 +89,6 @@ object EngineType extends Enumeration with Logging {
     case _ if PRESTO.toString.equalsIgnoreCase(str) => PRESTO
     case _ if FLINK.toString.equalsIgnoreCase(str) => FLINK
     case _ if APPCONN.toString.equals(str) => APPCONN
-    case _ if SQOOP.toString.equalsIgnoreCase(str) => SQOOP
     case _ if DATAX.toString.equalsIgnoreCase(str) => DATAX
     case _ if OPENLOOKENG.toString.equalsIgnoreCase(str) => OPENLOOKENG
     case _ if TRINO.toString.equalsIgnoreCase(str) => TRINO

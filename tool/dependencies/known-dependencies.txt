@@ -548,7 +548,6 @@ springfox-spring-webmvc-2.10.5.jar
 springfox-swagger-common-2.10.5.jar
 springfox-swagger2-2.10.5.jar
 sqlline-1.3.0.jar
-sqoop-1.4.6-hadoop200.jar
 ssl-config-core_2.12-0.3.7.jar
 stats-0.191.jar
 stax2-api-4.2.1.jar

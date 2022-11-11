@@ -67,7 +67,6 @@ class YarnAppIdExtractor extends Thread with Logging {
 
     if (StringUtils.isBlank(content)) return new Array[String](0)
     // spark: Starting|Submitted|Activating.{1,100}(application_\d{13}_\d+)
-    // sqoop, importtsv: Submitted application application_1609166102854_970911
     val regex = EngineConnConf.SPARK_ENGINE_CONN_YARN_APP_ID_PARSE_REGEX.getValue
     val pattern = Pattern.compile(regex)
 
