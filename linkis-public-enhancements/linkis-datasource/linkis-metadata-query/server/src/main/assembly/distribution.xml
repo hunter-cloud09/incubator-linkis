@@ -98,7 +98,7 @@
         <fileSet>
             <directory>${basedir}/../service/mongodb/target/out/lib</directory>
             <fileMode>0755</fileMode>
-            <outputDirectory>lib/service/hdfs</outputDirectory>
+            <outputDirectory>lib/service/mongodb</outputDirectory>
             <includes>
                 <include>*.jar</include>
             </includes>
