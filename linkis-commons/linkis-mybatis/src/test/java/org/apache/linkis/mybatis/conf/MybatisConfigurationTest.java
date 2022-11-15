@@ -62,7 +62,7 @@ public class MybatisConfigurationTest {
     Assertions.assertEquals("", bdpServerMybatisBasepackage);
     Assertions.assertEquals("", bdpServerMybatisDatasourceUrl);
     Assertions.assertEquals("", bdpServerMybatisDatasourceUsername);
-    Assertions.assertEquals("com.mysql.jdbc.Driver", bdpServerMybatisDatasourceDriverClassName);
+    Assertions.assertEquals("com.mysql.cj.jdbc.Driver", bdpServerMybatisDatasourceDriverClassName);
     Assertions.assertTrue(1 == bdpServerMybatisDatasourceInitialsize.intValue());
     Assertions.assertTrue(1 == bdpServerMybatisDatasourceMinidle.intValue());
     Assertions.assertTrue(20 == bdpServerMybatisDatasourceMaxactive.intValue());
