@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -64,13 +64,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -113,7 +107,10 @@ public class EngineRestfulApi {
 
   private static final Logger logger = LoggerFactory.getLogger(EngineRestfulApi.class);
 
-  @ApiOperation(value = "createEngineConn", response = Message.class)
+  @ApiOperation(
+      value = "createEngineConn",
+      notes = "create an engineconn",
+      response = Message.class)
   @ApiOperationSupport(ignoreParameters = {"jsonNode"})
   @RequestMapping(path = "/createEngineConn", method = RequestMethod.POST)
   public Message createEngineConn(
@@ -220,9 +217,15 @@ public class EngineRestfulApi {
     return Message.ok("Kill engineConn succeed.");
   }
 
-  @ApiOperation(value = "kill one engineconn or more", response = Message.class)
+  @ApiOperation(
+      value = "kill eginecon",
+      notes = "kill one engineconn or more ",
+      response = Message.class)
   @ApiImplicitParams({
-    @ApiImplicitParam(name = "engineInstance", dataType = "String", example = "bdpujes110:12295"),
+    @ApiImplicitParam(
+        name = "engineInstance",
+        dataType = "String",
+        example = "bdpujes110003:12295"),
     @ApiImplicitParam(
         name = "applicationName",
         dataType = "String",
@@ -267,10 +270,10 @@ public class EngineRestfulApi {
         dataType = "String",
         example = "linkis-cg-engineconnmanager"),
     @ApiImplicitParam(name = "instance", required = false, dataType = "String", value = "instance"),
-    @ApiImplicitParam(name = "emInstance", dataType = "String", example = "bdpujes1100:9102"),
+    @ApiImplicitParam(name = "emInstance", dataType = "String", example = "bdpujes110003:9102"),
     @ApiImplicitParam(name = "engineType", dataType = "String"),
     @ApiImplicitParam(name = "nodeStatus", dataType = "String"),
-    @ApiImplicitParam(name = "owner", dataType = "String", value = "owner"),
+    @ApiImplicitParam(name = "owner", required = false, dataType = "String", value = "owner"),
   })
   @ApiOperationSupport(ignoreParameters = {"jsonNode"})
   @RequestMapping(path = "/listEMEngines", method = RequestMethod.POST)
@@ -323,7 +326,10 @@ public class EngineRestfulApi {
     return Message.ok().data("engines", allengineNodes);
   }
 
-  @ApiOperation(value = "modifyEngineInfo", response = Message.class)
+  @ApiOperation(
+      value = "modifyEngineInfo",
+      notes = "modify engineconn info",
+      response = Message.class)
   @ApiImplicitParams({
     @ApiImplicitParam(
         name = "applicationName",
@@ -336,10 +342,7 @@ public class EngineRestfulApi {
     @ApiImplicitParam(name = "instance", dataType = "String", example = "bdpujes110003:12295"),
     @ApiImplicitParam(name = "labels", dataType = "List", required = false, value = "labels"),
     @ApiImplicitParam(name = "labelKey", dataType = "String", example = "engineInstance"),
-    @ApiImplicitParam(
-        name = "stringValue",
-        dataType = "String",
-        example = "linkis-cg-engineconn-bdpujes110003:12295")
+    @ApiImplicitParam(name = "stringValue", dataType = "String", example = "linkis-cg:12295")
   })
   @ApiOperationSupport(ignoreParameters = {"jsonNode"})
   @RequestMapping(path = "/modifyEngineInfo", method = RequestMethod.PUT)
@@ -377,7 +380,10 @@ public class EngineRestfulApi {
     return Message.ok("success to update engine information(更新引擎信息成功)");
   }
 
-  @ApiOperation(value = "listAllNodeHealthyStatus", response = Message.class)
+  @ApiOperation(
+      value = "listAllNodeHealthyStatus",
+      notes = "get all node healthy staus list",
+      response = Message.class)
   @RequestMapping(path = "/listAllNodeHealthyStatus", method = RequestMethod.GET)
   public Message listAllNodeHealthyStatus(
       HttpServletRequest req,
@@ -386,7 +392,10 @@ public class EngineRestfulApi {
     return Message.ok().data("nodeStatus", nodeStatus);
   }
 
-  @ApiOperation(value = "executeEngineConnOperation", response = Message.class)
+  @ApiOperation(
+      value = "executeEngineConnOperation",
+      notes = "execute engine conn operation",
+      response = Message.class)
   @RequestMapping(path = "/executeEngineConnOperation", method = RequestMethod.POST)
   public Message executeEngineConnOperation(HttpServletRequest req, @RequestBody JsonNode jsonNode)
       throws Exception {
