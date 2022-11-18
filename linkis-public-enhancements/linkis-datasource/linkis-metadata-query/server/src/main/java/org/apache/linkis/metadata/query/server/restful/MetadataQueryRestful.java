@@ -25,12 +25,15 @@ import org.apache.linkis.metadata.query.common.exception.MetaMethodInvokeExcepti
 import org.apache.linkis.metadata.query.server.service.MetadataQueryService;
 import org.apache.linkis.metadata.query.server.utils.MetadataUtils;
 import org.apache.linkis.server.Message;
-import org.apache.linkis.server.security.SecurityFilter;
+import org.apache.linkis.server.utils.ModuleUserUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -63,6 +66,9 @@ public class MetadataQueryRestful {
       if (StringUtils.isBlank(system)) {
         return Message.error("'system' is missing[缺少系统名]");
       }
+      String userName =
+          ModuleUserUtils.getOperationUser(
+              request, "getConnectionInfo, dataSourceName:" + dataSourceName);
       Map<String, String> queryParams =
           request.getParameterMap().entrySet().stream()
               .collect(
@@ -70,7 +76,7 @@ public class MetadataQueryRestful {
                       Map.Entry::getKey, entry -> StringUtils.join(entry.getValue(), ",")));
       Map<String, String> info =
           metadataQueryService.getConnectionInfoByDsName(
-              dataSourceName, queryParams, system, SecurityFilter.getLoginUsername(request));
+              dataSourceName, queryParams, system, userName);
       return Message.ok().data("info", info);
     } catch (Exception e) {
       return errorToResponseMessage(
@@ -86,7 +92,7 @@ public class MetadataQueryRestful {
   @ApiOperation(value = "getDatabases", notes = "get databases", response = Message.class)
   @ApiImplicitParams({
     @ApiImplicitParam(name = "dataSourceName", required = true, dataType = "String"),
-    @ApiImplicitParam(name = "system", required = true, dataType = "String", value = "system")
+    @ApiImplicitParam(name = "system", required = true, dataType = "String")
   })
   @RequestMapping(value = "/getDatabases", method = RequestMethod.GET)
   public Message getDatabases(
@@ -100,9 +106,11 @@ public class MetadataQueryRestful {
       if (!MetadataUtils.nameRegexPattern.matcher(dataSourceName).matches()) {
         return Message.error("'dataSourceId' is invalid[数据源错误]");
       }
+      String userName =
+          ModuleUserUtils.getOperationUser(
+              request, "getDatabases, dataSourceName:" + dataSourceName);
       List<String> databases =
-          metadataQueryService.getDatabasesByDsName(
-              dataSourceName, system, SecurityFilter.getLoginUsername(request));
+          metadataQueryService.getDatabasesByDsName(dataSourceName, system, userName);
       return Message.ok().data("dbs", databases);
     } catch (Exception e) {
       return errorToResponseMessage(
@@ -118,8 +126,8 @@ public class MetadataQueryRestful {
   @ApiOperation(value = "getTables", notes = "get tables", response = Message.class)
   @ApiImplicitParams({
     @ApiImplicitParam(name = "dataSourceName", required = true, dataType = "String"),
-    @ApiImplicitParam(name = "system", required = true, dataType = "String", value = "system"),
-    @ApiImplicitParam(name = "database", required = true, dataType = "String", value = "database")
+    @ApiImplicitParam(name = "system", required = true, dataType = "String"),
+    @ApiImplicitParam(name = "database", required = true, dataType = "String")
   })
   @RequestMapping(value = "/getTables", method = RequestMethod.GET)
   public Message getTables(
@@ -137,9 +145,10 @@ public class MetadataQueryRestful {
       if (!MetadataUtils.nameRegexPattern.matcher(database).matches()) {
         return Message.error("'database' is invalid[数据库名称错误]");
       }
+      String userName =
+          ModuleUserUtils.getOperationUser(request, "getTables, dataSourceName:" + dataSourceName);
       List<String> tables =
-          metadataQueryService.getTablesByDsName(
-              dataSourceName, database, system, SecurityFilter.getLoginUsername(request));
+          metadataQueryService.getTablesByDsName(dataSourceName, database, system, userName);
       return Message.ok().data("tables", tables);
     } catch (Exception e) {
       return errorToResponseMessage(
@@ -158,9 +167,9 @@ public class MetadataQueryRestful {
   @ApiOperation(value = "getTableProps", notes = "get table props", response = Message.class)
   @ApiImplicitParams({
     @ApiImplicitParam(name = "dataSourceName", required = true, dataType = "String"),
-    @ApiImplicitParam(name = "system", required = true, dataType = "String", value = "system"),
-    @ApiImplicitParam(name = "database", required = true, dataType = "String", value = "database"),
-    @ApiImplicitParam(name = "table", required = true, dataType = "String", value = "table")
+    @ApiImplicitParam(name = "system", required = true, dataType = "String"),
+    @ApiImplicitParam(name = "database", required = true, dataType = "String"),
+    @ApiImplicitParam(name = "table", required = true, dataType = "String")
   })
   @RequestMapping(value = "/getTableProps", method = RequestMethod.GET)
   public Message getTableProps(
@@ -182,9 +191,12 @@ public class MetadataQueryRestful {
       if (!MetadataUtils.nameRegexPattern.matcher(dataSourceName).matches()) {
         return Message.error("'dataSourceId' is invalid[数据源错误]");
       }
+      String userName =
+          ModuleUserUtils.getOperationUser(
+              request, "getTableProps, dataSourceName:" + dataSourceName);
       Map<String, String> tableProps =
           metadataQueryService.getTablePropsByDsName(
-              dataSourceName, database, table, system, SecurityFilter.getLoginUsername(request));
+              dataSourceName, database, table, system, userName);
       return Message.ok().data("props", tableProps);
     } catch (Exception e) {
       return errorToResponseMessage(
@@ -205,9 +217,9 @@ public class MetadataQueryRestful {
   @ApiOperation(value = "getPartitions", notes = "get partitions", response = Message.class)
   @ApiImplicitParams({
     @ApiImplicitParam(name = "dataSourceName", required = true, dataType = "String"),
-    @ApiImplicitParam(name = "system", required = true, dataType = "String", value = "system"),
-    @ApiImplicitParam(name = "database", required = true, dataType = "String", value = "database"),
-    @ApiImplicitParam(name = "table", required = true, dataType = "String", value = "table")
+    @ApiImplicitParam(name = "system", required = true, dataType = "String"),
+    @ApiImplicitParam(name = "database", required = true, dataType = "String"),
+    @ApiImplicitParam(name = "table", required = true, dataType = "String")
   })
   @RequestMapping(value = "/getPartitions", method = RequestMethod.GET)
   public Message getPartitions(
@@ -230,14 +242,13 @@ public class MetadataQueryRestful {
       if (!MetadataUtils.nameRegexPattern.matcher(dataSourceName).matches()) {
         return Message.error("'dataSourceId' is invalid[数据源错误]");
       }
+
+      String userName =
+          ModuleUserUtils.getOperationUser(
+              request, "getPartitions, dataSourceName:" + dataSourceName);
       MetaPartitionInfo partitionInfo =
           metadataQueryService.getPartitionsByDsName(
-              dataSourceName,
-              database,
-              table,
-              system,
-              traverse,
-              SecurityFilter.getLoginUsername(request));
+              dataSourceName, database, table, system, traverse, userName);
       return Message.ok().data("partitions", partitionInfo);
     } catch (Exception e) {
       return errorToResponseMessage(
@@ -257,14 +268,14 @@ public class MetadataQueryRestful {
 
   @ApiOperation(
       value = "getPartitionProps",
-      notes = "get partition pProps",
+      notes = "get partition props",
       response = Message.class)
   @ApiImplicitParams({
     @ApiImplicitParam(name = "dataSourceName", required = true, dataType = "String"),
-    @ApiImplicitParam(name = "system", required = true, dataType = "String", value = "System"),
-    @ApiImplicitParam(name = "database", required = true, dataType = "String", value = "database"),
-    @ApiImplicitParam(name = "table", required = true, dataType = "String", value = "Table"),
-    @ApiImplicitParam(name = "partition", required = true, dataType = "String", value = "partition")
+    @ApiImplicitParam(name = "system", required = true, dataType = "String"),
+    @ApiImplicitParam(name = "database", required = true, dataType = "String"),
+    @ApiImplicitParam(name = "table", required = true, dataType = "String"),
+    @ApiImplicitParam(name = "partition", required = true, dataType = "String")
   })
   @RequestMapping(value = "getPartitionProps", method = RequestMethod.GET)
   public Message getPartitionProps(
@@ -290,14 +301,12 @@ public class MetadataQueryRestful {
       if (!MetadataUtils.nameRegexPattern.matcher(partition).matches()) {
         return Message.error("'partition' is invalid[partition错误]");
       }
+      String userName =
+          ModuleUserUtils.getOperationUser(
+              request, "getPartitionProps, dataSourceName:" + dataSourceName);
       Map<String, String> partitionProps =
           metadataQueryService.getPartitionPropsByDsName(
-              dataSourceName,
-              database,
-              table,
-              partition,
-              system,
-              SecurityFilter.getLoginUsername(request));
+              dataSourceName, database, table, partition, system, userName);
       return Message.ok().data("props", partitionProps);
     } catch (Exception e) {
       return errorToResponseMessage(
@@ -320,9 +329,9 @@ public class MetadataQueryRestful {
   @ApiOperation(value = "getColumns", notes = "get columns", response = Message.class)
   @ApiImplicitParams({
     @ApiImplicitParam(name = "dataSourceName", required = true, dataType = "String"),
-    @ApiImplicitParam(name = "system", required = true, dataType = "String", value = "system"),
-    @ApiImplicitParam(name = "database", required = true, dataType = "String", value = "database"),
-    @ApiImplicitParam(name = "table", required = true, dataType = "String", value = "table")
+    @ApiImplicitParam(name = "system", required = true, dataType = "String"),
+    @ApiImplicitParam(name = "database", required = true, dataType = "String"),
+    @ApiImplicitParam(name = "table", required = true, dataType = "String")
   })
   @RequestMapping(value = "/getColumns", method = RequestMethod.GET)
   public Message getColumns(
@@ -344,9 +353,13 @@ public class MetadataQueryRestful {
       if (!MetadataUtils.nameRegexPattern.matcher(dataSourceName).matches()) {
         return Message.error("'dataSourceId' is invalid[数据源错误]");
       }
+
+      String userName =
+          ModuleUserUtils.getOperationUser(request, "getColumns, dataSourceName:" + dataSourceName);
+
       List<MetaColumnInfo> columns =
           metadataQueryService.getColumnsByDsName(
-              dataSourceName, database, table, system, SecurityFilter.getLoginUsername(request));
+              dataSourceName, database, table, system, userName);
       return Message.ok().data("columns", columns);
     } catch (Exception e) {
       return errorToResponseMessage(

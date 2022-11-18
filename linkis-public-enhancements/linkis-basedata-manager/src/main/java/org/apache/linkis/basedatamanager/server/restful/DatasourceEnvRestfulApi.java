@@ -20,9 +20,16 @@ package org.apache.linkis.basedatamanager.server.restful;
 import org.apache.linkis.basedatamanager.server.domain.DatasourceEnvEntity;
 import org.apache.linkis.basedatamanager.server.service.DatasourceEnvService;
 import org.apache.linkis.server.Message;
+import org.apache.linkis.server.utils.ModuleUserUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -42,17 +49,21 @@ public class DatasourceEnvRestfulApi {
     @ApiImplicitParam(paramType = "query", dataType = "int", name = "currentPage"),
     @ApiImplicitParam(paramType = "query", dataType = "int", name = "pageSize")
   })
-  @ApiOperation(value = "list", notes = "get list data", httpMethod = "GET")
+  @ApiOperation(value = "list", notes = "list Datasource Envs by searchName", httpMethod = "GET")
   @RequestMapping(path = "", method = RequestMethod.GET)
-  public Message list(String searchName, Integer currentPage, Integer pageSize) {
+  public Message list(
+      HttpServletRequest request, String searchName, Integer currentPage, Integer pageSize) {
+    ModuleUserUtils.getOperationUser(
+        request, "Query list data of Datasource Env,search name:" + searchName);
     PageInfo pageList = datasourceEnvService.getListByPage(searchName, currentPage, pageSize);
     return Message.ok("").data("list", pageList);
   }
 
   @ApiImplicitParams({@ApiImplicitParam(paramType = "path", dataType = "long", name = "id")})
-  @ApiOperation(value = "get", notes = "get data by id", httpMethod = "GET")
+  @ApiOperation(value = "get", notes = "Get a Datasource Env Record by id", httpMethod = "GET")
   @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-  public Message get(@PathVariable("id") Long id) {
+  public Message get(HttpServletRequest request, @PathVariable("id") Long id) {
+    ModuleUserUtils.getOperationUser(request, "Get a Datasource Env Record,id:" + id.toString());
     DatasourceEnvEntity datasourceEnv = datasourceEnvService.getById(id);
     return Message.ok("").data("item", datasourceEnv);
   }
@@ -60,28 +71,37 @@ public class DatasourceEnvRestfulApi {
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "body", dataType = "DatasourceEnvEntity", name = "datasourceEnv")
   })
-  @ApiOperation(value = "add", notes = "add data", httpMethod = "POST")
+  @ApiOperation(value = "add", notes = "Add a Datasource Env Record", httpMethod = "POST")
   @RequestMapping(path = "", method = RequestMethod.POST)
-  public Message add(@RequestBody DatasourceEnvEntity datasourceEnv) {
+  public Message add(HttpServletRequest request, @RequestBody DatasourceEnvEntity datasourceEnv) {
+    ModuleUserUtils.getOperationUser(
+        request, "Add a Datasource Env Record," + datasourceEnv.toString());
     boolean result = datasourceEnvService.save(datasourceEnv);
     return Message.ok("").data("result", result);
   }
 
   @ApiImplicitParams({@ApiImplicitParam(paramType = "path", dataType = "long", name = "id")})
-  @ApiOperation(value = "remove", notes = "remove data by id", httpMethod = "DELETE")
+  @ApiOperation(
+      value = "remove",
+      notes = "Remove a Datasource Env Record by id",
+      httpMethod = "DELETE")
   @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
-  public Message remove(@PathVariable("id") Long id) {
+  public Message remove(HttpServletRequest request, @PathVariable("id") Long id) {
+    ModuleUserUtils.getOperationUser(request, "Remove a Datasource Env Record,id:" + id.toString());
     boolean result = datasourceEnvService.removeById(id);
     return Message.ok("").data("result", result);
   }
 
   @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "body", dataType = "DatasourceEnvEntity", name = "errorCode")
+    @ApiImplicitParam(paramType = "body", dataType = "DatasourceEnvEntity", name = "datasourceEnv")
   })
-  @ApiOperation(value = "update", notes = "update data", httpMethod = "PUT")
+  @ApiOperation(value = "update", notes = "Update a Datasource Env Record", httpMethod = "PUT")
   @RequestMapping(path = "", method = RequestMethod.PUT)
-  public Message update(@RequestBody DatasourceEnvEntity errorCode) {
-    boolean result = datasourceEnvService.updateById(errorCode);
+  public Message update(
+      HttpServletRequest request, @RequestBody DatasourceEnvEntity datasourceEnv) {
+    ModuleUserUtils.getOperationUser(
+        request, "Update a Datasource Env Record,id:" + datasourceEnv.getId().toString());
+    boolean result = datasourceEnvService.updateById(datasourceEnv);
     return Message.ok("").data("result", result);
   }
 }

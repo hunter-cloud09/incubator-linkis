@@ -20,9 +20,16 @@ package org.apache.linkis.basedatamanager.server.restful;
 import org.apache.linkis.basedatamanager.server.domain.GatewayAuthTokenEntity;
 import org.apache.linkis.basedatamanager.server.service.GatewayAuthTokenService;
 import org.apache.linkis.server.Message;
+import org.apache.linkis.server.utils.ModuleUserUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 import java.util.Date;
 
@@ -43,17 +50,22 @@ public class GatewayAuthTokenRestfulApi {
     @ApiImplicitParam(paramType = "query", dataType = "int", name = "currentPage"),
     @ApiImplicitParam(paramType = "query", dataType = "int", name = "pageSize")
   })
-  @ApiOperation(value = "list", notes = "get list data", httpMethod = "GET")
+  @ApiOperation(value = "list", notes = "list Gateway Auth Tokens", httpMethod = "GET")
   @RequestMapping(path = "", method = RequestMethod.GET)
-  public Message list(String searchName, Integer currentPage, Integer pageSize) {
+  public Message list(
+      HttpServletRequest request, String searchName, Integer currentPage, Integer pageSize) {
+    ModuleUserUtils.getOperationUser(
+        request, "Query list data of Gateway Auth Token,search name:" + searchName);
     PageInfo pageList = gatewayAuthTokenService.getListByPage(searchName, currentPage, pageSize);
     return Message.ok("").data("list", pageList);
   }
 
   @ApiImplicitParams({@ApiImplicitParam(paramType = "path", dataType = "long", name = "id")})
-  @ApiOperation(value = "get", notes = "get data by id", httpMethod = "GET")
+  @ApiOperation(value = "get", notes = "Get a Gateway Auth Token Record by id", httpMethod = "GET")
   @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-  public Message get(@PathVariable("id") Long id) {
+  public Message get(HttpServletRequest request, @PathVariable("id") Long id) {
+    ModuleUserUtils.getOperationUser(
+        request, "Get a Gateway Auth Token Record,id:" + id.toString());
     GatewayAuthTokenEntity gatewayAuthToken = gatewayAuthTokenService.getById(id);
     return Message.ok("").data("item", gatewayAuthToken);
   }
@@ -64,13 +76,19 @@ public class GatewayAuthTokenRestfulApi {
         dataType = "GatewayAuthTokenEntity",
         name = "gatewayAuthToken")
   })
-  @ApiOperation(value = "add", notes = "add data", httpMethod = "POST")
+  @ApiOperation(value = "add", notes = "Add a Gateway Auth Token Record", httpMethod = "POST")
   @RequestMapping(path = "", method = RequestMethod.POST)
-  public Message add(@RequestBody GatewayAuthTokenEntity gatewayAuthToken) {
+  public Message add(
+      HttpServletRequest request, @RequestBody GatewayAuthTokenEntity gatewayAuthToken) {
+    ModuleUserUtils.getOperationUser(
+        request, "Add a Gateway Auth Token Record," + gatewayAuthToken.toString());
     gatewayAuthToken.setCreateTime(new Date());
     gatewayAuthToken.setUpdateTime(new Date());
     gatewayAuthToken.setBusinessOwner("BDP");
     gatewayAuthToken.setUpdateBy("LINKIS");
+
+    ModuleUserUtils.getOperationUser(
+        request, "Add a Gateway Auth Token Record," + gatewayAuthToken.toString());
     boolean result = gatewayAuthTokenService.save(gatewayAuthToken);
     return Message.ok("").data("result", result);
   }
@@ -78,11 +96,14 @@ public class GatewayAuthTokenRestfulApi {
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "body", dataType = "GatewayAuthTokenEntity", name = "token")
   })
-  @ApiOperation(value = "update", notes = "remove data by id", httpMethod = "PUT")
+  @ApiOperation(value = "update", notes = "Update a Gateway Auth Token Record", httpMethod = "PUT")
   @RequestMapping(path = "", method = RequestMethod.PUT)
-  public Message update(@RequestBody GatewayAuthTokenEntity token) {
+  public Message update(HttpServletRequest request, @RequestBody GatewayAuthTokenEntity token) {
+    ModuleUserUtils.getOperationUser(
+        request, "Update a Gateway Auth Token Record,id:" + token.getId().toString());
     token.setUpdateTime(new Date());
     token.setUpdateBy("LINKIS");
+
     boolean result = gatewayAuthTokenService.updateById(token);
     return Message.ok("").data("result", result);
   }
@@ -90,11 +111,14 @@ public class GatewayAuthTokenRestfulApi {
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "query", dataType = "string", name = "tokenName")
   })
-  @ApiOperation(value = "remove", notes = "update data", httpMethod = "DELETE")
-  @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
-  public Message remove(@PathVariable("id") Integer id) {
+  @ApiOperation(
+      value = "remove",
+      notes = "Remove a Gateway Auth Token Record by token name",
+      httpMethod = "DELETE")
+  @RequestMapping(path = "", method = RequestMethod.DELETE)
+  public Message remove(HttpServletRequest request, Long id) {
+    ModuleUserUtils.getOperationUser(request, "Remove a Gateway Auth Token Record,id:" + id);
     boolean result = gatewayAuthTokenService.removeById(id);
-
     return Message.ok("").data("result", result);
   }
 }

@@ -20,9 +20,16 @@ package org.apache.linkis.basedatamanager.server.restful;
 import org.apache.linkis.basedatamanager.server.domain.ErrorCodeEntity;
 import org.apache.linkis.basedatamanager.server.service.ErrorCodeService;
 import org.apache.linkis.server.Message;
+import org.apache.linkis.server.utils.ModuleUserUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -42,17 +49,21 @@ public class ErrorCodeRestfulApi {
     @ApiImplicitParam(paramType = "query", dataType = "int", name = "currentPage"),
     @ApiImplicitParam(paramType = "query", dataType = "int", name = "pageSize")
   })
-  @ApiOperation(value = "list", notes = "get list data with page", httpMethod = "GET")
+  @ApiOperation(value = "list", notes = "list Error Codes with page", httpMethod = "GET")
   @RequestMapping(path = "", method = RequestMethod.GET)
-  public Message list(String searchName, Integer currentPage, Integer pageSize) {
+  public Message list(
+      HttpServletRequest request, String searchName, Integer currentPage, Integer pageSize) {
+    ModuleUserUtils.getOperationUser(
+        request, "Query list data of Error Code,search name:" + searchName);
     PageInfo pageList = errorCodeService.getListByPage(searchName, currentPage, pageSize);
     return Message.ok("").data("list", pageList);
   }
 
   @ApiImplicitParams({@ApiImplicitParam(paramType = "path", dataType = "long", name = "id")})
-  @ApiOperation(value = "get", notes = "get data by id", httpMethod = "GET")
+  @ApiOperation(value = "get", notes = "Get an Error Code Record by id", httpMethod = "GET")
   @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-  public Message get(@PathVariable("id") Long id) {
+  public Message get(HttpServletRequest request, @PathVariable("id") Long id) {
+    ModuleUserUtils.getOperationUser(request, "Get a Error Code Record,id:" + id.toString());
     ErrorCodeEntity errorCode = errorCodeService.getById(id);
     return Message.ok("").data("item", errorCode);
   }
@@ -60,17 +71,21 @@ public class ErrorCodeRestfulApi {
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "body", dataType = "ErrorCodeEntity", name = "errorCode")
   })
-  @ApiOperation(value = "add", notes = "add data", httpMethod = "POST")
+  @ApiOperation(value = "add", notes = "Add an Error Code Record", httpMethod = "POST")
   @RequestMapping(path = "", method = RequestMethod.POST)
-  public Message add(@RequestBody ErrorCodeEntity errorCode) {
+  public Message add(HttpServletRequest request, @RequestBody ErrorCodeEntity errorCode) {
+    ModuleUserUtils.getOperationUser(
+        request, "Add a Datasource Code Record," + errorCode.toString());
     boolean result = errorCodeService.save(errorCode);
     return Message.ok("").data("result", result);
   }
 
   @ApiImplicitParams({@ApiImplicitParam(paramType = "path", dataType = "long", name = "id")})
-  @ApiOperation(value = "remove", notes = "remove data by id", httpMethod = "DELETE")
+  @ApiOperation(value = "remove", notes = "Remove an Error Code by id", httpMethod = "DELETE")
   @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
-  public Message remove(@PathVariable("id") Long id) {
+  public Message remove(HttpServletRequest request, @PathVariable("id") Long id) {
+    ModuleUserUtils.getOperationUser(
+        request, "Remove a Datasource Code Record,id:" + id.toString());
     boolean result = errorCodeService.removeById(id);
     return Message.ok("").data("result", result);
   }
@@ -78,9 +93,11 @@ public class ErrorCodeRestfulApi {
   @ApiImplicitParams({
     @ApiImplicitParam(paramType = "body", dataType = "ErrorCodeEntity", name = "errorCode")
   })
-  @ApiOperation(value = "update", notes = "update data", httpMethod = "PUT")
+  @ApiOperation(value = "update", notes = "Update a Error Code Record", httpMethod = "PUT")
   @RequestMapping(path = "", method = RequestMethod.PUT)
-  public Message update(@RequestBody ErrorCodeEntity errorCode) {
+  public Message update(HttpServletRequest request, @RequestBody ErrorCodeEntity errorCode) {
+    ModuleUserUtils.getOperationUser(
+        request, "Update a Datasource Code Record,id:" + errorCode.getId().toString());
     boolean result = errorCodeService.updateById(errorCode);
     return Message.ok("").data("result", result);
   }
