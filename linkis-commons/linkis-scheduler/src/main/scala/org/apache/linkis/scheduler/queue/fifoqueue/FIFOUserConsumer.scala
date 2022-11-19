@@ -108,7 +108,7 @@ class FIFOUserConsumer(
     }
     var event: Option[SchedulerEvent] = getWaitForRetryEvent
     if (event.isEmpty) {
-      val completedNums = runningJobs.filter(e => e == null || e.isCompleted)
+      val completedNums = runningJobs.filter(job => job == null || job.isCompleted)
       if (completedNums.length < 1) {
         Utils.tryQuietly(Thread.sleep(1000)) // TODO 还可以优化，通过实现JobListener进行优化
         return
@@ -201,7 +201,7 @@ class FIFOUserConsumer(
   def isIdle: Boolean = {
     logger.info(s"${getGroup.getGroupName} queue isEmpty:${queue.isEmpty},size ${queue.size}")
     logger.info(s"${getGroup.getGroupName} running jobs is not empty:${this.runningJobs
-      .exists(job => job != null && !job.isCompleted)}")
+        .exists(job => job != null && !job.isCompleted)}")
     this.queue.peek.isEmpty && !this.runningJobs.exists(job => job != null && !job.isCompleted)
   }
 
