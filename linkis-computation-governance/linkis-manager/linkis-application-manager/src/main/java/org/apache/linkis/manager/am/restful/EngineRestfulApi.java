@@ -161,7 +161,8 @@ public class EngineRestfulApi {
   @ApiOperation(value = "getEngineConn", notes = "get engineconn", response = Message.class)
   @ApiOperationSupport(ignoreParameters = {"jsonNode"})
   @RequestMapping(path = "/getEngineConn", method = RequestMethod.POST)
-  public Message getEngineConn(HttpServletRequest req, @RequestBody JsonNode jsonNode) throws AMErrorException {
+  public Message getEngineConn(HttpServletRequest req, @RequestBody JsonNode jsonNode)
+      throws AMErrorException {
     String userName = ModuleUserUtils.getOperationUser(req, "getEngineConn");
     ServiceInstance serviceInstance = getServiceInstance(jsonNode);
     JsonNode ticketIdNode = jsonNode.get("ticketId");
