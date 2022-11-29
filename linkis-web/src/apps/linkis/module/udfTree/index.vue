@@ -151,7 +151,7 @@ export default {
           align: 'center',
           render: (h,params)=>{
             return h('div',
-              formatDate(new Date(params.row.createTime),'yyyy-MM-dd hh:mm')
+              formatDate(new Date(params.row.createTime),'yyyy-MM-dd hh:mm:ss')
             )
           }
         },
@@ -163,7 +163,7 @@ export default {
           align: 'center',
           render: (h,params)=>{
             return h('div',
-              formatDate(new Date(params.row.createTime),'yyyy-MM-dd hh:mm')
+              formatDate(new Date(params.row.updateTime),'yyyy-MM-dd hh:mm:ss')
             )
           }
         },
@@ -202,18 +202,21 @@ export default {
         this.pageDatalist = data.list.list
         this.page.totalSize = data.list.total
       })
+
+
+
     },
     changePage(value) {
       this.page.pageNow = value
       this.load()
     },
     onAdd(){
+      this.$refs.errorCodeForm.formModel.resetFields()
       this.modalAddMode = 'add'
       this.modalShow = true
     },
     onTableEdit(row){
-      row.parent = row.parent + ""
-      this.modalEditData = row
+      this.$refs.errorCodeForm.formModel.setValue(row)
       this.modalAddMode = 'edit'
       this.modalShow = true
     },

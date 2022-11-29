@@ -433,7 +433,21 @@
           "createTime":"创建时间",
           "updateTime": "更新时间",
           "updateBy": "更新人",
-          "searchPlaceholder": "令牌名称/用户/主机"
+          "searchPlaceholder": "令牌名称/用户/主机",
+          "info":"过期天数: -1 表示永久",
+          "legalUsersInfo": "*允许所有用户；多用户使用,隔开，例如:user1,user2",
+          "legalUsersValidate": {
+            "empty": "请填写用户",
+            "format": "格式不正确，使用*或使用,分割，例如:user1,user2"
+          },
+          "legalHostsInfo": "*允许所有主机；多主机使用,隔开，例如:host1,host2",
+          "legalHostsInfoValidate": {
+            "empty": "请填写主机"
+          },
+          "elapseDayValidate": {
+            "format": "格式不正确，使用*或使用,分割，例如:host1,host2",
+            "empty": "请填写过期天数"
+          }
         },
         "errorCode": {
           "errorCode": "错误代码",
@@ -450,17 +464,22 @@
         },
         "udfManager": {
           "userName": "用户名",
-          "searchPlaceholder": "用户名"
+          "searchPlaceholder": "用户名",
+          "userNameValidate": {
+            "size": "用户名长度不能超过20个字符",
+            "empty": "请输入用户名"
+          }
         },
         "udfTree": {
           "name": "名称",
           "category": "分类",
           "userName": "用户名",
           "description": "描述",
-          "parent": "父级Key",
+          "parent": "父级",
           "createTime": "创建时间",
           "updateTime": "更新时间",
-          "searchPlaceholder": "名称/分类/描述/用户名"
+          "searchPlaceholder": "名称/分类/描述/用户名",
+          "parentInfo": "父级分类，Root为根目录"
         },
         "datasourceEnv": {
           "envName": "环境名称",
@@ -482,17 +501,29 @@
           "classifier": "分类",
           "icon": "图标",
           "layers": "层级",
-          "searchPlaceholder": "名称/描述/分类"
+          "searchPlaceholder": "名称/描述/分类",
+          "layersValidate": {
+            "range": "最小为0"
+          }
         },
         "datasourceTypeKey": {
           "key": "键名",
           "dataSourceType": "数据源类型",
           "name": "名称",
+          "nameEn": "名称(英文)",
           "valueType": "值类型",
+          "defaultValue": "默认值",
+          "scope": "范围",
+          "require": "必填",
           "description": "描述",
+          "descriptionEn": "描述(英文)",
+          "valueRegex": "值校验",
           "createTime": "创建时间",
           "updateTime": "更新时间",
-          "searchPlaceholder": "名称"
+          "searchPlaceholder": "名称",
+          "searchName": "名称",
+          "searchType": "类型",
+          "all": "全部"
         }
       },
       "EnginePluginManagement": {

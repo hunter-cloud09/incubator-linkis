@@ -432,7 +432,20 @@
           "createTime":"Create Time",
           "updateTime": "Update Time",
           "updateBy": "Update By",
-          "searchPlaceholder": "TokenName/Users/Hosts"
+          "searchPlaceholder": "TokenName/Users/Hosts",
+          "info":"Elapse Day: -1 means permanent",
+          "legalUsersInfo": "* Allow all users; Multi-user use, separated, for example :user1,user2",
+          "legalUsersValidate": {
+            "empty": "Please enter the Users"
+          },
+          "legalHostsInfo": "* Allow all hosts; Use multiple hosts, separated, for example :host1,host2",
+          "legalHostsInfoValidate": {
+            "empty": "Please enter the Hosts"
+          },
+          "elapseDayValidate": {
+            "size": "The Elapse Day cannot be less than -1",
+            "empty": "Please enter the elapse day"
+          }
         },
         "errorCode": {
           "errorCode": "Code",
@@ -449,7 +462,11 @@
         },
         "udfManager": {
           "userName": "User Name",
-          "searchPlaceholder": "UserName"
+          "searchPlaceholder": "UserName",
+          "userNameValidate": {
+            "size": "Usernames cannot be longer than 20 characters",
+            "empty": "Please enter your username"
+          }
         },
         "udfTree": {
           "name": "Name",
@@ -459,7 +476,8 @@
           "parent": "Parent",
           "createTime": "Create Time",
           "updateTime": "Update Time",
-          "searchPlaceholder": "Name/Category/Desc/UserName"
+          "searchPlaceholder": "Name/Category/Desc/UserName",
+          "parentInfo": "Parent classification, Root is the root directory"
         },
         "datasourceEnv": {
           "envName": "Env Name",
@@ -481,17 +499,29 @@
           "classifier": "Classifier",
           "icon": "Icon",
           "layers": "Layers",
-          "searchPlaceholder": "Name/Desc/Classifier"
+          "searchPlaceholder": "Name/Desc/Classifier",
+          "layersValidate": {
+            "range": "The minimum is 0"
+          }
         },
         "datasourceTypeKey": {
           "key": "Key",
           "dataSourceType": "Datasource Type",
-          "name": "Name",
+          "name": "Name(Chinese)",
+          "nameEn": "Name",
           "valueType": "Value Type",
-          "description": "Description",
+          "scope": "Scope",
+          "require": "Require",
+          "defaultValue": "Default Value",
+          "description": "Description(Chinese)",
+          "descriptionEn": "Description",
+          "valueRegex": "Value Regex",
           "createTime": "Create Time",
           "updateTime": "Update Time",
-          "searchPlaceholder": "Name"
+          "searchPlaceholder": "Name",
+          "searchName": "名称",
+          "searchType": "类型",
+          "all": "All"
         }
       },
       "EnginePluginManagement": {

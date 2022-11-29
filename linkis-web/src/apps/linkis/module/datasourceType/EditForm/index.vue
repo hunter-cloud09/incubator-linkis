@@ -113,12 +113,20 @@ export default {
           ],
         },
         {
-          type: 'input',
+          type: 'select',
           title: this.$t('message.linkis.basedataManagement.datasourceType.classifier'),
           field: 'classifier',
           value: '',
+          options: [
+            {label: "关系型数据库",value: "关系型数据库"},
+            {label: "消息队列",value: "消息队列"},
+            {label: "大数据存储",value: "大数据存储"},
+            {label: "olap",value: "olap"},
+            {label: "分布式全文索引",value: "分布式全文索引"},
+          ],
           props: {
             placeholder: "relational database",
+            "filterable": true
           },
           validate: [
             {
@@ -141,7 +149,7 @@ export default {
           },
           validate: [
             {
-              required: true,
+              required: false,
               type: "url",
               message: `${this.$t(
                 'message.linkis.datasource.pleaseInput'
@@ -151,41 +159,35 @@ export default {
           ],
         },
         {
-          type: 'InputNumber',
+          type: 'inputNumber',
           title: this.$t('message.linkis.basedataManagement.datasourceType.layers'),
           field: 'layers',
           value: 0,
           props: {
-            placeholder: "eg. 1-3"
+            placeholder: "eg. 1-3",
+            type: "number",
+            min: 0
           },
           validate: [
             {
               required: true,
+              "mode": "required",
+              type: "number",
               message: `${this.$t(
                 'message.linkis.datasource.pleaseInput'
               )} `+this.$t('message.linkis.basedataManagement.datasourceType.layers'),
+              trigger: 'change',
+            },
+            {
+              min: 0,
+              type: "number",
+              message: this.$t('message.linkis.basedataManagement.datasourceType.layersValidate.range'),
               trigger: 'change',
             },
           ],
         }
       ]
     }
-  },
-  created() {
-    this.getData(this.data)
-  },
-  methods: {
-    getData(data){
-      this.formData = {...data}
-    }
-  },
-  watch: {
-    data: {
-      handler(newV) {
-        this.getData(newV)
-      },
-      deep: true,
-    },
   },
 }
 </script>

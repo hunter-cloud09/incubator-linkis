@@ -21,12 +21,13 @@
       :rule="rule"
       v-model="formModel"
       :option="options"
-      :value.sync="formData"
     />
   </div>
 </template>
 
 <script>
+import {getAll} from "../service";
+
 export default {
   props: {
     mode: String,
@@ -138,13 +139,15 @@ export default {
           ],
         },
         {
-          type: 'input',
+          type: 'select',
           title: this.$t('message.linkis.basedataManagement.udfTree.parent'),
           field: 'parent',
-          value: '',
+          info: this.$t('message.linkis.basedataManagement.udfTree.parentInfo'),
+          value: "",
           props: {
             placeholder: "",
           },
+          options: [],
           validate: [
             {
               required: true,
@@ -159,20 +162,13 @@ export default {
     }
   },
   created() {
-    this.getData(this.data)
-  },
-  methods: {
-    getData(data){
-      this.formData = {...data}
-    }
-  },
-  watch: {
-    data: {
-      handler(newV) {
-        this.getData(newV)
-      },
-      deep: true,
-    },
+    getAll().then(res=>{
+      let list = res.list.map(m=>{
+        return {label: m.name,value: m.id}
+      });
+      list = [{label: "Root",value: -1},...list]
+      this.rule[this.rule.length-1].options = list
+    })
   },
 }
 </script>

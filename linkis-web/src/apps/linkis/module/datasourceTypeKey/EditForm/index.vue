@@ -21,7 +21,6 @@
       :rule="rule"
       v-model="formModel"
       :option="options"
-      :value.sync="formData"
     />
   </div>
 </template>
@@ -30,12 +29,10 @@
 export default {
   props: {
     mode: String,
-    data: Object,
   },
   data() {
     return {
       formModel: {},
-      formData: {},
       options: {
         submitBtn: false,
       },
@@ -77,16 +74,18 @@ export default {
           ],
         },
         {
-          type: 'input',
+          type: 'select',
           title: this.$t('message.linkis.basedataManagement.datasourceTypeKey.dataSourceType'),
           field: 'dataSourceTypeId',
+          options: [],
           value: '',
           props: {
-            placeholder: "",
+            placeholder: "请选择",
           },
           validate: [
             {
               required: true,
+              type: "number",
               message: `${this.$t(
                 'message.linkis.datasource.pleaseInput'
               )} `+this.$t('message.linkis.basedataManagement.datasourceTypeKey.dataSourceType'),
@@ -114,8 +113,8 @@ export default {
         },
         {
           type: 'input',
-          title: this.$t('message.linkis.basedataManagement.datasourceTypeKey.valueType'),
-          field: 'valueType',
+          title: this.$t('message.linkis.basedataManagement.datasourceTypeKey.nameEn'),
+          field: 'nameEn',
           value: '',
           props: {
             placeholder: "",
@@ -125,7 +124,82 @@ export default {
               required: true,
               message: `${this.$t(
                 'message.linkis.datasource.pleaseInput'
+              )} `+this.$t('message.linkis.basedataManagement.datasourceTypeKey.nameEn'),
+              trigger: 'blur',
+            },
+          ],
+        },
+        {
+          type: 'select',
+          title: this.$t('message.linkis.basedataManagement.datasourceTypeKey.valueType'),
+          field: 'valueType',
+          options: [{label: "TEXT",value: "TEXT"},{label: "PASSWORD",value: "PASSWORD"},{label: "SELECT",value: "SELECT"}],
+          value: '',
+          props: {
+            placeholder: "请选择",
+          },
+          validate: [
+            {
+              required: true,
+              message: `${this.$t(
+                'message.linkis.datasource.pleaseInput'
               )} `+this.$t('message.linkis.basedataManagement.datasourceTypeKey.valueType'),
+              trigger: 'blur',
+            },
+          ],
+        },
+        {
+          type: 'input',
+          title: this.$t('message.linkis.basedataManagement.datasourceTypeKey.defaultValue'),
+          field: 'defaultValue',
+          value: '',
+          props: {
+            placeholder: "",
+          },
+          validate: [
+            {
+              required: false,
+              message: `${this.$t(
+                'message.linkis.datasource.pleaseInput'
+              )} `+this.$t('message.linkis.basedataManagement.datasourceTypeKey.defaultValue'),
+              trigger: 'blur',
+            },
+          ],
+        },
+        {
+          type: 'input',
+          title: this.$t('message.linkis.basedataManagement.datasourceTypeKey.scope'),
+          field: 'scope',
+          value: '',
+          props: {
+            placeholder: "",
+          },
+          validate: [
+            {
+              required: false,
+              message: `${this.$t(
+                'message.linkis.datasource.pleaseInput'
+              )} `+this.$t('message.linkis.basedataManagement.datasourceTypeKey.scope'),
+              trigger: 'blur',
+            },
+          ],
+        },
+        {
+          type: 'switch',
+          title: this.$t('message.linkis.basedataManagement.datasourceTypeKey.require'),
+          field: 'require',
+          value: 0,
+          props: {
+            placeholder: "",
+            trueValue: 1,
+            falseValue: 0,
+          },
+          validate: [
+            {
+              required: false,
+              message: `${this.$t(
+                'message.linkis.datasource.pleaseInput'
+              )} `+this.$t('message.linkis.basedataManagement.datasourceTypeKey.require'),
               trigger: 'blur',
             },
           ],
@@ -148,24 +222,44 @@ export default {
             },
           ],
         },
+        {
+          type: 'input',
+          title: this.$t('message.linkis.basedataManagement.datasourceTypeKey.descriptionEn'),
+          field: 'descriptionEn',
+          value: '',
+          props: {
+            placeholder: "",
+          },
+          validate: [
+            {
+              required: true,
+              message: `${this.$t(
+                'message.linkis.datasource.pleaseInput'
+              )} ` +this.$t('message.linkis.basedataManagement.datasourceTypeKey.descriptionEn'),
+              trigger: 'blur',
+            },
+          ],
+        },
+        {
+          type: 'input',
+          title: this.$t('message.linkis.basedataManagement.datasourceTypeKey.valueRegex'),
+          field: 'valueRegex',
+          value: '',
+          props: {
+            placeholder: "",
+          },
+          validate: [
+            {
+              required: false,
+              message: `${this.$t(
+                'message.linkis.datasource.pleaseInput'
+              )} `+this.$t('message.linkis.basedataManagement.datasourceTypeKey.valueRegex'),
+              trigger: 'blur',
+            },
+          ],
+        },
       ]
     }
-  },
-  created() {
-    this.getData(this.data)
-  },
-  methods: {
-    getData(data){
-      this.formData = {...data}
-    }
-  },
-  watch: {
-    data: {
-      handler(newV) {
-        this.getData(newV)
-      },
-      deep: true,
-    },
   },
 }
 </script>
