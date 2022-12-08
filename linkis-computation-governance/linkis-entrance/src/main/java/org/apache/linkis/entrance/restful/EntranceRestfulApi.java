@@ -105,7 +105,7 @@ public class EntranceRestfulApi implements EntranceRestfulRemote {
     }
     String ip = JobHistoryHelper.getRequestIpAddr(req);
     map.put(TaskConstant.REQUEST_IP, ip);
-    Job job =  entranceServer.execute(json);
+    Job job = entranceServer.execute(json);
     JobRequest jobReq = ((EntranceJob) job).getJobRequest();
     Long jobReqId = jobReq.getId();
     ModuleUserUtils.getOperationUser(req, "execute task,id: " + jobReqId);
