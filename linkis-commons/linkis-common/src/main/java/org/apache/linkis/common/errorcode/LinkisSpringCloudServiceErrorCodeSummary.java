@@ -17,7 +17,7 @@
 
 package org.apache.linkis.common.errorcode;
 
-public class LinkisSpringCloudServiceErrorCodeSummary {;
+public class LinkisSpringCloudServiceErrorCodeSummary {
 
   private int errorCode;
   private String errorDesc;

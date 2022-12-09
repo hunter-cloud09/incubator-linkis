@@ -22,7 +22,6 @@ import org.apache.linkis.metadata.query.common.domain.MetaColumnInfo;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.sql.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 

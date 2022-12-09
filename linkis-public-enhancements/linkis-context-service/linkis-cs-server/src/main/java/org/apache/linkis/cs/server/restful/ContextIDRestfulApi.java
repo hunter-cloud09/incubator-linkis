@@ -72,6 +72,10 @@ public class ContextIDRestfulApi implements CsRestfulParent {
   public Message createContextID(HttpServletRequest req, @RequestBody JsonNode jsonNode)
       throws InterruptedException, ClassNotFoundException, IOException, CSErrorException {
     ContextID contextID = getContextIDFromJsonNode(jsonNode);
+    if (StringUtils.isEmpty(contextID.getContextId())) {
+      throw new CSErrorException(97000, "contxtId cannot be empty");
+    }
+    ModuleUserUtils.getOperationUser(req, "createContextID,contextID:" + contextID.getContextId());
     HttpAnswerJob answerJob = submitRestJob(req, ServiceMethod.CREATE, contextID);
     return generateResponse(answerJob, "contextId");
   }
@@ -85,6 +89,7 @@ public class ContextIDRestfulApi implements CsRestfulParent {
     if (StringUtils.isEmpty(id)) {
       throw new CSErrorException(97000, "contxtId cannot be empty");
     }
+    ModuleUserUtils.getOperationUser(req, "getContextID,contextID:" + id);
     HttpAnswerJob answerJob = submitRestJob(req, ServiceMethod.GET, id);
     Message message = generateResponse(answerJob, "contextID");
     return message;
@@ -100,6 +105,7 @@ public class ContextIDRestfulApi implements CsRestfulParent {
     if (StringUtils.isEmpty(contextID.getContextId())) {
       throw new CSErrorException(97000, "contxtId cannot be empty");
     }
+    ModuleUserUtils.getOperationUser(req, "updateContextID,contextID:" + contextID.getContextId());
     HttpAnswerJob answerJob = submitRestJob(req, ServiceMethod.UPDATE, contextID);
     return generateResponse(answerJob, "");
   }
@@ -114,6 +120,10 @@ public class ContextIDRestfulApi implements CsRestfulParent {
       throw new CSErrorException(97000, ContextHTTPConstant.CONTEXT_ID_STR + " cannot be empty");
     }
     String id = jsonNode.get(ContextHTTPConstant.CONTEXT_ID_STR).textValue();
+    if (StringUtils.isEmpty(id)) {
+      throw new CSErrorException(97000, "contxtId cannot be empty");
+    }
+    ModuleUserUtils.getOperationUser(req, "resetContextID,contextID:" + id);
     HttpAnswerJob answerJob = submitRestJob(req, ServiceMethod.RESET, id);
     return generateResponse(answerJob, "");
   }
@@ -124,10 +134,11 @@ public class ContextIDRestfulApi implements CsRestfulParent {
   @RequestMapping(path = "removeContextID", method = RequestMethod.POST)
   public Message removeContextID(HttpServletRequest req, @RequestBody JsonNode jsonNode)
       throws InterruptedException, CSErrorException {
-    String id = jsonNode.get("contextId").textValue();
+    String id = jsonNode.get(ContextHTTPConstant.CONTEXT_ID_STR).textValue();
     if (StringUtils.isEmpty(id)) {
       throw new CSErrorException(97000, "contxtId cannot be empty");
     }
+    ModuleUserUtils.getOperationUser(req, "removeContextID,contextID:" + id);
     HttpAnswerJob answerJob = submitRestJob(req, ServiceMethod.REMOVE, id);
     return generateResponse(answerJob, "");
   }
@@ -158,7 +169,7 @@ public class ContextIDRestfulApi implements CsRestfulParent {
       @RequestParam(value = "pageNow", required = false) Integer paramPageNow,
       @RequestParam(value = "pageSize", required = false) Integer paramPageSize)
       throws InterruptedException, CSErrorException, IOException, ClassNotFoundException {
-    String username = ModuleUserUtils.getOperationUser(req);
+    String username = ModuleUserUtils.getOperationUser(req, "searchContextIDByTime");
     if (Configuration.isNotAdmin(username)) {
       throw new CSErrorException(97018, "Only station admins are allowed.");
     }
@@ -206,18 +217,24 @@ public class ContextIDRestfulApi implements CsRestfulParent {
     Date accessTimeEndDate = null;
 
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern(CSCommonUtils.DEFAULT_TIME_FORMAT);
-    if (StringUtils.isNotBlank(createTimeStart))
+    if (StringUtils.isNotBlank(createTimeStart)) {
       createTimeStartDate = localDatetimeToDate(LocalDateTime.parse(createTimeStart, dtf));
-    if (StringUtils.isNotBlank(createTimeEnd))
+    }
+    if (StringUtils.isNotBlank(createTimeEnd)) {
       createTimeEndDate = localDatetimeToDate(LocalDateTime.parse(createTimeEnd, dtf));
-    if (StringUtils.isNotBlank(updateTimeStart))
+    }
+    if (StringUtils.isNotBlank(updateTimeStart)) {
       updateTimeStartDate = localDatetimeToDate(LocalDateTime.parse(updateTimeStart, dtf));
-    if (StringUtils.isNotBlank(updateTimeEnd))
+    }
+    if (StringUtils.isNotBlank(updateTimeEnd)) {
       updateTimeEndDate = localDatetimeToDate(LocalDateTime.parse(updateTimeEnd, dtf));
-    if (StringUtils.isNotBlank(accessTimeStart))
+    }
+    if (StringUtils.isNotBlank(accessTimeStart)) {
       accessTimeStartDate = localDatetimeToDate(LocalDateTime.parse(accessTimeStart, dtf));
-    if (StringUtils.isNotBlank(accessTimeEnd))
+    }
+    if (StringUtils.isNotBlank(accessTimeEnd)) {
       accessTimeEndDate = localDatetimeToDate(LocalDateTime.parse(accessTimeEnd, dtf));
+    }
     HttpAnswerJob answerJob =
         submitRestJob(
             req,

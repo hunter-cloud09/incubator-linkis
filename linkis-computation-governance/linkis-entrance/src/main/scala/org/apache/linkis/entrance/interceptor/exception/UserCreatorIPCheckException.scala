@@ -15,35 +15,9 @@
  * limitations under the License.
  */
 
-package org.apache.linkis.ecm.server.util
+package org.apache.linkis.entrance.interceptor.exception
 
-import oshi.SystemInfo
+import org.apache.linkis.common.exception.ErrorException
 
-object HardwareUtils {
-
-  def getAvailableMemory(): Long = {
-    val systemInfo = new SystemInfo
-    val hardware = systemInfo.getHardware
-    val globalMemory = hardware.getMemory
-    globalMemory.getAvailable
-  }
-
-  def getMaxMemory(): Long = {
-    val systemInfo = new SystemInfo
-    val hardware = systemInfo.getHardware
-    val globalMemory = hardware.getMemory
-    globalMemory.getTotal
-  }
-
-  /**
-   * 1 total 2 available
-   * @return
-   */
-  def getTotalAndAvailableMemory(): (Long, Long) = {
-    val systemInfo = new SystemInfo
-    val hardware = systemInfo.getHardware
-    val globalMemory = hardware.getMemory
-    (globalMemory.getTotal, globalMemory.getAvailable)
-  }
-
-}
+case class UserCreatorIPCheckException(errCode: Int, errDesc: String)
+    extends ErrorException(errCode, errDesc) {}

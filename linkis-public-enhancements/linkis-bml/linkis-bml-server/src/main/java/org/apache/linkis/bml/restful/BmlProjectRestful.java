@@ -44,6 +44,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -138,7 +139,8 @@ public class BmlProjectRestful {
       @RequestParam(name = "projectName") String projectName,
       @RequestParam(name = "file") List<MultipartFile> files)
       throws ErrorException {
-    String username = ModuleUserUtils.getOperationUser(request, "uploadShareResource");
+    String username =
+        ModuleUserUtils.getOperationUser(request, "uploadShareResource projectName:" + projectName);
     Message message;
     try {
       LOGGER.info(
@@ -231,6 +233,24 @@ public class BmlProjectRestful {
     Message message;
     try {
       String projectName = bmlProjectService.getProjectNameByResourceId(resourceId);
+      if (StringUtils.isBlank(projectName)) {
+        LOGGER.error(
+            "The project name of user {}'s resourceId: {} is empty.  Contact the administrator. (用户{}的资源：{}对应的项目名称为空，请联系管理员。)",
+            username,
+            resourceId,
+            username,
+            resourceId);
+        throw new BmlProjectNoEditException(
+            "The project name of user "
+                + username
+                + "'s resourceId: "
+                + resourceId
+                + " is empty.  Contact the administrator. (用户"
+                + username
+                + "的资源："
+                + resourceId
+                + "对应的项目名称为空，请联系管理员。)");
+      }
       if (!bmlProjectService.checkEditPriv(projectName, username)) {
         LOGGER.error(
             "{} does not have edit permission on project {}. Upload resource failed ({} 对工程 {} 没有编辑权限, 上传资源失败)",
@@ -308,8 +328,30 @@ public class BmlProjectRestful {
     resp.setHeader("Content-Disposition", "attachment");
     String ip = HttpRequestHelper.getIp(request);
     DownloadModel downloadModel = new DownloadModel(resourceId, version, user, ip);
+    ModuleUserUtils.getOperationUser(
+        request,
+        MessageFormat.format(
+            "downloadShareResource,resourceId:{0},version:{1}", resourceId, version));
     try {
       String projectName = bmlProjectService.getProjectNameByResourceId(resourceId);
+      if (StringUtils.isBlank(projectName)) {
+        LOGGER.error(
+            "The project name of user {}'s resourceId: {} is empty.  Contact the administrator. (用户{}的资源：{}对应的项目名称为空，请联系管理员。)",
+            user,
+            resourceId,
+            user,
+            resourceId);
+        throw new BmlProjectNoEditException(
+            "The project name of user "
+                + user
+                + "'s resourceId: "
+                + resourceId
+                + " is empty.  Contact the administrator. (用户"
+                + user
+                + "的资源："
+                + resourceId
+                + "对应的项目名称为空，请联系管理员。)");
+      }
       if (!bmlProjectService.checkAccessPriv(projectName, user)) {
         LOGGER.error(
             "{} does not have view privileges on project {}. Download resource failed({} 对工程 {} 没有查看权限, 下载资源失败)",
@@ -325,7 +367,7 @@ public class BmlProjectRestful {
                 + user
                 + " 对工程 { "
                 + projectName
-                + " }没有编辑权限,上传资源失败");
+                + " }没有编辑权限, 下载资源失败");
       }
       LOGGER.info(
           "user {} begin to downLoad resource resourceId is {}, version is {} ,ip is {}, 并代理成hadoop ",
@@ -403,6 +445,7 @@ public class BmlProjectRestful {
   public Message getProjectInfo(
       HttpServletRequest request,
       @RequestParam(value = "projectName", required = false) String projectName) {
+    ModuleUserUtils.getOperationUser(request, "getProjectInfo");
     return Message.ok("Obtain project information successfully (获取工程信息成功)");
   }
 
@@ -418,9 +461,14 @@ public class BmlProjectRestful {
   @RequestMapping(path = "attachResourceAndProject", method = RequestMethod.POST)
   public Message attachResourceAndProject(
       HttpServletRequest request, @RequestBody JsonNode jsonNode) throws ErrorException {
-    String username = ModuleUserUtils.getOperationUser(request, "attachResourceAndProject");
     String projectName = jsonNode.get(PROJECT_NAME_STR).textValue();
     String resourceId = jsonNode.get("resourceId").textValue();
+    String username =
+        ModuleUserUtils.getOperationUser(
+            request,
+            MessageFormat.format(
+                "attachResourceAndProject,resourceId:{0},projectName:{1}",
+                resourceId, projectName));
     LOGGER.info("begin to attach {}  and {}", projectName, username);
     bmlProjectService.attach(projectName, resourceId);
     return Message.ok("attach resource and project ok");
@@ -439,8 +487,9 @@ public class BmlProjectRestful {
   @RequestMapping(path = "updateProjectUsers", method = RequestMethod.POST)
   public Message updateProjectUsers(HttpServletRequest request, @RequestBody JsonNode jsonNode)
       throws ErrorException {
-    String username = ModuleUserUtils.getOperationUser(request, "updateProjectUsers");
     String projectName = jsonNode.get("projectName").textValue();
+    String username =
+        ModuleUserUtils.getOperationUser(request, "updateProjectUsers,projectName:" + projectName);
     LOGGER.info("{} begins to update project users for {}", username, projectName);
     List<String> editUsers = new ArrayList<>();
     List<String> accessUsers = new ArrayList<>();

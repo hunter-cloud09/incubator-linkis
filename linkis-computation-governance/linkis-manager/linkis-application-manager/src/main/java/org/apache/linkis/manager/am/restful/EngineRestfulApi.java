@@ -64,7 +64,13 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -107,10 +113,7 @@ public class EngineRestfulApi {
 
   private static final Logger logger = LoggerFactory.getLogger(EngineRestfulApi.class);
 
-  @ApiOperation(
-      value = "createEngineConn",
-      notes = "create an engineconn",
-      response = Message.class)
+  @ApiOperation(value = "createEngineConn", response = Message.class)
   @ApiOperationSupport(ignoreParameters = {"jsonNode"})
   @RequestMapping(path = "/createEngineConn", method = RequestMethod.POST)
   public Message createEngineConn(
@@ -221,10 +224,7 @@ public class EngineRestfulApi {
       notes = "kill one engineconn or more ",
       response = Message.class)
   @ApiImplicitParams({
-    @ApiImplicitParam(
-        name = "engineInstance",
-        dataType = "String",
-        example = "bdpujes110003:12295"),
+    @ApiImplicitParam(name = "engineInstance", dataType = "String", example = "bdpujes110:12295"),
     @ApiImplicitParam(
         name = "applicationName",
         dataType = "String",
@@ -272,7 +272,7 @@ public class EngineRestfulApi {
     @ApiImplicitParam(name = "emInstance", dataType = "String", example = "bdpujes110003:9102"),
     @ApiImplicitParam(name = "engineType", dataType = "String"),
     @ApiImplicitParam(name = "nodeStatus", dataType = "String"),
-    @ApiImplicitParam(name = "owner", required = false, dataType = "String", value = "owner"),
+    @ApiImplicitParam(name = "owner", dataType = "String", value = "owner")
   })
   @ApiOperationSupport(ignoreParameters = {"jsonNode"})
   @RequestMapping(path = "/listEMEngines", method = RequestMethod.POST)
