@@ -65,7 +65,7 @@ public class MetaClassLoaderManager {
   private static final String META_CLASS_NAME =
       "org.apache.linkis.metadata.query.service.%sMetaService";
 
-  private static final String MYSQL_BASE_DIR = "jdbc";
+  private static final String JDBC_BASE_DIR = "jdbc";
   private static final String HIVE_BASE_DIR = "hive";
 
   private static final Logger LOG = LoggerFactory.getLogger(MetaClassLoaderManager.class);
@@ -86,14 +86,13 @@ public class MetaClassLoaderManager {
     }
     if (needToLoad) {
       MetaServiceInstance finalServiceInstance1 = serviceInstance;
-      boolean isHiveContains = false;
       String finalBaseType;
-      boolean isMysqlContains =
-          CacheConfiguration.MYSQL_RELATIONSHIP_LIST.getValue().contains(dsType);
-      if (!isMysqlContains)
-        isHiveContains = CacheConfiguration.HIVE_RELATIONSHIP_LIST.getValue().contains(dsType);
-      if (isMysqlContains) finalBaseType = MYSQL_BASE_DIR;
-      else if (isHiveContains) finalBaseType = HIVE_BASE_DIR;
+      boolean isJdbcDatasource =
+          CacheConfiguration.JDBC_RELATIONSHIP_LIST.getValue().contains(dsType);
+      boolean isHiveDatasource =
+          CacheConfiguration.HIVE_RELATIONSHIP_LIST.getValue().contains(dsType);
+      if (isJdbcDatasource) finalBaseType = JDBC_BASE_DIR;
+      else if (isHiveDatasource) finalBaseType = HIVE_BASE_DIR;
       else finalBaseType = dsType;
       serviceInstance =
           metaServiceInstances.compute(
