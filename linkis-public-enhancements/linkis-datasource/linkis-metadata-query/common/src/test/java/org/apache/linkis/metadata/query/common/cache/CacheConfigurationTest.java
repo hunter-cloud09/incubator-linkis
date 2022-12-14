@@ -30,7 +30,7 @@ public class CacheConfigurationTest {
     Long cacheExpireTimeValue = CacheConfiguration.CACHE_EXPIRE_TIME.getValue();
     Integer cacheInPoolSizeValue = CacheConfiguration.CACHE_IN_POOL_SIZE.getValue();
     Long cacheMaxSizeValue = CacheConfiguration.CACHE_MAX_SIZE.getValue();
-    String mysqlRelationshipListValue = CacheConfiguration.MYSQL_RELATIONSHIP_LIST.getValue();
+    String mysqlRelationshipListValue = CacheConfiguration.JDBC_RELATIONSHIP_LIST.getValue();
 
     Assertions.assertTrue(cacheExpireTimeValue.longValue() == 600L);
     Assertions.assertTrue(cacheInPoolSizeValue == 5);

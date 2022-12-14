@@ -31,8 +31,11 @@ public class CacheConfiguration {
   public static final CommonVars<Integer> CACHE_IN_POOL_SIZE =
       CommonVars.apply("wds.linkis.server.mdm.service.cache.in-pool.size", 5);
 
-  public static final CommonVars<String> MYSQL_RELATIONSHIP_LIST =
+  public static final CommonVars<String> JDBC_RELATIONSHIP_LIST =
       CommonVars.apply(
-          "wds.linkis.server.mdq.mysql.relationship",
+          "linkis.server.mdq.jdbc.relationship",
           "mysql,oracle,kingbase,postgresql,sqlserver,db2,greenplum,dm,mysql,doris,clickhouse");
+
+  public static final CommonVars<String> HIVE_RELATIONSHIP_LIST =
+      CommonVars.apply("linkis.server.mdq.hive.relationship", "hive,iceberg");
 }
