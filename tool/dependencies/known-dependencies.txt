@@ -74,7 +74,7 @@ commons-lang3-3.12.0.jar
 commons-logging-1.2.jar
 commons-math-2.2.jar
 commons-math3-3.6.1.jar
-commons-net-3.8.0.jar
+commons-net-3.9.0.jar
 commons-pool-1.6.jar
 commons-pool2-2.8.1.jar
 commons-text-1.10.0.jar
@@ -437,8 +437,7 @@ presto-client-0.234.jar
 presto-client-1.5.0.jar
 presto-resource-group-managers-0.234.jar
 presto-spi-0.234.jar
-protobuf-java-3.14.0.jar
-protobuf-java-3.15.8.jar
+protobuf-java-3.16.3.jar
 protostuff-api-1.6.2.jar
 protostuff-collectionschema-1.6.2.jar
 protostuff-core-1.6.2.jar
@@ -482,7 +481,7 @@ simplefan-19.3.0.0.jar
 sketches-core-0.9.0.jar
 slf4j-api-1.7.36.jar
 slice-0.38.jar
-snakeyaml-1.26.jar
+snakeyaml-1.33.jar
 snappy-java-1.1.7.7.jar
 snappy-java-1.1.8.2.jar
 snappy-java-1.1.8.3.jar
