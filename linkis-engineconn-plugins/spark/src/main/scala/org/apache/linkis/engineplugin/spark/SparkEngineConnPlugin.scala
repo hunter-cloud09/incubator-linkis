@@ -27,7 +27,7 @@ import org.apache.linkis.manager.engineplugin.common.creation.EngineConnFactory
 import org.apache.linkis.manager.engineplugin.common.launch.EngineConnLaunchBuilder
 import org.apache.linkis.manager.engineplugin.common.resource.EngineResourceFactory
 import org.apache.linkis.manager.label.entity.Label
-import org.apache.linkis.manager.label.entity.engine.{EngineType, EngineTypeLabel}
+import org.apache.linkis.manager.label.entity.engine.EngineType
 import org.apache.linkis.manager.label.utils.EngineTypeLabelCreator
 
 import java.util
@@ -48,7 +48,7 @@ class SparkEngineConnPlugin extends EngineConnPlugin {
 
   private var engineFactory: EngineConnFactory = _
 
-  override def init(params: util.Map[String, Any]): Unit = {
+  override def init(params: util.Map[String, AnyRef]): Unit = {
     val engineTypeLabel = EngineTypeLabelCreator.createEngineTypeLabel(EngineType.SPARK.toString)
     this.defaultLabels.add(engineTypeLabel)
   }

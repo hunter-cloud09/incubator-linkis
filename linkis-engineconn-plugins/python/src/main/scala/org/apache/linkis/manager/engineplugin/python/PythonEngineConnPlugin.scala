@@ -48,7 +48,7 @@ class PythonEngineConnPlugin extends EngineConnPlugin {
 
   private val defaultLabels: util.List[Label[_]] = new util.ArrayList[Label[_]]()
 
-  override def init(params: util.Map[String, Any]): Unit = {
+  override def init(params: util.Map[String, AnyRef]): Unit = {
     val engineTypeLabel = EngineTypeLabelCreator.createEngineTypeLabel(EngineType.PYTHON.toString)
     this.defaultLabels.add(engineTypeLabel)
   }

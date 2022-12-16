@@ -53,11 +53,10 @@ class RuntimeParamsImpl(
   private var jobs: util.Map[String, AnyRef] = _
 
   def init(): Unit = {
-    dataSources =
-      getSubMap(runtimeMap.asInstanceOf[util.Map[String, Any]], QueryParams.DATA_SOURCE_KEY)
-    context = getSubMap(runtimeMap.asInstanceOf[util.Map[String, Any]], QueryParams.CONTEXT_KEY)
+    dataSources = getSubMap(runtimeMap, QueryParams.DATA_SOURCE_KEY)
+    context = getSubMap(runtimeMap, QueryParams.CONTEXT_KEY)
     initContextMap(runtimeMap, context) // just for compatible with old usage.
-    jobs = getSubMap(runtimeMap.asInstanceOf[util.Map[String, Any]], QueryParams.JOB_KEY)
+    jobs = getSubMap(runtimeMap, QueryParams.JOB_KEY)
   }
 
   init()
@@ -78,7 +77,7 @@ class RuntimeParamsImpl(
     }
   }
 
-  private def getSubMap(params: util.Map[String, Any], key: String): util.Map[String, AnyRef] = {
+  private def getSubMap(params: util.Map[String, AnyRef], key: String): util.Map[String, AnyRef] = {
     if (null != params.get(key)) {
       params.get(key).asInstanceOf[util.Map[String, AnyRef]]
     } else {
