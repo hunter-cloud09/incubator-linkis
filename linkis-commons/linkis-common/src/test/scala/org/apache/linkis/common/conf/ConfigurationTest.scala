@@ -15,25 +15,15 @@
  * limitations under the License.
  */
 
-package org.apache.linkis.storage.script.parser
+package org.apache.linkis.common.conf
 
-import org.apache.linkis.common.utils.CodeAndRunTypeUtils
+import org.junit.jupiter.api.{Assertions, Test}
 
-class PYScriptParser private extends CommonScriptParser {
-  override def prefix: String = "#@set"
+class ConfigurationTest {
 
-  override def belongTo(suffix: String): Boolean =
-    CodeAndRunTypeUtils.getSuffixBelongToLanguageTypeOrNot(
-      suffix,
-      CodeAndRunTypeUtils.LANGUAGE_TYPE_PYTHON
-    )
-
-  override def prefixConf: String = "#conf@set"
-}
-
-object PYScriptParser {
-  val pYScriptParser: PYScriptParser = new PYScriptParser
-
-  def apply(): CommonScriptParser = pYScriptParser
+  @Test private[conf] def testIsAdmin(): Unit = {
+    Assertions.assertTrue(Configuration.isAdmin("hadoop"))
+    Assertions.assertFalse(Configuration.isAdmin("HaDoop"))
+  }
 
 }

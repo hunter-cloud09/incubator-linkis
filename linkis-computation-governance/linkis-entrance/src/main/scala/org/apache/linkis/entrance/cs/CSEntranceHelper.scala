@@ -150,14 +150,16 @@ object CSEntranceHelper extends Logging {
         case contextID: LinkisWorkflowContextID =>
           if (CSCommonUtils.CONTEXT_ENV_PROD.equalsIgnoreCase(contextID.getEnv)) {
             logger.info(
-              s"reset creator from ${userCreatorLabel.getCreator} to " + EntranceConfiguration.SCHEDULER_CREATOR
-                .getHotValue()
+              "reset creator from {} to {}",
+              userCreatorLabel.getCreator: Any,
+              EntranceConfiguration.SCHEDULER_CREATOR.getHotValue(): Any
             )
             userCreatorLabel.setCreator(EntranceConfiguration.SCHEDULER_CREATOR.getHotValue())
           } else {
             logger.info(
-              s"reset creator from ${userCreatorLabel.getCreator} to " + EntranceConfiguration.FLOW_EXECUTION_CREATOR
-                .getHotValue()
+              "reset creator from {} to {}",
+              userCreatorLabel.getCreator: Any,
+              EntranceConfiguration.FLOW_EXECUTION_CREATOR.getHotValue: Any
             )
             userCreatorLabel.setCreator(EntranceConfiguration.FLOW_EXECUTION_CREATOR.getHotValue())
           }
