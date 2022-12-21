@@ -21,7 +21,7 @@ import org.apache.linkis.engineplugin.spark.factory.{
   SparkEngineConnFactory,
   SparkEngineConnResourceFactory
 }
-import org.apache.linkis.engineplugin.spark.launch.SparkSubmitProcessEngineConnLaunchBuilder
+import org.apache.linkis.engineplugin.spark.launch.SparkEngineConnLaunchBuilder
 import org.apache.linkis.manager.engineplugin.common.EngineConnPlugin
 import org.apache.linkis.manager.engineplugin.common.creation.EngineConnFactory
 import org.apache.linkis.manager.engineplugin.common.launch.EngineConnLaunchBuilder
@@ -61,7 +61,7 @@ class SparkEngineConnPlugin extends EngineConnPlugin {
   }
 
   override def getEngineConnLaunchBuilder: EngineConnLaunchBuilder = {
-    SparkSubmitProcessEngineConnLaunchBuilder.newBuilder()
+    new SparkEngineConnLaunchBuilder()
   }
 
   override def getEngineConnFactory: EngineConnFactory = {

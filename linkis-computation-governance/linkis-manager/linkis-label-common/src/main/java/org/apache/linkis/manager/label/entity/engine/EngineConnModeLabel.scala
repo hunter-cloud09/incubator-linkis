@@ -59,4 +59,10 @@ object EngineConnMode extends Enumeration {
     case _ => Unknown
   }
 
+  val ONCE_MODES = Set(Once, Computation_With_Once, Once_With_Cluster)
+
+  def isOnceMode(ecMode: String): Boolean = {
+    ONCE_MODES.contains(toEngineConnMode(ecMode))
+  }
+
 }
