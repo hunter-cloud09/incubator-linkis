@@ -53,8 +53,7 @@ classgraph-4.1.7.jar
 classmate-1.5.1.jar
 clickhouse-jdbc-0.3.2-patch11.jar
 commons-beanutils-1.9.4.jar
-commons-cli-1.2.jar
-commons-cli-1.3.1.jar
+commons-cli-1.5.0.jar
 commons-codec-1.10.jar
 commons-codec-1.14.jar
 commons-collections-3.2.2.jar
@@ -290,6 +289,7 @@ jmxutils-1.19.jar
 jna-5.12.1.jar
 jna-platform-5.12.1.jar
 joda-time-2.10.10.jar
+joda-time-2.10.5.jar
 joda-time-2.3.jar
 joda-time-2.9.9.jar
 jol-core-0.2.jar
