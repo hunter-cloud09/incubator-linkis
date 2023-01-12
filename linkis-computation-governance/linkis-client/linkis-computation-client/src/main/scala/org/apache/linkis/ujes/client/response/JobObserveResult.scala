@@ -15,38 +15,14 @@
  * limitations under the License.
  */
 
-package org.apache.linkis.gateway.http
+package org.apache.linkis.ujes.client.response
 
-import org.apache.linkis.server.JMap
+import org.apache.linkis.httpclient.dws.annotation.DWSHttpMessageResult
+import org.apache.linkis.httpclient.dws.response.DWSResult
 
-import org.springframework.http.server.reactive.AbstractServerHttpRequest
+import java.util
 
-import javax.servlet.http.Cookie
+import scala.beans.BeanProperty
 
-import java.net.{InetSocketAddress, URI}
-
-trait GatewayHttpRequest {
-
-  def getRequestURI: String
-
-  def getURI: URI
-
-  def getHeaders: JMap[String, Array[String]]
-
-  def addHeader(headerName: String, headers: Array[String]): Unit
-
-  def getQueryParams: JMap[String, Array[String]]
-
-  def addCookie(cookieName: String, cookies: Array[Cookie]): Unit
-
-  def getCookies: JMap[String, Array[Cookie]]
-
-  def getRemoteAddress: InetSocketAddress
-
-  def getRequestRealIpAddr(): String
-
-  def getMethod: String
-
-  def getRequestBody: String
-
-}
+@DWSHttpMessageResult("/api/rest_j/v\\d+/jobhistory/setting/addObserveInfo")
+class JobObserveResult extends JobExecuteResult {}
