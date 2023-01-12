@@ -34,13 +34,13 @@ public class LabelCommonConfig {
       CommonVars.apply("wds.linkis.label.entity.packages", "");
 
   public static final CommonVars<String> SPARK_ENGINE_VERSION =
-      CommonVars.apply("wds.linkis.spark.engine.version", "2.4.3");
+      CommonVars.apply("wds.linkis.spark.engine.version", "3.2.1");
 
   public static final CommonVars<String> HIVE_ENGINE_VERSION =
-      CommonVars.apply("wds.linkis.hive.engine.version", "2.3.3");
+      CommonVars.apply("wds.linkis.hive.engine.version", "3.1.3");
 
   public static final CommonVars<String> PYTHON_ENGINE_VERSION =
-      CommonVars.apply("wds.linkis.python.engine.version", "python2");
+      CommonVars.apply("wds.linkis.python.engine.version", "python3");
 
   public static final CommonVars<String> FILE_ENGINE_VERSION =
       CommonVars.apply("wds.linkis.file.engine.version", "1.0");
@@ -61,7 +61,7 @@ public class LabelCommonConfig {
       CommonVars.apply("wds.linkis.appconn.engine.version", "1");
 
   public static final CommonVars<String> FLINK_ENGINE_VERSION =
-      CommonVars.apply("wds.linkis.flink.engine.version", "1.12.2");
+      CommonVars.apply("wds.linkis.flink.engine.version", "1.12.7");
 
   public static final CommonVars<String> DATAX_ENGINE_VERSION =
       CommonVars.apply("wds.linkis.datax.engine.version", "3.0.0");
