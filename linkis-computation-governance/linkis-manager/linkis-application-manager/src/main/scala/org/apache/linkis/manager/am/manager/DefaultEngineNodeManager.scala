@@ -304,7 +304,7 @@ class DefaultEngineNodeManager extends EngineNodeManager with Logging {
     }
     throw new AMErrorException(
       AMErrorCode.NOT_EXISTS_ENGINE_CONN.getErrorCode,
-      AMErrorCode.NOT_EXISTS_ENGINE_CONN.getErrorDesc
+      AMErrorCode.NOT_EXISTS_ENGINE_CONN.getErrorDesc + ":" + serviceInstance.toString
     )
   }
 
