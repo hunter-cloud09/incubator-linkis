@@ -35,7 +35,4 @@ public class CacheConfiguration {
       CommonVars.apply(
           "linkis.server.mdq.jdbc.relationship",
           "mysql,oracle,kingbase,postgresql,sqlserver,db2,greenplum,dm,mysql,doris,clickhouse");
-
-  public static final CommonVars<String> HIVE_RELATIONSHIP_LIST =
-      CommonVars.apply("linkis.server.mdq.hive.relationship", "hive,iceberg");
 }

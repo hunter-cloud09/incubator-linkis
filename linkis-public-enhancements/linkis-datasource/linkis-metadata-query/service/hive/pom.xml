@@ -27,6 +27,7 @@
 
   <properties>
     <datanucleus-api-jdo.version>4.2.4</datanucleus-api-jdo.version>
+    <iceberg.version>0.13.2</iceberg.version>
   </properties>
 
   <dependencies>
@@ -252,6 +253,23 @@
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpcore</artifactId>
+    </dependency>
+
+    <!--    iceberg dependency-->
+    <dependency>
+      <groupId>org.apache.iceberg</groupId>
+      <artifactId>iceberg-mr</artifactId>
+      <version>${iceberg.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.iceberg</groupId>
+      <artifactId>iceberg-hive-metastore</artifactId>
+      <version>${iceberg.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.iceberg</groupId>
+      <artifactId>iceberg-hive-runtime</artifactId>
+      <version>${iceberg.version}</version>
     </dependency>
   </dependencies>
 
