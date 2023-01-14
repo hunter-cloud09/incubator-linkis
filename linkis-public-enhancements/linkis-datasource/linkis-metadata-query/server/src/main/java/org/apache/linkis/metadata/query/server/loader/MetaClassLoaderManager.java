@@ -67,12 +67,17 @@ public class MetaClassLoaderManager {
 
   private static final String JDBC_BASE_DIR = "jdbc";
   private static final String HIVE_BASE_DIR = "hive";
+  private static final String ICEBERG_DS_TYPE = "iceberg";
+  private static final String HIVE_DS_TYPE = "hive";
 
   private static final Logger LOG = LoggerFactory.getLogger(MetaClassLoaderManager.class);
 
   public BiFunction<String, Object[], Object> getInvoker(String dsType) throws ErrorException {
     boolean needToLoad = true;
-
+    if (dsType.equalsIgnoreCase(ICEBERG_DS_TYPE)) {
+      dsType = HIVE_DS_TYPE;
+      LOG.info("change iceberg ds type to hive..");
+    }
     MetaServiceInstance serviceInstance = metaServiceInstances.get(dsType);
     if (Objects.nonNull(serviceInstance)) {
       Integer expireTimeInSec = INSTANCE_EXPIRE_TIME.getValue();
@@ -89,11 +94,12 @@ public class MetaClassLoaderManager {
       String finalBaseType;
       boolean isJdbcDatasource =
           CacheConfiguration.JDBC_RELATIONSHIP_LIST.getValue().contains(dsType);
-      boolean isHiveDatasource =
-          CacheConfiguration.HIVE_RELATIONSHIP_LIST.getValue().contains(dsType);
-      if (isJdbcDatasource) finalBaseType = JDBC_BASE_DIR;
-      else if (isHiveDatasource) finalBaseType = HIVE_BASE_DIR;
-      else finalBaseType = dsType;
+      if (isJdbcDatasource) {
+        finalBaseType = JDBC_BASE_DIR;
+      } else {
+        finalBaseType = dsType;
+      }
+      String finalDsType = dsType;
       serviceInstance =
           metaServiceInstances.compute(
               dsType,
@@ -106,13 +112,13 @@ public class MetaClassLoaderManager {
                 String componentLib = stdLib + "/" + finalBaseType;
                 LOG.info(
                     "Start to load/reload meta instance of data source type: ["
-                        + dsType
+                        + finalDsType
                         + "] from library dir:"
                         + componentLib);
                 ClassLoader parentClassLoader = MetaClassLoaderManager.class.getClassLoader();
                 ClassLoader metaClassLoader =
                     classLoaders.compute(
-                        dsType,
+                        finalDsType,
                         (type, classLoader) -> {
                           try {
                             return new URLClassLoader(
@@ -121,7 +127,7 @@ public class MetaClassLoaderManager {
                           } catch (Exception e) {
                             LOG.error(
                                 "Cannot init the classloader of type: ["
-                                    + dsType
+                                    + finalDsType
                                     + "] in library path: ["
                                     + componentLib
                                     + "]",
@@ -131,23 +137,25 @@ public class MetaClassLoaderManager {
                         });
                 if (Objects.isNull(metaClassLoader)) {
                   throw new MetaRuntimeException(
-                      MessageFormat.format(ERROR_IN_CREATING.getErrorDesc(), dsType), null);
+                      MessageFormat.format(ERROR_IN_CREATING.getErrorDesc(), finalDsType), null);
                 }
                 String expectClassName = null;
-                if (dsType.length() > 0) {
-                  String prefix = dsType.substring(0, 1).toUpperCase() + dsType.substring(1);
+                if (finalDsType.length() > 0) {
+                  String prefix =
+                      finalDsType.substring(0, 1).toUpperCase() + finalDsType.substring(1);
                   expectClassName = String.format(META_CLASS_NAME, prefix);
                 }
                 Class<? extends BaseMetadataService> metaServiceClass =
                     searchForLoadMetaServiceClass(metaClassLoader, expectClassName, true);
                 if (Objects.isNull(metaServiceClass)) {
                   throw new MetaRuntimeException(
-                      MessageFormat.format(INIT_META_SERVICE.getErrorDesc(), dsType), null);
+                      MessageFormat.format(INIT_META_SERVICE.getErrorDesc(), finalDsType), null);
                 }
                 BaseMetadataService metadataService =
                     MetadataUtils.loadMetaService(metaServiceClass, metaClassLoader);
                 if (metadataService instanceof AbstractCacheMetaService) {
-                  LOG.info("Invoke the init() method in meta service for type: [" + dsType + "]");
+                  LOG.info(
+                      "Invoke the init() method in meta service for type: [" + finalDsType + "]");
                   ((AbstractCacheMetaService<?>) metadataService).init();
                 }
                 return new MetaServiceInstance(metadataService, metaClassLoader);
