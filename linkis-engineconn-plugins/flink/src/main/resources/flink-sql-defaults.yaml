@@ -76,7 +76,7 @@ catalogs:
     type: hive
     hive-conf-dir: /ldp/etc/hive
     property-version: 1
-  - name: default_catalog
+  - name: ldp_iceberg
     type: iceberg
     catalog-type: hive
     hive-conf-dir: /ldp/etc/hive
@@ -120,7 +120,7 @@ execution:
   # maximum number of maintained rows in 'table' presentation of results
   max-table-result-rows: 1000000
   # parallelism of the program
-  parallelism: 1
+  # parallelism: 1
   # maximum parallelism
   max-parallelism: 128
   # minimum idle state retention in ms
@@ -128,14 +128,14 @@ execution:
   # maximum idle state retention in ms
   max-idle-state-retention: 0
   # current catalog ('default_catalog' by default)
-  current-catalog: default_catalog
+  current-catalog: ldp_iceberg
   # current database of the current catalog (default database of the catalog by default)
-  current-database: default_database
-  # controls how table programs are restarted in case of a failures
-  restart-strategy:
+  current-database: default
+    # controls how table programs are restarted in case of a failures
+    # restart-strategy:
     # strategy type
     # possible values are "fixed-delay", "failure-rate", "none", or "fallback" (default)
-    type: fallback
+  # type: fallback
 
 #==============================================================================
 # Configuration options
