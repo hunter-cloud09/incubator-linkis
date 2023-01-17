@@ -102,7 +102,7 @@
     </snapshotRepository>
   </distributionManagement>
   <properties>
-    <revision>1.3.2-SNAPSHOT</revision>
+    <revision>1.3.2</revision>
 
     <!-- bigdata -->
     <zookeeper.version>3.5.9</zookeeper.version>
