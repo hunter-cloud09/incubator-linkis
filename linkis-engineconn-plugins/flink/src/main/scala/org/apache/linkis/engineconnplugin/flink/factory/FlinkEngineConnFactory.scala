@@ -137,8 +137,13 @@ class FlinkEngineConnFactory extends MultiExecutorEngineConnFactory with Logging
     if (flinkProvidedLibPathList != null && flinkProvidedLibPathList.size() > 0) {
       providedLibDirList.addAll(flinkProvidedLibPathList)
     }
-    // if(StringUtils.isNotBlank(flinkLibRemotePath)) providedLibDirList.add(flinkLibRemotePath)
-    flinkConfig.set(YarnConfigOptions.PROVIDED_LIB_DIRS, providedLibDirList)
+    if (!providedLibDirList.isEmpty) {
+      flinkConfig.get(YarnConfigOptions.PROVIDED_LIB_DIRS).addAll(providedLibDirList)
+    }
+
+    // miss the default Global config
+    // flinkConfig.set(YarnConfigOptions.PROVIDED_LIB_DIRS, providedLibDirList)
+
     // construct jar-dependencies
     flinkConfig.set(YarnConfigOptions.SHIP_FILES, context.getShipDirs)
     // set user classpaths
