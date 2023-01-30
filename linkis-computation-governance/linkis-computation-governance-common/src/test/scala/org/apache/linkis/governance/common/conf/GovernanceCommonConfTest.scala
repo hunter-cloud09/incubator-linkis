@@ -54,7 +54,7 @@ class GovernanceCommonConfTest {
     Assertions.assertEquals("linkis-cg-entrance", entranceservicename)
     Assertions.assertTrue(5000 == enginedefaultlimit.intValue())
     Assertions.assertTrue(skippythonparser)
-    Assertions.assertEquals("hdfs:///tmp/linkis/", resultsetstorepath)
+    Assertions.assertEquals("file:///tmp/linkis/", resultsetstorepath)
     Assertions.assertTrue(512 == errorcodedesclen)
 
   }

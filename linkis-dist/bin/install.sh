@@ -336,6 +336,11 @@ sed -i ${txt}  "s#wds.linkis.home.*#wds.linkis.home=$LINKIS_HOME#g" $common_conf
 sed -i ${txt}  "s#wds.linkis.filesystem.root.path.*#wds.linkis.filesystem.root.path=$WORKSPACE_USER_ROOT_PATH#g" $common_conf
 sed -i ${txt}  "s#wds.linkis.filesystem.hdfs.root.path.*#wds.linkis.filesystem.hdfs.root.path=$HDFS_USER_ROOT_PATH#g" $common_conf
 
+if [ "$RESULT_SET_ROOT_PATH" != "" ]
+then
+  sed -i ${txt}  "s#wds.linkis.resultSet.store.path.*#wds.linkis.resultSet.store.path=$RESULT_SET_ROOT_PATH#g" $common_conf
+fi
+
 ##gateway
 gateway_conf=$LINKIS_HOME/conf/linkis-mg-gateway.properties
 echo "update conf $gateway_conf"
@@ -385,10 +390,6 @@ entrance_conf=$LINKIS_HOME/conf/linkis-cg-entrance.properties
 if [ "$ENTRANCE_PORT" != "" ]
 then
   sed -i ${txt}  "s#spring.server.port.*#spring.server.port=$ENTRANCE_PORT#g" $entrance_conf
-fi
-if [ "$RESULT_SET_ROOT_PATH" != "" ]
-then
-  sed -i ${txt}  "s#wds.linkis.resultSet.store.path.*#wds.linkis.resultSet.store.path=$RESULT_SET_ROOT_PATH#g" $entrance_conf
 fi
 
 publicservice_conf=$LINKIS_HOME/conf/linkis-ps-publicservice.properties
