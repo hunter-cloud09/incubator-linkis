@@ -133,17 +133,17 @@ fi
 echo "[HDFS_USER_ROOT_PATH] try to create directory"
  if [ "$HDFS_USER_ROOT_PATH" != "" ]
  then
-     localRootDir=$HDFS_USER_ROOT_PATH
+     localRootDir=$HDFS_USER_ROOT_PATH/bml
    if [[ $HDFS_USER_ROOT_PATH == file://* ]];then
      sed -i ${txt}  "s#wds.linkis.bml.is.hdfs.*#wds.linkis.bml.is.hdfs=false#g" $common_conf
-     sed -i ${txt}  "s#\#wds.linkis.bml.local.prefix.*#wds.linkis.bml.local.prefix=$HDFS_USER_ROOT_PATH#g" $common_conf
-     localRootDir=${HDFS_USER_ROOT_PATH#file://}
+     localRootDir=${localRootDir#file://}
+     sed -i ${txt}  "s#\#wds.linkis.bml.local.prefix.*#wds.linkis.bml.local.prefix=$localRootDir#g" $common_conf
      echo "[HDFS_USER_ROOT_PATH] try to create local dir,cmd is: mkdir -p $localRootDir/$deployUser"
      mkdir -p $localRootDir/$deployUser
      sudo chmod -R 775 $localRootDir/$deployUser
    elif [[ $HDFS_USER_ROOT_PATH == hdfs://* ]];then
-     sed -i ${txt}  "s#\#wds.linkis.bml.hdfs.prefix.*#wds.linkis.bml.hdfs.prefix=$HDFS_USER_ROOT_PATH#g" $common_conf
-     localRootDir=${HDFS_USER_ROOT_PATH#hdfs://}
+     localRootDir=${localRootDir#hdfs://}
+     sed -i ${txt}  "s#\#wds.linkis.bml.hdfs.prefix.*#wds.linkis.bml.hdfs.prefix=$localRootDir#g" $common_conf
      echo "[HDFS_USER_ROOT_PATH] try to create hdfs dir,cmd is: hdfs dfs -mkdir -p $localRootDir/$deployUser"
      hdfs dfs -mkdir -p $localRootDir/$deployUser
    else
