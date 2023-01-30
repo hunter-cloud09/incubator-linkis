@@ -46,7 +46,7 @@ object EntranceConfiguration {
    */
   val DEFAULT_LOGPATH_PREFIX = CommonVars[String](
     "wds.linkis.entrance.config.log.path",
-    CommonVars[String]("wds.linkis.filesystem.hdfs.root.path").getValue
+    CommonVars[String]("wds.linkis.entrance.config.log.path", "hdfs:///tmp/linkis/").getValue
   )
 
   /**

@@ -51,7 +51,7 @@ object GovernanceCommonConf {
 
   val RESULT_SET_STORE_PATH = CommonVars(
     "wds.linkis.resultSet.store.path",
-    CommonVars[String]("wds.linkis.filesystem.hdfs.root.path", "hdfs:///tmp/linkis/").getValue
+    CommonVars[String]("wds.linkis.resultSet.store.path", "hdfs:///tmp/linkis/").getValue
   )
 
   val ENGINE_CONN_YARN_APP_KILL_SCRIPTS_PATH = CommonVars(
