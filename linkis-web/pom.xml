@@ -15,18 +15,35 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>linkis</artifactId>
     <groupId>org.apache.linkis</groupId>
+    <artifactId>linkis</artifactId>
     <version>${revision}</version>
   </parent>
-  <modelVersion>4.0.0</modelVersion>
 
   <artifactId>linkis-web</artifactId>
   <packaging>pom</packaging>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>de.ingogriebsch.maven</groupId>
+        <artifactId>sync-packagejson-version-maven-plugin</artifactId>
+        <version>1.3.0</version>
+        <executions>
+          <execution>
+            <id>sync</id>
+            <goals>
+              <goal>sync</goal>
+            </goals>
+            <phase>process-resources</phase>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
   <profiles>
     <profile>
@@ -45,29 +62,29 @@
             <executions>
               <execution>
                 <id>dependency</id>
-                <phase>install</phase>
                 <goals>
                   <goal>run</goal>
                 </goals>
+                <phase>install</phase>
                 <configuration>
                   <target>
                     <exec executable="npm" failonerror="true">
-                      <arg value="install" />
+                      <arg value="install"/>
                     </exec>
                   </target>
                 </configuration>
               </execution>
               <execution>
                 <id>build</id>
-                <phase>install</phase>
                 <goals>
                   <goal>run</goal>
                 </goals>
+                <phase>install</phase>
                 <configuration>
                   <target>
                     <exec executable="npm" failonerror="true">
-                      <arg value="run" />
-                      <arg value="build" />
+                      <arg value="run"/>
+                      <arg value="build"/>
                     </exec>
                   </target>
                 </configuration>

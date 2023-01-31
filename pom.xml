@@ -76,6 +76,7 @@
     <module>linkis-engineconn-plugins</module>
     <module>linkis-extensions</module>
     <module>linkis-dist</module>
+    <module>linkis-web</module>
   </modules>
   <scm>
     <connection>scm:git:https://github.com/apache/linkis.git</connection>
