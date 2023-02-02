@@ -79,6 +79,8 @@ HADOOP_HOME=${HADOOP_HOME:-"/appcom/Install/hadoop"}
 HADOOP_CONF_DIR=${HADOOP_CONF_DIR:-"/appcom/config/hadoop-config"}
 HADOOP_KERBEROS_ENABLE=${HADOOP_KERBEROS_ENABLE:-"false"}
 HADOOP_KEYTAB_PATH=${HADOOP_KEYTAB_PATH:-"/appcom/keytab/"}
+## Hadoop env version
+HADOOP_VERSION=${HADOOP_VERSION:-"3.3.3"}
 
 #Hive
 HIVE_HOME=${HIVE_HOME:-"/appcom/Install/hive"}
@@ -92,9 +94,6 @@ SPARK_VERSION=${SPARK_VERSION:-"3.2.1"}
 
 #Python
 PYTHON_VERSION=${PYTHON_VERSION:-"python3"}
-
-## Hadoop env version
-HADOOP_VERSION=2.7.2
 
 ################### The install Configuration of all Micro-Services #####################
 #

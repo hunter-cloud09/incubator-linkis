@@ -66,7 +66,6 @@ public class MetaClassLoaderManager {
       "org.apache.linkis.metadata.query.service.%sMetaService";
 
   private static final String JDBC_BASE_DIR = "jdbc";
-  private static final String HIVE_BASE_DIR = "hive";
   private static final String ICEBERG_DS_TYPE = "iceberg";
   private static final String HIVE_DS_TYPE = "hive";
 
@@ -117,9 +116,9 @@ public class MetaClassLoaderManager {
                         + componentLib);
                 ClassLoader parentClassLoader = MetaClassLoaderManager.class.getClassLoader();
                 ClassLoader metaClassLoader =
-                    classLoaders.compute(
+                    classLoaders.computeIfAbsent(
                         finalDsType,
-                        (type, classLoader) -> {
+                        (type) -> {
                           try {
                             return new URLClassLoader(
                                 getJarsUrlsOfPath(componentLib).toArray(new URL[0]),
