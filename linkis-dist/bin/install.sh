@@ -188,6 +188,11 @@ then
   sed -i ${txt}  "s#@YARN_RESTFUL_URL#$YARN_RESTFUL_URL#g" $LINKIS_HOME/db/linkis_dml.sql
 fi
 
+if [ "$HIVE_METASTORE_URIS" != "" ]
+then
+  sed -i ${txt} "s#@HIVE_METASTORE_URIS#$HIVE_METASTORE_URIS#g" $LINKIS_HOME/db/linkis_dml.sql
+fi
+
 if [ "$HADOOP_VERSION" != "" ]
 then
   sed -i ${txt}  "s#@HADOOP_VERSION#$HADOOP_VERSION#g" $LINKIS_HOME/db/linkis_dml.sql
