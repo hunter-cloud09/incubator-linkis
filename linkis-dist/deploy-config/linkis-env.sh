@@ -55,6 +55,8 @@ RESULT_SET_ROOT_PATH=hdfs:///tmp/linkis
 # Active resourcemanager address needed. Recommended to add all ha addresses. eg YARN_RESTFUL_URL="http://127.0.0.1:8088;http://127.0.0.2:8088"
 YARN_RESTFUL_URL=${YARN_RESTFUL_URL:-"http://127.0.0.1:8088"}
 
+HIVE_METASTORE_URIS=${HIVE_METASTORE_URIS:-"thrift://localhost:9083"}
+
 ## request Yarn resource restful interface When Yarn need auth by user
 ## If your environment yarn interface can be accessed directly, ignore it
 #YARN_AUTH_ENABLE=false
