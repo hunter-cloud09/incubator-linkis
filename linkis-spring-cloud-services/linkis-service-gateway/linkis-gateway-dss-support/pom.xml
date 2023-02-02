@@ -27,7 +27,7 @@
   <dependencies>
     <dependency>
       <groupId>org.apache.linkis</groupId>
-      <artifactId>linkis-gateway-server-support</artifactId>
+      <artifactId>linkis-gateway-core</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>
