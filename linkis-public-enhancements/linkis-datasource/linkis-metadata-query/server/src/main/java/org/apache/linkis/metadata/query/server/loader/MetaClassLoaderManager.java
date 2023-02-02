@@ -90,15 +90,10 @@ public class MetaClassLoaderManager {
     }
     if (needToLoad) {
       MetaServiceInstance finalServiceInstance1 = serviceInstance;
-      String finalBaseType;
       boolean isJdbcDatasource =
           CacheConfiguration.JDBC_RELATIONSHIP_LIST.getValue().contains(dsType);
-      if (isJdbcDatasource) {
-        finalBaseType = JDBC_BASE_DIR;
-      } else {
-        finalBaseType = dsType;
-      }
-      String finalDsType = dsType;
+      String finalBaseType = isJdbcDatasource ? JDBC_BASE_DIR : dsType;
+      final String finalDsType = dsType;
       serviceInstance =
           metaServiceInstances.compute(
               dsType,
