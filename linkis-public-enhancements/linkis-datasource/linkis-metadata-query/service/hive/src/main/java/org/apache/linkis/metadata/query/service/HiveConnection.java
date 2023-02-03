@@ -24,6 +24,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.hive.metastore.IMetaStoreClient;
 import org.apache.hadoop.hive.ql.metadata.Hive;
+import org.apache.hadoop.hive.ql.session.SessionState;
 import org.apache.hadoop.security.UserGroupInformation;
 
 import java.io.Closeable;
@@ -76,6 +77,7 @@ public class HiveConnection implements Closeable {
     UserGroupInformation ugi =
         UserGroupInformationWrapper.loginUserFromKeytab(conf, principle, keytabFilePath);
     hiveClient = getHive(ugi, conf);
+    addHadoopConfToHiveSessionConf(hadoopConf);
   }
 
   public HiveConnection(String uris, Map<String, String> hadoopConf) throws Exception {
@@ -88,10 +90,18 @@ public class HiveConnection implements Closeable {
             "fs.%s.impl.disable.cache", URI.create(conf.get(FS_DEFAULT_NAME_KEY, "")).getScheme()),
         true);
     // TODO choose an authentication strategy for hive, and then use createProxyUser
+
     UserGroupInformation ugi =
         UserGroupInformation.createRemoteUser(DEFAULT_SERVICE_USER.getValue());
     hiveClient = getHive(ugi, conf);
+    addHadoopConfToHiveSessionConf(hadoopConf);
   }
+
+  private static void addHadoopConfToHiveSessionConf(Map<String, String> hadoopConf) {
+    HiveConf sessionConf = SessionState.getSessionConf();
+    hadoopConf.forEach(sessionConf::set);
+  }
+
   /**
    * Get Hive client(Hive object)
    *

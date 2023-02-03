@@ -127,7 +127,6 @@ public abstract class AbstractCacheMetaService<C extends Closeable> implements B
     String cacheKey = "";
     MetadataConnection<C> connection = null;
     try {
-      cacheKey = md5String(Json.toJson(params, null), "", 2);
       // Dive the cache by operator/creator
       cacheKey = operator + "_" + md5String(Json.toJson(params, null), "", 2);
       if (null != reqCache) {

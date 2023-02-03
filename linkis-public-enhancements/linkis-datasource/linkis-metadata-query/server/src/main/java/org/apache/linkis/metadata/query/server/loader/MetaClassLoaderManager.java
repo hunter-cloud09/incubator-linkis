@@ -149,7 +149,7 @@ public class MetaClassLoaderManager {
                     MetadataUtils.loadMetaService(metaServiceClass, metaClassLoader);
                 if (metadataService instanceof AbstractCacheMetaService) {
                   LOG.info(
-                      "Invoke the init() method in meta service for type: [" + finalDsType + "]");
+                      "Invoke the init() method in meta service for type: [ {} ]", finalDsType);
                   ((AbstractCacheMetaService<?>) metadataService).init();
                 }
                 return new MetaServiceInstance(metadataService, metaClassLoader);
