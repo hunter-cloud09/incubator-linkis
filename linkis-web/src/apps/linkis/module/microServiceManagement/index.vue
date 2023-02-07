@@ -46,7 +46,7 @@
         <Button class="search" type="primary" @click="searchAction">{{
           $t("message.linkis.find")
         }}</Button>
-        <!-- jump(跳转) -->
+        <!-- 跳转 -->
         <Button class="jump" type="primary" @click="handleTabsJump">{{ $t("message.linkis.serviceRegistryCenter") }}</Button>
       </Col>
     </Row>

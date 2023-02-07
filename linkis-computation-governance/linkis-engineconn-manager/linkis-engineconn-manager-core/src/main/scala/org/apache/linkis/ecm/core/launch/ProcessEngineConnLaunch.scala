@@ -165,12 +165,14 @@ trait ProcessEngineConnLaunch extends EngineConnLaunch with Logging {
     engineConnPort = PortUtils
       .findAvailPortByRange(GovernanceCommonConf.ENGINE_CONN_PORT_RANGE.getValue)
       .toString
+
     var springConf = Map("server.port" -> engineConnPort, "spring.profiles.active" -> "engineconn")
 
     request.creationDesc.properties.asScala.filter(_._1.startsWith("spring.")).foreach {
       case (k, v) =>
         springConf = springConf + (k -> v)
     }
+
     arguments.addSpringConf(springConf)
     var engineConnConf = Map("ticketId" -> request.ticketId, "user" -> request.user)
     engineConnConf = engineConnConf ++: request.labels.asScala

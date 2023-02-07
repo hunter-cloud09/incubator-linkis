@@ -28,18 +28,13 @@ class SpringRPCServerLoader extends AbstractRPCServerLoader {
   override def refreshAllServers(): Unit = {}
 
   override val refreshMaxWaitTime: Duration =
-    RPCConfiguration.BDP_RPC_SERVICE_REFRESH_MAX_WAIT_TIME.getValue.toDuration
+    RPCConfiguration.RPC_SERVICE_REFRESH_MAX_WAIT_TIME.getValue.toDuration
 
   override def getDWCServiceInstance(
       serviceInstance: SpringCloudServiceInstance
   ): ServiceInstance = {
     val applicationName = serviceInstance.getServiceId
-    val instanceId = serviceInstance.getInstanceId
-    logger.info("service name: {}, instance id: {}", applicationName: Any, instanceId: Any)
-    ServiceInstance(applicationName, getInstance(serviceInstance))
+    ServiceInstance(applicationName, s"${serviceInstance.getHost}:${serviceInstance.getPort}")
   }
-
-  private[rpc] def getInstance(serviceInstance: SpringCloudServiceInstance): String =
-    s"${serviceInstance.getHost}:${serviceInstance.getPort}"
 
 }

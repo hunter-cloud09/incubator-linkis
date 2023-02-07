@@ -166,6 +166,7 @@ class BmlResourceLocalizationService extends ResourceLocalizationService with Lo
         }
         // 2.软连，并且添加到map
         val dirAndFileList = fs.listPathWithError(fsPath)
+
         var paths = dirAndFileList.getFsPaths.asScala
 
         if (paths.exists(_.getPath.endsWith(".zip"))) {

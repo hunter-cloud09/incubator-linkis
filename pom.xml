@@ -69,6 +69,7 @@
   </mailingLists>
   <modules>
     <module>linkis-commons</module>
+    <module>linkis-hadoop-hdfs-client-shade</module>
     <module>linkis-spring-cloud-services</module>
     <module>linkis-orchestrator</module>
     <module>linkis-public-enhancements</module>
@@ -110,6 +111,7 @@
     <curator.version>4.2.0</curator.version>
     <hadoop.version>3.3.3</hadoop.version>
     <hadoop-hdfs-client.artifact>hadoop-hdfs-client</hadoop-hdfs-client.artifact>
+    <hadoop-hdfs-client-shade.version>2.7.2</hadoop-hdfs-client-shade.version>
     <hbase.version>2.5.0</hbase.version>
     <hive.version>3.1.3</hive.version>
     <spark.version>3.2.1</spark.version>
@@ -126,7 +128,7 @@
     <jersey.version>1.19.4</jersey.version>
     <jersey.servlet.version>2.23.1</jersey.servlet.version>
 
-    <netty.version>4.1.78.Final</netty.version>
+    <netty.version>4.1.86.Final</netty.version>
     <jetty.version>9.4.48.v20220622</jetty.version>
     <httpclient.version>4.5.13</httpclient.version>
     <httpmime.version>${httpclient.version}</httpmime.version>
@@ -148,6 +150,7 @@
     <commons-collections.version>3.2.2</commons-collections.version>
     <commons-lang.version>2.6</commons-lang.version>
     <commons-lang3.version>3.12.0</commons-lang3.version>
+    <commons-logging.version>1.2</commons-logging.version>
     <commons-text.version>1.10.0</commons-text.version>
     <commons-math3.version>3.6.1</commons-math3.version>
     <commons-io.version>2.11.0</commons-io.version>
@@ -156,7 +159,6 @@
     <commons-configuration.version>1.10</commons-configuration.version>
     <commons-exec.version>1.3</commons-exec.version>
     <commons-net.version>3.9.0</commons-net.version>
-    <commons-logging.version>1.2</commons-logging.version>
     <commons-cli.version>1.5.0</commons-cli.version>
     <jline.version>3.9.0</jline.version>
     <snakeyaml.version>1.33</snakeyaml.version>
@@ -1673,37 +1675,29 @@
   </build>
 
   <profiles>
-    <!-- jacoco: mvn validate -Pjacoco  -->
-    <profile>
-      <id>jacoco</id>
-      <properties>
-        <jacoco.skip>false</jacoco.skip>
-      </properties>
-    </profile>
-    <!-- hadoop-3.3 -->
+    <!-- hadoop version: mvn validate -Phadoop-3.3 ,when used with spark2.x ,please add -Pspark-2.4-hadoop-3.3 together, More details please check SPARK-23534   -->
     <profile>
       <id>hadoop-3.3</id>
       <properties>
-        <!-- Default hadoop profile. Uses global properties. -->
+        <hadoop.version>3.3.3</hadoop.version>
+        <curator.version>4.2.0</curator.version>
+        <hadoop-hdfs-client.artifact>hadoop-hdfs-client</hadoop-hdfs-client.artifact>
       </properties>
     </profile>
+    <!-- hadoop version: mvn validate -Phadoop-2.7  -->
     <profile>
       <id>hadoop-2.7</id>
       <properties>
         <hadoop.version>2.7.2</hadoop.version>
-        <hadoop-hdfs-client.artifact>hadoop-hdfs</hadoop-hdfs-client.artifact>
         <curator.version>2.7.1</curator.version>
+        <hadoop-hdfs-client.artifact>hadoop-hdfs</hadoop-hdfs-client.artifact>
       </properties>
     </profile>
-    <!-- spark-3.2
-    需要修改模块linkis-engineconn-plugins/engineconn-plugins/spark中
-    src/main/scala/org/apache/linkis/engineplugin/spark/metadata/SparkSQLHistoryParser.scala类第219行
-    c.child -> c.plan
-    -->
     <profile>
       <id>spark-3.2</id>
       <properties>
-        <!-- Default spark profile. Uses global properties. -->
+        <json4s.version>3.7.0-M11</json4s.version>
+        <spark.version>3.2.1</spark.version>
       </properties>
     </profile>
     <profile>
@@ -1729,7 +1723,8 @@
     <profile>
       <id>scala-2.12</id>
       <properties>
-        <!-- Default scala profile. Uses global properties. -->
+        <scala.version>2.12.17</scala.version>
+        <scala.binary.version>2.12</scala.binary.version>
       </properties>
     </profile>
     <profile>
@@ -1737,6 +1732,13 @@
       <properties>
         <scala.version>2.11.12</scala.version>
         <scala.binary.version>2.11</scala.binary.version>
+      </properties>
+    </profile>
+    <!-- jacoco: mvn validate -Pjacoco  -->
+    <profile>
+      <id>jacoco</id>
+      <properties>
+        <jacoco.skip>false</jacoco.skip>
       </properties>
     </profile>
     <!-- check apache license: mvn validate -Prat  -->

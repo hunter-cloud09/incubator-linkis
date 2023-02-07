@@ -27,6 +27,7 @@ eureka:
     hostname: ${spring.cloud.client.ip-address}
     metadata-map:
       prometheus.path: ${prometheus.path:/actuator/prometheus}
+      linkis.app.version: ${linkis.app.version}
   client:
     serviceUrl:
       defaultZone: http://127.0.0.1:20303/eureka/
