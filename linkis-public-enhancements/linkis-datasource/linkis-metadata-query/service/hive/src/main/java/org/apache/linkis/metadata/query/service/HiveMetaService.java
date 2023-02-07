@@ -214,7 +214,7 @@ public class HiveMetaService extends AbstractDbMetaService<HiveConnection> {
     try {
       tb = connection.getClient().getTable(database, table);
     } catch (HiveException e) {
-      throw new RuntimeException("Fail to get Hive columns(获得表字段信息失败)", e);
+      throw new RuntimeException("Fail to get Hive table(获得表信息失败)", e);
     }
     tb.getFields()
         .forEach(
