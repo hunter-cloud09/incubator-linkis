@@ -41,11 +41,7 @@ object EnvConfiguration {
   val ENGINE_CONN_CLASSPATH_FILES =
     CommonVars("wds.linkis.engineConn.files", "", "engineConn额外的配置文件")
 
-  val metaspaceSize = if (SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_8)) {
-    "-XX:MaxMetaspaceSize=256m -XX:MetaspaceSize=128m"
-  } else {
-    "-XX:MaxPermSize=256m -XX:PermSize=128m"
-  }
+  val metaspaceSize = "-XX:MaxMetaspaceSize=256m -XX:MetaspaceSize=128m"
 
   val ENGINE_CONN_DEFAULT_JAVA_OPTS = CommonVars[String](
     "wds.linkis.engineConn.javaOpts.default",
