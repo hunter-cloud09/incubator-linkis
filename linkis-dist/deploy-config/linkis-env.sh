@@ -94,6 +94,9 @@ SPARK_HOME=${SPARK_HOME:-"/appcom/Install/spark"}
 SPARK_CONF_DIR=${SPARK_CONF_DIR:-"/appcom/config/spark-config"}
 SPARK_VERSION=${SPARK_VERSION:-"3.2.1"}
 
+#Flink
+FLINK_VERSION=${FLINK_VERSION:-"1.12.7"}
+
 #Python
 PYTHON_VERSION=${PYTHON_VERSION:-"python3"}
 

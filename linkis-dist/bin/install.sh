@@ -245,20 +245,6 @@ echo " 1: Do not execute table-building statements"
 echo -e "${RED} 2: Dangerous! Clear all data and rebuild the tables${NC}"
 echo -e " other: exit\n"
 
-MYSQL_INSTALL_MODE=1
-
-read -p "[Please input your choice]:"  idx
-if [[ '2' = "$idx" ]];then
-  MYSQL_INSTALL_MODE=2
-  echo "You chose Rebuild the table"
-elif [[ '1' = "$idx" ]];then
-  MYSQL_INSTALL_MODE=1
-  echo "You chose not execute table-building statements"
-else
-  echo "no choice,exit!"
-  exit 1
-fi
-
 ##Label set end
 
 #Deal special symbol '#'
@@ -266,26 +252,24 @@ HIVE_META_PASSWORD=$(echo ${HIVE_META_PASSWORD//'#'/'\#'})
 MYSQL_PASSWORD=$(echo ${MYSQL_PASSWORD//'#'/'\#'})
 
 #init db
-if [[ '2' = "$MYSQL_INSTALL_MODE" ]];then
-  mysql -h$MYSQL_HOST -P$MYSQL_PORT -u$MYSQL_USER -p$MYSQL_PASSWORD --default-character-set=utf8 -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DB DEFAULT CHARSET utf8 COLLATE utf8_general_ci;"
-  ddl_result=`mysql -h$MYSQL_HOST -P$MYSQL_PORT -u$MYSQL_USER -p$MYSQL_PASSWORD -D$MYSQL_DB  --default-character-set=utf8 -e "source ${LINKIS_HOME}/db/linkis_ddl.sql" 2>&1`
-  # Check ddl-sql execution result
-  if [[ $? -ne 0 || $ddl_result =~ "ERROR" ]];then
-      echoErrMsgAndExit "$ddl_result"
-  else
-      echoSuccessMsg "source linkis_ddl.sql"
-  fi
-
-  dml_result=`mysql -h$MYSQL_HOST -P$MYSQL_PORT -u$MYSQL_USER -p$MYSQL_PASSWORD -D$MYSQL_DB  --default-character-set=utf8 -e "source ${LINKIS_HOME}/db/linkis_dml.sql" 2>&1`
-  # Check dml-sql execution result
-  if [[ $? -ne 0 || $dml_result =~ "ERROR" ]];then
-      echoErrMsgAndExit "$dml_result"
-  else
-      echoSuccessMsg "source linkis_dml.sql"
-  fi
-
-  echo "Rebuild the table"
+dl_result=`mysql -h$MYSQL_HOST -P$MYSQL_PORT -u$MYSQL_USER -p$MYSQL_PASSWORD -D$MYSQL_DB  --default-character-set=utf8 -e "source ${LINKIS_HOME}/db/linkis_ddl.sql" 2>&1`
+# Check ddl-sql execution result
+if [[ $? -ne 0 || $ddl_result =~ "ERROR" ]];then
+    echoErrMsgAndExit "$ddl_result"
+else
+    echoSuccessMsg "source linkis_ddl.sql"
 fi
+
+dml_result=`mysql -h$MYSQL_HOST -P$MYSQL_PORT -u$MYSQL_USER -p$MYSQL_PASSWORD -D$MYSQL_DB  --default-character-set=utf8 -e "source ${LINKIS_HOME}/db/linkis_dml.sql" 2>&1`
+# Check dml-sql execution result
+if [[ $? -ne 0 || $dml_result =~ "ERROR" ]];then
+    echoErrMsgAndExit "$dml_result"
+else
+    echoSuccessMsg "source linkis_dml.sql"
+fi
+
+echo "Rebuild the table"
+
 ###########################################################################
 
 
@@ -298,7 +282,10 @@ then
   export EUREKA_INSTALL_IP=$SERVER_IP
 fi
 
-export EUREKA_URL=http://$EUREKA_INSTALL_IP:$EUREKA_PORT/eureka/
+if test -z "$EUREKA_URL"
+then
+  export EUREKA_URL=http://$EUREKA_INSTALL_IP:$EUREKA_PORT/eureka/
+fi
 
 if test -z "$GATEWAY_INSTALL_IP"
 then
@@ -331,6 +318,9 @@ if [ "$EUREKA_PREFER_IP" == "true" ]; then
   sed -i ${txt}  "s#linkis.discovery.prefer-ip-address.*#linkis.discovery.prefer-ip-address=true#g" $common_conf
 fi
 
+##server linkis-cli.properties
+sed -i ${txt}  "s#wds.linkis.client.common.gatewayUrl.*#wds.linkis.client.common.gatewayUrl=http://$GATEWAY_INSTALL_IP:$GATEWAY_PORT#g" $LINKIS_HOME/conf/linkis-cli/linkis-cli.properties
+
 echo "update conf $common_conf"
 sed -i ${txt}  "s#wds.linkis.server.version.*#wds.linkis.server.version=$LINKIS_SERVER_VERSION#g" $common_conf
 sed -i ${txt}  "s#wds.linkis.gateway.url.*#wds.linkis.gateway.url=http://$GATEWAY_INSTALL_IP:$GATEWAY_PORT#g" $common_conf
@@ -342,8 +332,13 @@ sed -i ${txt}  "s#wds.linkis.server.mybatis.datasource.password.*#wds.linkis.ser
 sed -i ${txt}  "s#\#hadoop.config.dir.*#hadoop.config.dir=$HADOOP_CONF_DIR#g" $common_conf
 #hive config
 sed -i ${txt}  "s#\#hive.config.dir.*#hive.config.dir=$HIVE_CONF_DIR#g" $common_conf
+sed -i ${txt} "/wds.linkis.server.user.restful.uri.pass.auth/c\wds.linkis.metadata.hive.db.admin=$HIVE_ADMIN_USER" $common_conf
+sed -i ${txt} "/wds.linkis.server.user.restful.uri.pass.auth/c\linkis.metadata.hive.permission.with-login-user-enabled=true" $common_conf
 #spark config
 sed -i ${txt}  "s#\#spark.config.dir.*#spark.config.dir=$SPARK_CONF_DIR#g" $common_conf
+#flink
+sed -i ${txt} "/wds.linkis.python.engine.version/a\wds.linkis.flink.engine.version=$FLINK_VERSION" $common_conf
+
 
 if [ "true" == "$HADOOP_KERBEROS_ENABLE" ]
 then
