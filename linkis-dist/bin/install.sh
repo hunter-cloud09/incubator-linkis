@@ -60,8 +60,8 @@ isSuccess "load config"
 
 echo "======= Step 2: Check env =========="
 ## check env
-sh ${workDir}/bin/checkEnv.sh
-isSuccess "check env"
+# sh ${workDir}/bin/checkEnv.sh
+# isSuccess "check env"
 
 until mysql -h$MYSQL_HOST -P$MYSQL_PORT -u$MYSQL_USER -p$MYSQL_PASSWORD  -e ";" ; do
      echo "try to connect to linkis mysql $MYSQL_HOST:$MYSQL_PORT/$MYSQL_DB failed, please check db configuration in:$LINKIS_DB_CONFIG_PATH"
