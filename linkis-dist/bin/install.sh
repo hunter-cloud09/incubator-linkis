@@ -240,10 +240,11 @@ then
 fi
 
 echo "Linkis mysql DB will use this config: $MYSQL_HOST:$MYSQL_PORT/$MYSQL_DB"
-echo "Do you want to clear Linkis table information in the database?"
-echo " 1: Do not execute table-building statements"
-echo -e "${RED} 2: Dangerous! Clear all data and rebuild the tables${NC}"
-echo -e " other: exit\n"
+
+if test -z "$MYSQL_INSTALL_MODE"
+then
+  MYSQL_INSTALL_MODE=1
+if
 
 ##Label set end
 
@@ -252,24 +253,26 @@ HIVE_META_PASSWORD=$(echo ${HIVE_META_PASSWORD//'#'/'\#'})
 MYSQL_PASSWORD=$(echo ${MYSQL_PASSWORD//'#'/'\#'})
 
 #init db
-dl_result=`mysql -h$MYSQL_HOST -P$MYSQL_PORT -u$MYSQL_USER -p$MYSQL_PASSWORD -D$MYSQL_DB  --default-character-set=utf8 -e "source ${LINKIS_HOME}/db/linkis_ddl.sql" 2>&1`
-# Check ddl-sql execution result
-if [[ $? -ne 0 || $ddl_result =~ "ERROR" ]];then
-    echoErrMsgAndExit "$ddl_result"
-else
-    echoSuccessMsg "source linkis_ddl.sql"
+if [[ '2' = "$MYSQL_INSTALL_MODE" ]];then
+  mysql -h$MYSQL_HOST -P$MYSQL_PORT -u$MYSQL_USER -p$MYSQL_PASSWORD --default-character-set=utf8 -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DB DEFAULT CHARSET utf8 COLLATE utf8_general_ci;"
+  ddl_result=`mysql -h$MYSQL_HOST -P$MYSQL_PORT -u$MYSQL_USER -p$MYSQL_PASSWORD -D$MYSQL_DB  --default-character-set=utf8 -e "source ${LINKIS_HOME}/db/linkis_ddl.sql;" 2>&1`
+  # Check ddl-sql execution result
+  if [[ $? -ne 0 || $ddl_result =~ "ERROR" ]];then
+      echoErrMsgAndExit "$ddl_result"
+  else
+      echoSuccessMsg "source linkis_ddl.sql"
+  fi
+
+  dml_result=`mysql -h$MYSQL_HOST -P$MYSQL_PORT -u$MYSQL_USER -p$MYSQL_PASSWORD -D$MYSQL_DB  --default-character-set=utf8 -e "source ${LINKIS_HOME}/db/linkis_dml.sql;" 2>&1`
+  # Check dml-sql execution result
+  if [[ $? -ne 0 || $dml_result =~ "ERROR" ]];then
+      echoErrMsgAndExit "$dml_result"
+  else
+      echoSuccessMsg "source linkis_dml.sql"
+  fi
+
+  echo "Rebuild the table"
 fi
-
-dml_result=`mysql -h$MYSQL_HOST -P$MYSQL_PORT -u$MYSQL_USER -p$MYSQL_PASSWORD -D$MYSQL_DB  --default-character-set=utf8 -e "source ${LINKIS_HOME}/db/linkis_dml.sql" 2>&1`
-# Check dml-sql execution result
-if [[ $? -ne 0 || $dml_result =~ "ERROR" ]];then
-    echoErrMsgAndExit "$dml_result"
-else
-    echoSuccessMsg "source linkis_dml.sql"
-fi
-
-echo "Rebuild the table"
-
 ###########################################################################
 
 
