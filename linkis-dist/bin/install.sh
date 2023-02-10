@@ -63,12 +63,6 @@ echo "======= Step 2: Check env =========="
 # sh ${workDir}/bin/checkEnv.sh
 # isSuccess "check env"
 
-until mysql -h$MYSQL_HOST -P$MYSQL_PORT -u$MYSQL_USER -p$MYSQL_PASSWORD  -e ";" ; do
-     echo "try to connect to linkis mysql $MYSQL_HOST:$MYSQL_PORT/$MYSQL_DB failed, please check db configuration in:$LINKIS_DB_CONFIG_PATH"
-     exit 1
-done
-
-
 ########################  init LINKIS related env  ################################
 if [ "$LINKIS_HOME" = "" ]
 then
@@ -254,6 +248,12 @@ MYSQL_PASSWORD=$(echo ${MYSQL_PASSWORD//'#'/'\#'})
 
 #init db
 if [[ '2' = "$MYSQL_INSTALL_MODE" ]];then
+  # check mysql ready
+  until mysql -h$MYSQL_HOST -P$MYSQL_PORT -u$MYSQL_USER -p$MYSQL_PASSWORD  -e ";" ; do
+       echo "try to connect to linkis mysql $MYSQL_HOST:$MYSQL_PORT/$MYSQL_DB failed, please check db configuration in:$LINKIS_DB_CONFIG_PATH"
+       exit 1
+  done
+
   mysql -h$MYSQL_HOST -P$MYSQL_PORT -u$MYSQL_USER -p$MYSQL_PASSWORD --default-character-set=utf8 -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DB DEFAULT CHARSET utf8 COLLATE utf8_general_ci;"
   ddl_result=`mysql -h$MYSQL_HOST -P$MYSQL_PORT -u$MYSQL_USER -p$MYSQL_PASSWORD -D$MYSQL_DB  --default-character-set=utf8 -e "source ${LINKIS_HOME}/db/linkis_ddl.sql;" 2>&1`
   # Check ddl-sql execution result
