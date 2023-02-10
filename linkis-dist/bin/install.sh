@@ -238,7 +238,7 @@ echo "Linkis mysql DB will use this config: $MYSQL_HOST:$MYSQL_PORT/$MYSQL_DB"
 if test -z "$MYSQL_INSTALL_MODE"
 then
   MYSQL_INSTALL_MODE=1
-if
+fi
 
 ##Label set end
 
