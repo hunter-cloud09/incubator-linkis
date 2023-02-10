@@ -87,7 +87,7 @@ if [  -d $LINKIS_HOME ] && [ "$LINKIS_HOME" != "$workDir" ];then
    isSuccess "back up old LINKIS_HOME:$LINKIS_HOME to $backDir"
 fi
 echo "try to create dir LINKIS_HOME: $LINKIS_HOME"
-sudo mkdir -p $LINKIS_HOME;sudo chown -R $deployUser:deployUserGroup $LINKIS_HOME
+sudo mkdir -p $LINKIS_HOME;sudo chown -R $deployUser:$deployUserGroup $LINKIS_HOME
 isSuccess "create the dir of LINKIS_HOME:$LINKIS_HOME"
 
 LINKIS_PACKAGE=${workDir}/linkis-package
