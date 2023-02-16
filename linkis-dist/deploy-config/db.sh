@@ -20,7 +20,7 @@ MYSQL_PORT=
 MYSQL_DB=
 MYSQL_USER=
 MYSQL_PASSWORD=
-MYSQL_PARAMS=useUnicode=true\&characterEncoding=UTF-8
+MYSQL_PARAMS=useSSL=false\&characterEncoding=UTF-8
 
 
 ### Provide the DB information of Hive metadata database.
