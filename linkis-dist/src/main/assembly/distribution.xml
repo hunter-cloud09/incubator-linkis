@@ -171,10 +171,21 @@
             </includes>
         </fileSet>
 
-        <!--pipeline-->
+        <!--flink-->
         <fileSet>
             <directory>
                 ../linkis-engineconn-plugins/flink/target/out/
+            </directory>
+            <outputDirectory>linkis-package/lib/linkis-engineconn-plugins/</outputDirectory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+        </fileSet>
+
+        <!--elastic search-->
+        <fileSet>
+            <directory>
+                ../linkis-engineconn-plugins/elasticsearch/target/out/
             </directory>
             <outputDirectory>linkis-package/lib/linkis-engineconn-plugins/</outputDirectory>
             <includes>
