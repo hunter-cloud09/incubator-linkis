@@ -367,11 +367,6 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.apache.hadoop</groupId>
-      <artifactId>${hadoop-hdfs-client.artifact}</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org.apache.spark</groupId>
       <artifactId>spark-hive_${scala.binary.version}</artifactId>
       <version>${spark.version}</version>
@@ -446,7 +441,7 @@
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-hdfs</artifactId>
+      <artifactId>${hadoop-hdfs-client.artifact}</artifactId>
       <version>${hadoop.version}</version>
       <scope>provided</scope>
     </dependency>
@@ -495,6 +490,7 @@
       <id>spark-2.4-hadoop-3.3</id>
       <properties>
         <hadoop.version>${hadoop-hdfs-client-shade.version}</hadoop.version>
+        <hadoop-hdfs-client.artifact>hadoop-hdfs</hadoop-hdfs-client.artifact>
       </properties>
       <dependencies>
         <dependency>

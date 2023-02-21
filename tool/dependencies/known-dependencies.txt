@@ -66,7 +66,6 @@ commons-configuration-1.10.jar
 commons-configuration2-2.1.1.jar
 commons-daemon-1.0.13.jar
 commons-dbcp-1.4.jar
-commons-el-1.0.jar
 commons-exec-1.3.jar
 commons-fileupload-1.4.jar
 commons-httpclient-3.1.jar
@@ -167,7 +166,6 @@ hadoop-auth-3.3.3.jar
 hadoop-client-3.3.3.jar
 hadoop-common-2.7.2.jar
 hadoop-common-3.3.3.jar
-hadoop-hdfs-2.4.1.jar
 hadoop-hdfs-2.7.2.jar
 hadoop-hdfs-client-3.3.3.jar
 hadoop-mapreduce-client-common-3.3.3.jar
@@ -253,7 +251,6 @@ jakarta.websocket-api-1.1.2.jar
 jakarta.xml.bind-api-2.3.3.jar
 jamon-runtime-2.3.1.jar
 janino-3.1.4.jar
-jasper-runtime-5.5.23.jar
 javassist-3.27.0-GA.jar
 javax-websocket-client-impl-9.4.48.v20220622.jar
 javax-websocket-server-impl-9.4.48.v20220622.jar
@@ -288,9 +285,7 @@ jersey-media-jaxb-2.23.1.jar
 jersey-server-1.19.4.jar
 jersey-server-2.23.1.jar
 jersey-servlet-1.19.4.jar
-jettison-1.1.jar
-jettison-1.4.0.jar
-jetty-6.1.26.jar
+jettison-1.5.3.jar
 jetty-annotations-9.4.48.v20220622.jar
 jetty-client-9.4.48.v20220622.jar
 jetty-continuation-9.4.48.v20220622.jar
@@ -302,7 +297,6 @@ jetty-security-9.4.48.v20220622.jar
 jetty-server-9.4.48.v20220622.jar
 jetty-servlet-9.4.48.v20220622.jar
 jetty-servlets-9.4.48.v20220622.jar
-jetty-util-6.1.26.jar
 jetty-util-9.4.48.v20220622.jar
 jetty-util-ajax-9.4.48.v20220622.jar
 jetty-webapp-9.4.48.v20220622.jar
@@ -326,7 +320,6 @@ json4s-ast_2.12-3.7.0-M11.jar
 json4s-core_2.12-3.7.0-M11.jar
 json4s-jackson_2.12-3.7.0-M11.jar
 json4s-scalap_2.12-3.7.0-M11.jar
-jsp-api-2.1.jar
 jsqlparser-4.2.jar
 jsr305-1.3.9.jar
 jsr305-3.0.1.jar
@@ -350,6 +343,7 @@ kerby-config-1.0.1.jar
 kerby-pkix-1.0.1.jar
 kerby-util-1.0.1.jar
 kerby-xdr-1.0.1.jar
+kingbase8-8.6.0.jar
 knife4j-annotations-2.0.9.jar
 knife4j-core-2.0.9.jar
 knife4j-spring-2.0.9.jar
@@ -508,7 +502,6 @@ seatunnel-core-flink-sql-2.1.2.jar
 seatunnel-core-spark-2.1.2.jar
 security-0.191.jar
 security-0.193.jar
-servlet-api-2.5.jar
 servo-core-0.12.21.jar
 shims-0.9.22.jar
 simpleclient-0.8.1.jar
