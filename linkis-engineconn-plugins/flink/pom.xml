@@ -27,6 +27,8 @@
   <artifactId>linkis-engineconn-plugin-flink</artifactId>
   <properties>
     <flink.version>1.12.7</flink.version>
+    <maven.deploy.skip>true</maven.deploy.skip>
+    <maven.install.skip>true</maven.install.skip>
   </properties>
 
   <dependencies>

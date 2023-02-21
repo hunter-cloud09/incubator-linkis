@@ -27,6 +27,8 @@
   <artifactId>linkis-engineplugin-seatunnel</artifactId>
   <properties>
     <seatunnel.version>2.1.2</seatunnel.version>
+    <maven.deploy.skip>true</maven.deploy.skip>
+    <maven.install.skip>true</maven.install.skip>
   </properties>
 
   <dependencies>

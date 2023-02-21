@@ -27,6 +27,8 @@
   <artifactId>linkis-engineplugin-pipeline</artifactId>
   <properties>
     <pipeline.version>1</pipeline.version>
+    <maven.deploy.skip>true</maven.deploy.skip>
+    <maven.install.skip>true</maven.install.skip>
   </properties>
 
   <dependencies>

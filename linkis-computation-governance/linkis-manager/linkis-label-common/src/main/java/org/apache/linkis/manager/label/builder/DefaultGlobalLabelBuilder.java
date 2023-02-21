@@ -33,6 +33,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
+import java.nio.charset.Charset;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -135,7 +136,10 @@ public class DefaultGlobalLabelBuilder extends AbstractGenericLabelBuilder {
       throws LabelErrorException {
     try {
       return build(
-          labelKey, null == valueInput ? "" : IOUtils.toString(valueInput), labelClass, valueTypes);
+          labelKey,
+          null == valueInput ? "" : IOUtils.toString(valueInput, Charset.defaultCharset()),
+          labelClass,
+          valueTypes);
     } catch (IOException e) {
       throw new LabelErrorException(
           FAILED_READ_INPUT_STREAM.getErrorCode(), FAILED_READ_INPUT_STREAM.getErrorDesc(), e);
@@ -147,7 +151,9 @@ public class DefaultGlobalLabelBuilder extends AbstractGenericLabelBuilder {
       throws LabelErrorException {
     try {
       return build(
-          labelKey, null == valueInput ? "" : IOUtils.toString(valueInput), (Class<?>) labelClass);
+          labelKey,
+          null == valueInput ? "" : IOUtils.toString(valueInput, Charset.defaultCharset()),
+          (Class<?>) labelClass);
     } catch (IOException e) {
       throw new LabelErrorException(
           FAILED_READ_INPUT_STREAM.getErrorCode(), FAILED_READ_INPUT_STREAM.getErrorDesc(), e);
@@ -168,8 +174,8 @@ public class DefaultGlobalLabelBuilder extends AbstractGenericLabelBuilder {
    * @param suitableLabelClass suitable label class
    * @param suitableValueType suitable value type
    * @param <T>
-   * @return
-   * @throws LabelErrorException
+   * @return the label instance
+   * @throws LabelErrorException label error
    */
   protected <T extends Label<?>> T buildInner(
       String labelKey,

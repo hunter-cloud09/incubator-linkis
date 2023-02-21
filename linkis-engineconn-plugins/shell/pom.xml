@@ -27,6 +27,8 @@
   <artifactId>linkis-engineplugin-shell</artifactId>
   <properties>
     <shell.version>1</shell.version>
+    <maven.deploy.skip>true</maven.deploy.skip>
+    <maven.install.skip>true</maven.install.skip>
   </properties>
 
   <dependencies>

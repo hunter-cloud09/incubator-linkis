@@ -28,6 +28,8 @@
 
   <properties>
     <elasticsearch.version>7.6.2</elasticsearch.version>
+    <maven.deploy.skip>true</maven.deploy.skip>
+    <maven.install.skip>true</maven.install.skip>
   </properties>
 
   <dependencies>
