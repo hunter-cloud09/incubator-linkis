@@ -45,8 +45,6 @@ public class DmMetaService extends AbstractDbMetaService<SqlConnection> {
     String password =
         String.valueOf(params.getOrDefault(SqlParamsMapper.PARAM_SQL_PASSWORD.getValue(), ""));
 
-    String database =
-        String.valueOf(params.getOrDefault(SqlParamsMapper.PARAM_SQL_DATABASE.getValue(), ""));
     Map<String, Object> extraParams = new HashMap<>();
     Object sqlParamObj = params.get(SqlParamsMapper.PARAM_SQL_EXTRA_PARAMS.getValue());
     if (null != sqlParamObj) {
@@ -58,8 +56,7 @@ public class DmMetaService extends AbstractDbMetaService<SqlConnection> {
       }
     }
     assert extraParams != null;
-    return new MetadataConnection<>(
-        new SqlConnection(host, port, username, password, database, extraParams));
+    return new MetadataConnection<>(new SqlConnection(host, port, username, password, extraParams));
   }
 
   @Override

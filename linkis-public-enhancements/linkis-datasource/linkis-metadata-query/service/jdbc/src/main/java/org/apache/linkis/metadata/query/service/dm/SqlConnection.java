@@ -39,22 +39,17 @@ public class SqlConnection implements Closeable {
       CommonVars.apply("wds.linkis.server.mdm.service.dameng.driver", "dm.jdbc.driver.DmDriver");
 
   private static final CommonVars<String> SQL_CONNECT_URL =
-      CommonVars.apply("wds.linkis.server.mdm.service.dameng.url", "jdbc:dm://%s:%s/%s");
+      CommonVars.apply("wds.linkis.server.mdm.service.dameng.url", "jdbc:dm://%s:%s");
 
   private Connection conn;
 
   private ConnectMessage connectMessage;
 
   public SqlConnection(
-      String host,
-      Integer port,
-      String username,
-      String password,
-      String database,
-      Map<String, Object> extraParams)
+      String host, Integer port, String username, String password, Map<String, Object> extraParams)
       throws ClassNotFoundException, SQLException {
     connectMessage = new ConnectMessage(host, port, username, password, extraParams);
-    conn = getDBConnection(connectMessage, database);
+    conn = getDBConnection(connectMessage);
     // Try to create statement
     Statement statement = conn.createStatement();
     statement.close();
@@ -201,7 +196,7 @@ public class SqlConnection implements Closeable {
    * @return
    * @throws ClassNotFoundException
    */
-  private Connection getDBConnection(ConnectMessage connectMessage, String database)
+  private Connection getDBConnection(ConnectMessage connectMessage)
       throws ClassNotFoundException, SQLException {
     String extraParamString =
         connectMessage.extraParams.entrySet().stream()
@@ -209,8 +204,7 @@ public class SqlConnection implements Closeable {
             .collect(Collectors.joining("&"));
     Class.forName(SQL_DRIVER_CLASS.getValue());
     String url =
-        String.format(
-            SQL_CONNECT_URL.getValue(), connectMessage.host, connectMessage.port, database);
+        String.format(SQL_CONNECT_URL.getValue(), connectMessage.host, connectMessage.port);
     if (!connectMessage.extraParams.isEmpty()) {
       url += "?" + extraParamString;
     }
