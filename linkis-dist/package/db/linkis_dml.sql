@@ -522,7 +522,7 @@ VALUES (@data_source_type_id, 'address', '地址', 'Address', NULL, 'TEXT', NULL
        (@data_source_type_id, 'driverClassName', '驱动类名(Driver class name)', 'Driver class name', 'dm.jdbc.driver.DmDriver', 'TEXT', NULL, 1, '驱动类名(Driver class name)', 'Driver class name', NULL, NULL, NULL, NULL,  now(), now()),
        (@data_source_type_id, 'params', '连接参数(Connection params)', 'Connection params', NULL, 'TEXT', NULL, 0, '输入JSON格式(Input JSON format): {"param":"value"}', 'Input JSON format: {"param":"value"}', NULL, NULL, NULL, NULL,  now(), now()),
        (@data_source_type_id, 'username', '用户名(Username)', 'Username', NULL, 'TEXT', NULL, 1, '用户名(Username)', 'Username', '^[0-9A-Za-z_-]+$', NULL, NULL, NULL,  now(), now()),
-       (@data_source_type_id, 'password', '密码(Password)', 'Password', NULL, 'PASSWORD', NULL, 1, '密码(Password)', 'Password', '', NULL, NULL, NULL,  now(), now()));
+       (@data_source_type_id, 'password', '密码(Password)', 'Password', NULL, 'PASSWORD', NULL, 1, '密码(Password)', 'Password', '', NULL, NULL, NULL,  now(), now());
 
 select @data_source_type_id := id from `linkis_ps_dm_datasource_type` where `name` = 'kingbase';
 INSERT INTO `linkis_ps_dm_datasource_type_key`
@@ -619,8 +619,3 @@ INSERT INTO `linkis_ps_dm_datasource_env` (`env_name`, `env_desc`, `datasource_t
 
 select @data_source_type_id := id from `linkis_ps_dm_datasource_type` where `name` = 'iceberg';
 INSERT INTO `linkis_ps_dm_datasource_env` (`env_name`, `env_desc`, `datasource_type_id`, `parameter`, `create_time`, `create_user`, `modify_time`, `modify_user`) VALUES ('测试环境iceberg', '测试环境iceberg', @data_source_type_id, '{"uris":"@HIVE_METASTORE_URIS", "hadoopConf":{"hive.metastore.execute.setugi":"true"}}', now(), NULL, now(), NULL);
-
-select @data_source_type_id := id from `linkis_ps_dm_datasource_type` where `name` = 'elasticsearch';
-INSERT INTO `linkis_ps_dm_datasource_type_key` (`data_source_type_id`, `key`, `name`, `name_en`, `default_value`, `value_type`, `scope`, `require`, `description`, `description_en`, `value_regex`, `ref_id`, `ref_value`, `data_source`, `update_time`, `create_time`) VALUES (@data_source_type_id, 'username', '用户名(Username)' , 'Username', NULL, 'TEXT', NULL, 1, '用户名(Username)', 'Username', '^[0-9A-Za-z_-]+$', NULL, '', NULL, now(), now());
-INSERT INTO `linkis_ps_dm_datasource_type_key` (`data_source_type_id`, `key`, `name`, `name_en`, `default_value`, `value_type`, `scope`, `require`, `description`, `description_en`, `value_regex`, `ref_id`, `ref_value`, `data_source`, `update_time`, `create_time`) VALUES (@data_source_type_id, 'password', '密码(Password)', 'Password', NULL, 'PASSWORD', NULL, 1, '密码(Password)', 'Password', '', NULL, '', NULL, now(), now());
-INSERT INTO `linkis_ps_dm_datasource_type_key` (`data_source_type_id`, `key`, `name`, `name_en`, `default_value`, `value_type`, `scope`, `require`, `description`, `description_en`, `value_regex`, `ref_id`, `ref_value`, `data_source`, `update_time`, `create_time`) VALUES (@data_source_type_id, 'elasticUrls', 'ES连接URL(Elastic Url)', 'Elastic Url', NULL, 'TEXT', NULL, 1, 'ES连接URL(Elastic Url)', 'Elastic Url', '', NULL, '', NULL, now(), now());
