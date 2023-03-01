@@ -44,7 +44,7 @@ public class SqlConnection implements Closeable {
 
   private static final CommonVars<String> SQL_DRIVER_CLASS =
       CommonVars.apply(
-          "wds.linkis.server.mdm.service.sql.driver", "ru.yandex.clickhouse.ClickHouseDriver");
+          "wds.linkis.server.mdm.service.sql.driver", "com.clickhouse.jdbc.ClickHouseDriver");
 
   private static final CommonVars<String> SQL_CONNECT_URL =
       CommonVars.apply("wds.linkis.server.mdm.service.sql.url", "jdbc:clickhouse://%s:%s/%s");
