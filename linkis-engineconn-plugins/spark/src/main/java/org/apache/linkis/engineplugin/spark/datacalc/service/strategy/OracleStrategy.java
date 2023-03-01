@@ -26,18 +26,13 @@ public class OracleStrategy extends DataSourceStrategy {
   @Override
   public String getJdbcUrl(String address, Map<String, String> paramsJson, String paramsStr) {
     String serviceName = paramsJson.getOrDefault("serviceName", "");
-    String server = paramsJson.getOrDefault("server", "");
-    String instanceName = paramsJson.getOrDefault("instance", "");
-    String sid = paramsJson.getOrDefault("sid", "");
+    String sid = paramsJson.getOrDefault("instance", "");
     StringBuilder builder = new StringBuilder("jdbc:oracle:thin:@");
-    if (StringUtils.isNotBlank(sid)) {
-      builder.append(address);
-      builder.append(":").append(sid);
-    } else {
+    if (StringUtils.isNotBlank(serviceName)) {
       builder.append("//").append(address).append("/").append(serviceName);
-      if (StringUtils.isNotBlank(server)) builder.append(":").append(server);
+    } else {
+      builder.append(address).append(":").append(sid);
     }
-    if (StringUtils.isNotBlank(instanceName)) builder.append("/").append(instanceName);
     if (!paramsStr.isEmpty()) builder.append(getConnectParams(paramsStr));
     return builder.toString();
   }

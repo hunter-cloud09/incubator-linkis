@@ -19,14 +19,25 @@ package org.apache.linkis.metadata.query.service.oracle;
 
 import org.apache.linkis.common.conf.CommonVars;
 import org.apache.linkis.metadata.query.common.domain.MetaColumnInfo;
+import org.apache.linkis.metadata.query.service.util.ConnectionUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.sql.*;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,12 +66,12 @@ public class SqlConnection implements Closeable {
       Integer port,
       String username,
       String password,
-      String database,
+      String sid,
       String serviceName,
       Map<String, Object> extraParams)
       throws ClassNotFoundException, SQLException {
     connectMessage = new ConnectMessage(host, port, username, password, extraParams);
-    conn = getDBConnection(connectMessage, database, serviceName);
+    conn = getDBConnection(connectMessage, sid, serviceName);
     // Try to create statement
     Statement statement = conn.createStatement();
     statement.close();
@@ -208,35 +219,28 @@ public class SqlConnection implements Closeable {
 
   /**
    * @param connectMessage
-   * @param database
+   * @param sid
    * @return
    * @throws ClassNotFoundException
    */
-  private Connection getDBConnection(
-      ConnectMessage connectMessage, String database, String serviceName)
+  private Connection getDBConnection(ConnectMessage connectMessage, String sid, String serviceName)
       throws ClassNotFoundException, SQLException {
-    String extraParamString =
-        connectMessage.extraParams.entrySet().stream()
-            .map(e -> String.join("=", e.getKey(), String.valueOf(e.getValue())))
-            .collect(Collectors.joining("&"));
+
     Class.forName(SQL_DRIVER_CLASS.getValue());
     String url = "";
-    if (StringUtils.isNotBlank(database)) {
-      url =
-          String.format(
-              SQL_CONNECT_URL.getValue(), connectMessage.host, connectMessage.port, database);
-    } else if (StringUtils.isNotBlank(serviceName)) {
+    if (StringUtils.isNotBlank(serviceName)) {
       url =
           String.format(
               SQL_CONNECT_SERVICE_URL.getValue(),
               connectMessage.host,
               connectMessage.port,
-              database);
+              serviceName);
+    } else if (StringUtils.isNotBlank(sid)) {
+      url =
+          String.format(SQL_CONNECT_URL.getValue(), connectMessage.host, connectMessage.port, sid);
     }
 
-    if (!connectMessage.extraParams.isEmpty()) {
-      url += "?" + extraParamString;
-    }
+    url = ConnectionUtils.addUrlParams(url, connectMessage.extraParams);
     Properties prop = new Properties();
     prop.put("user", connectMessage.username);
     prop.put("password", connectMessage.password);

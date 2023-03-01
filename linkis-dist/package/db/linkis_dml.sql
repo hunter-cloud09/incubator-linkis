@@ -508,10 +508,8 @@ VALUES (@data_source_type_id, 'address', '地址', 'Address', NULL, 'TEXT', NULL
        (@data_source_type_id, 'params', '连接参数(Connection params)', 'Connection params', NULL, 'TEXT', NULL, 0, '输入JSON格式(Input JSON format): {"param":"value"}', 'Input JSON format: {"param":"value"}', NULL, NULL, NULL, NULL,  now(), now()),
        (@data_source_type_id, 'username', '用户名(Username)', 'Username', NULL, 'TEXT', NULL, 1, '用户名(Username)', 'Username', '^[0-9A-Za-z_-]+$', NULL, NULL, NULL,  now(), now()),
        (@data_source_type_id, 'password', '密码(Password)', 'Password', NULL, 'PASSWORD', NULL, 1, '密码(Password)', 'Password', '', NULL, NULL, NULL,  now(), now()),
-       (@data_source_type_id, 'sid', 'SID', 'SID', NULL, 'TEXT', NULL, 0, 'SID', 'SID', NULL, NULL, NULL, NULL,  now(), now()),
-       (@data_source_type_id, 'serviceName', 'service_name', 'service_name', NULL, 'TEXT', NULL, 0, 'service_name', 'service_name', NULL, NULL, NULL, NULL,  now(), now()),
-       (@data_source_type_id, 'server', 'server', 'server', NULL, 'TEXT', NULL, 0, 'server', 'server', NULL, NULL, NULL, NULL,  now(), now()),
-       (@data_source_type_id, 'instance', '实例名(instance)', 'Instance', NULL, 'TEXT', NULL, 0, '实例名(instance)', 'Instance', NULL, NULL, NULL, NULL,  now(), now());
+       (@data_source_type_id, 'serviceName', '服务名(serviceName)', 'Service name', NULL, 'TEXT', NULL, 0, '服务名', 'Service name', NULL, NULL, NULL, NULL,  now(), now()),
+       (@data_source_type_id, 'instance', '实例名(sid)', 'Instance', NULL, 'TEXT', NULL, 0, '实例名(sid)', 'Instance', NULL, NULL, NULL, NULL,  now(), now());
 
 select @data_source_type_id := id from `linkis_ps_dm_datasource_type` where `name` = 'dm';
 INSERT INTO `linkis_ps_dm_datasource_type_key`
@@ -534,7 +532,7 @@ VALUES (@data_source_type_id, 'address', '地址', 'Address', NULL, 'TEXT', NULL
        (@data_source_type_id, 'params', '连接参数(Connection params)', 'Connection params', NULL, 'TEXT', NULL, 0, '输入JSON格式(Input JSON format): {"param":"value"}', 'Input JSON format: {"param":"value"}', NULL, NULL, NULL, NULL,  now(), now()),
        (@data_source_type_id, 'username', '用户名(Username)', 'Username', NULL, 'TEXT', NULL, 1, '用户名(Username)', 'Username', '^[0-9A-Za-z_-]+$', NULL, NULL, NULL,  now(), now()),
        (@data_source_type_id, 'password', '密码(Password)', 'Password', NULL, 'PASSWORD', NULL, 1, '密码(Password)', 'Password', '', NULL, NULL, NULL,  now(), now()),
-       (@data_source_type_id, 'instance', '实例名(instance)', 'Instance', NULL, 'TEXT', NULL, 1, '实例名(instance)', 'instance', NULL, NULL, NULL, NULL,  now(), now());
+       (@data_source_type_id, 'databaseName', '数据库名(Database name)', 'Database name', NULL, 'TEXT', NULL, 0, '数据库名(Database name)', 'Database name', NULL, NULL, NULL, NULL,  now(), now());
 
 -- https://jdbc.postgresql.org/documentation/use/
 select @data_source_type_id := id from `linkis_ps_dm_datasource_type` where `name` = 'postgresql';
@@ -560,7 +558,7 @@ VALUES (@data_source_type_id, 'address', '地址', 'Address', NULL, 'TEXT', NULL
        (@data_source_type_id, 'params', '连接参数(Connection params)', 'Connection params', NULL, 'TEXT', NULL, 0, '输入JSON格式(Input JSON format): {"param":"value"}', 'Input JSON format: {"param":"value"}', NULL, NULL, NULL, NULL,  now(), now()),
        (@data_source_type_id, 'username', '用户名(Username)', 'Username', NULL, 'TEXT', NULL, 1, '用户名(Username)', 'Username', '^[0-9A-Za-z_-]+$', NULL, NULL, NULL,  now(), now()),
        (@data_source_type_id, 'password', '密码(Password)', 'Password', NULL, 'PASSWORD', NULL, 1, '密码(Password)', 'Password', '', NULL, NULL, NULL,  now(), now()),
-       (@data_source_type_id, 'instance', '实例名(instance)', 'Instance', NULL, 'TEXT', NULL, 1, '实例名(instance)', 'Instance', NULL, NULL, NULL, NULL,  now(), now()),
+       (@data_source_type_id, 'instance', '实例名(instance)', 'Instance', NULL, 'TEXT', NULL, 0, '实例名(instance)', 'Instance', NULL, NULL, NULL, NULL,  now(), now()),
        (@data_source_type_id, 'databaseName', '数据库名(Database name)', 'Database name', NULL, 'TEXT', NULL, 0, '数据库名(Database name)', 'Database name', NULL, NULL, NULL, NULL,  now(), now());
 
 -- https://www.ibm.com/docs/en/db2/11.5?topic=cdsudidsdjs-url-format-data-server-driver-jdbc-sqlj-type-4-connectivity

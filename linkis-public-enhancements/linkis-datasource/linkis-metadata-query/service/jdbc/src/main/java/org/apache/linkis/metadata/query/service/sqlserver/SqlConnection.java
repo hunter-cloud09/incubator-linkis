@@ -19,14 +19,23 @@ package org.apache.linkis.metadata.query.service.sqlserver;
 
 import org.apache.linkis.common.conf.CommonVars;
 import org.apache.linkis.metadata.query.common.domain.MetaColumnInfo;
+import org.apache.linkis.metadata.query.service.util.ConnectionUtils;
+
+import org.apache.commons.lang.StringUtils;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,18 +49,22 @@ public class SqlConnection implements Closeable {
           "com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
   private static final CommonVars<String> SQL_CONNECT_URL =
-      CommonVars.apply(
-          "wds.linkis.server.mdm.service.sqlserver.url", "jdbc:sqlserver://%s:%s;DataBaseName=%s");
+      CommonVars.apply("wds.linkis.server.mdm.service.sqlserver.url", "jdbc:sqlserver://%s:%s");
 
   private Connection conn;
 
   private ConnectMessage connectMessage;
 
   public SqlConnection(
-      String host, Integer port, String username, String password, Map<String, Object> extraParams)
+      String host,
+      Integer port,
+      String username,
+      String password,
+      String database,
+      Map<String, Object> extraParams)
       throws ClassNotFoundException, SQLException {
     connectMessage = new ConnectMessage(host, port, username, password, extraParams);
-    conn = getDBConnection(connectMessage, "");
+    conn = getDBConnection(connectMessage, database);
     // Try to create statement
     Statement statement = conn.createStatement();
     statement.close();
@@ -202,19 +215,13 @@ public class SqlConnection implements Closeable {
    */
   private Connection getDBConnection(ConnectMessage connectMessage, String database)
       throws ClassNotFoundException, SQLException {
-    String extraParamString =
-        connectMessage.extraParams.entrySet().stream()
-            .map(e -> String.join("=", e.getKey(), String.valueOf(e.getValue())))
-            .collect(Collectors.joining("&"));
     Class.forName(SQL_DRIVER_CLASS.getValue());
-    String url =
-        String.format(
-            SQL_CONNECT_URL.getValue(), connectMessage.host, connectMessage.port, database);
-    //        String url = String.format(SQL_CONNECT_URL.getValue(), connectMessage.host,
-    // database);
-    if (!connectMessage.extraParams.isEmpty()) {
-      url += "?" + extraParamString;
+    if (StringUtils.isNotBlank(database)) {
+      connectMessage.extraParams.put("databaseName", database);
     }
+    String url =
+        String.format(SQL_CONNECT_URL.getValue(), connectMessage.host, connectMessage.port);
+    url = ConnectionUtils.addUrlParams(url, connectMessage.extraParams, ";", ";");
     return DriverManager.getConnection(url, connectMessage.username, connectMessage.password);
   }
 

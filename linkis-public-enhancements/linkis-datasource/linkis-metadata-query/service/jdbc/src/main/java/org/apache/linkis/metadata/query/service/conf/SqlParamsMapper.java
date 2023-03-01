@@ -33,11 +33,14 @@ public class SqlParamsMapper {
       CommonVars.apply("wds.linkis.server.mdm.service.sql.password", "password");
 
   public static final CommonVars<String> PARAM_SQL_DATABASE =
+      CommonVars.apply("wds.linkis.server.mdm.service.sql.database", "databaseName");
+
+  public static final CommonVars<String> PARAM_SQL_INSTANCE =
       CommonVars.apply("wds.linkis.server.mdm.service.sql.instance", "instance");
 
   public static final CommonVars<String> PARAM_SQL_EXTRA_PARAMS =
       CommonVars.apply("wds.linkis.server.mdm.service.sql.params", "params");
 
   public static final CommonVars<String> PARAM_SQL_SERVICE_NAME =
-      CommonVars.apply("wds.linkis.server.mdm.service.sql.service.name", "servicename");
+      CommonVars.apply("wds.linkis.server.mdm.service.sql.service.name", "serviceName");
 }

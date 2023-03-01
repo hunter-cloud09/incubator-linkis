@@ -19,14 +19,25 @@ package org.apache.linkis.metadata.query.service.dm;
 
 import org.apache.linkis.common.conf.CommonVars;
 import org.apache.linkis.metadata.query.common.domain.MetaColumnInfo;
+import org.apache.linkis.metadata.query.service.util.ConnectionUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.sql.*;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -192,22 +203,15 @@ public class SqlConnection implements Closeable {
 
   /**
    * @param connectMessage
-   * @param database
    * @return
    * @throws ClassNotFoundException
    */
   private Connection getDBConnection(ConnectMessage connectMessage)
       throws ClassNotFoundException, SQLException {
-    String extraParamString =
-        connectMessage.extraParams.entrySet().stream()
-            .map(e -> String.join("=", e.getKey(), String.valueOf(e.getValue())))
-            .collect(Collectors.joining("&"));
     Class.forName(SQL_DRIVER_CLASS.getValue());
     String url =
         String.format(SQL_CONNECT_URL.getValue(), connectMessage.host, connectMessage.port);
-    if (!connectMessage.extraParams.isEmpty()) {
-      url += "?" + extraParamString;
-    }
+    url = ConnectionUtils.addUrlParams(url, connectMessage.extraParams);
     try {
       //            return DriverManager.getConnection(url, connectMessage.username,
       // connectMessage.password);

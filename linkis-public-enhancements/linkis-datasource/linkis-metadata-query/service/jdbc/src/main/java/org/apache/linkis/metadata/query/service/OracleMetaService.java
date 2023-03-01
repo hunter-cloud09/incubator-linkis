@@ -50,8 +50,8 @@ public class OracleMetaService extends AbstractDbMetaService<SqlConnection> {
     String password =
         String.valueOf(params.getOrDefault(SqlParamsMapper.PARAM_SQL_PASSWORD.getValue(), ""));
 
-    String database =
-        String.valueOf(params.getOrDefault(SqlParamsMapper.PARAM_SQL_DATABASE.getValue(), ""));
+    String sid =
+        String.valueOf(params.getOrDefault(SqlParamsMapper.PARAM_SQL_INSTANCE.getValue(), ""));
 
     String serviceName =
         String.valueOf(params.getOrDefault(SqlParamsMapper.PARAM_SQL_SERVICE_NAME.getValue(), ""));
@@ -68,14 +68,14 @@ public class OracleMetaService extends AbstractDbMetaService<SqlConnection> {
     assert extraParams != null;
     LOG.info("oracle connection params:{}", params.toString());
     LOG.info(
-        "oracle connection host:{},port:{},username:{},password:{},database:{}",
+        "oracle connection host:{},port:{},username:{},password:{},sid:{}",
         host,
         port,
         username,
         password,
-        database);
+        sid);
     return new MetadataConnection<>(
-        new SqlConnection(host, port, username, password, database, serviceName, extraParams));
+        new SqlConnection(host, port, username, password, sid, serviceName, extraParams));
   }
 
   @Override
