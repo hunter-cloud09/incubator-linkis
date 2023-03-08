@@ -95,7 +95,7 @@ public class SqlConnection implements Closeable {
       stmt = conn.createStatement();
       rs =
           stmt.executeQuery(
-              "SELECT ('\"' || table_schema || '\".\"' || table_name || '\"') AS table_name "
+              "SELECT table_name "
                   + "FROM information_schema.TABLES WHERE table_schema ='"
                   + schema
                   + "'");
