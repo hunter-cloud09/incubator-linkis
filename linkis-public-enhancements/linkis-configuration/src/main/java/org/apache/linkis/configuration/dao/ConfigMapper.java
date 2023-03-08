@@ -28,16 +28,9 @@ import java.util.List;
 
 public interface ConfigMapper {
 
-  List<ConfigKeyValue> getConfigByEngineUserCreator(
-      @Param("engineType") String engineType,
-      @Param("creator") String creator,
-      @Param("userName") String userName);
-
   List<ConfigKeyValue> getConfigKeyByLabelIds(@Param("ids") List<Integer> ids);
 
   List<ConfigKeyValue> getConfigKeyValueByLabelId(@Param("labelId") Integer labelId);
-
-  Long selectAppIDByAppName(@Param("name") String appName);
 
   void insertValue(ConfigValue configValue);
 
@@ -58,8 +51,6 @@ public interface ConfigMapper {
   List<ConfigKey> selectKeyByKeyName(@Param("keyName") String keyName);
 
   List<ConfigKey> listKeyByStringValue(@Param("stringValue") String stringValue);
-
-  void insertCreator(String creator);
 
   List<CategoryLabel> getCategory();
 

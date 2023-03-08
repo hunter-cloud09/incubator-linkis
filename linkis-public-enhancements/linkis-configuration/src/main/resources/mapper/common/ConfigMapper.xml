@@ -24,7 +24,6 @@
         <result column="key" property="key" jdbcType="VARCHAR"/>
         <result column="description" property="description" jdbcType="VARCHAR"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
-        <result column="creator_id" property="creatorId" jdbcType="VARCHAR"/>
         <result column="engine_conn_type" property="engineType" jdbcType="VARCHAR"/>
         <result column="default_value" property="defaultValue" jdbcType="VARCHAR"/>
         <result column="validate_type" property="validateType" jdbcType="VARCHAR"/>
@@ -32,7 +31,6 @@
         <result column="is_hidden" property="isHidden" jdbcType="TINYINT"/>
         <result column="is_advanced" property="isAdvanced" jdbcType="TINYINT"/>
         <result column="level" property="level" jdbcType="TINYINT"/>
-        <result column="username" property="userName" jdbcType="VARCHAR"/>
         <result column="treename" property="treeName" jdbcType="VARCHAR"/>
         <result column="value_id" property="valueId" jdbcType="BIGINT"/>
         <result column="config_value" property="configValue" jdbcType="VARCHAR"/>
@@ -51,7 +49,6 @@
         <result column="is_hidden" property="isHidden" jdbcType="TINYINT"/>
         <result column="is_advanced" property="isAdvanced" jdbcType="TINYINT"/>
         <result column="level" property="level" jdbcType="TINYINT"/>
-        <result column="username" property="userName" jdbcType="VARCHAR"/>
         <result column="treename" property="treeName" jdbcType="VARCHAR"/>
     </resultMap>
 
@@ -143,12 +140,6 @@
         LEFT OUTER JOIN linkis_ps_configuration_config_value AS v
         ON k.id = v.config_key_id
         WHERE v.config_label_id = #{labelId}
-    </select>
-
-    <select id="getConfigById" resultMap="ConfigKeyValueMap">
-        SELECT <include refid="Config_Key_Column"/>
-        FROM linkis_ps_configuration_config_key
-        WHERE id = #{id}
     </select>
 
     <select id="selectKeyByKeyName" resultMap="ConfigKeyMap">
