@@ -113,9 +113,9 @@ then
     sudo chmod -R 775 $localRootDir/$deployUser
   elif [[ $WORKSPACE_USER_ROOT_PATH == hdfs://* ]];then
     localRootDir=${WORKSPACE_USER_ROOT_PATH#hdfs://}
-    echo "[WORKSPACE_USER_ROOT_PATH] try to create hdfs dir,cmd is: hdfs dfs -mkdir -p $localRootDir/$deployUser"
-    hdfs dfs -mkdir -p $localRootDir/$deployUser
-    hdfs dfs -chmod -R 775 $localRootDir/$deployUser
+    echo "[WORKSPACE_USER_ROOT_PATH] create hdfs dir manually,cmd is: hdfs dfs -mkdir -p $localRootDir/$deployUser"
+#    hdfs dfs -mkdir -p $localRootDir/$deployUser
+#    hdfs dfs -chmod -R 775 $localRootDir/$deployUser
   else
     echo "[WORKSPACE_USER_ROOT_PATH] does not support $WORKSPACE_USER_ROOT_PATH filesystem types"
   fi
@@ -139,8 +139,8 @@ echo "[HDFS_USER_ROOT_PATH] try to create directory"
    elif [[ $HDFS_USER_ROOT_PATH == hdfs://* ]];then
      localRootDir=${localRootDir#hdfs://}
      sed -i ${txt}  "s#\#wds.linkis.bml.hdfs.prefix.*#wds.linkis.bml.hdfs.prefix=$localRootDir#g" $common_conf
-     echo "[HDFS_USER_ROOT_PATH] try to create hdfs dir,cmd is: hdfs dfs -mkdir -p $localRootDir/$deployUser"
-     hdfs dfs -mkdir -p $localRootDir/$deployUser
+     echo "[HDFS_USER_ROOT_PATH] create hdfs dir manually,cmd is: hdfs dfs -mkdir -p $localRootDir/$deployUser"
+#     hdfs dfs -mkdir -p $localRootDir/$deployUser
    else
      echo "[HDFS_USER_ROOT_PATH] does not support $HDFS_USER_ROOT_PATH filesystem types"
    fi
@@ -164,9 +164,9 @@ echo "[RESULT_SET_ROOT_PATH] try to create directory"
      sudo chmod -R 775 $localRootDir/$deployUser
    elif [[ $RESULT_SET_ROOT_PATH == hdfs://* ]];then
      localRootDir=${RESULT_SET_ROOT_PATH#hdfs://}
-     echo "[RESULT_SET_ROOT_PATH] try to create hdfs dir,cmd is: hdfs dfs -mkdir -p $localRootDir"
-     hdfs dfs -mkdir -p $localRootDir
-     hdfs dfs -chmod 775 $localRootDir
+     echo "[RESULT_SET_ROOT_PATH] create hdfs dir manually,cmd is: hdfs dfs -mkdir -p $localRootDir"
+#     hdfs dfs -mkdir -p $localRootDir
+#     hdfs dfs -chmod 775 $localRootDir
    else
      echo "[RESULT_SET_ROOT_PATH] does not support $RESULT_SET_ROOT_PATH filesystem types"
    fi
