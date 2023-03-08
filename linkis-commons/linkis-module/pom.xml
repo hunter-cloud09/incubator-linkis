@@ -34,7 +34,7 @@
       <version>${project.version}</version>
     </dependency>
 
-    <!--add knif2 dependency-->
+    <!--add knife2 dependency-->
     <dependency>
       <groupId>com.github.xiaoymin</groupId>
       <artifactId>knife4j-spring-boot-starter</artifactId>
