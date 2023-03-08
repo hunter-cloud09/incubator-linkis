@@ -24,7 +24,6 @@ import org.apache.linkis.cs.contextcache.cache.csid.ContextIDValue;
 import org.apache.linkis.cs.contextcache.cache.csid.ContextIDValueGenerator;
 import org.apache.linkis.cs.contextcache.conf.ContextCacheConf;
 import org.apache.linkis.cs.contextcache.metric.ContextCacheMetric;
-import org.apache.linkis.cs.contextcache.metric.ContextIDMetric;
 import org.apache.linkis.cs.contextcache.metric.DefaultContextCacheMetric;
 import org.apache.linkis.cs.listener.CSIDListener;
 import org.apache.linkis.cs.listener.ListenerBus.ContextAsyncListenerBus;
@@ -50,7 +49,9 @@ import com.google.common.cache.RemovalListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.apache.linkis.cs.listener.event.enumeration.OperateType.*;
+import static org.apache.linkis.cs.listener.event.enumeration.OperateType.ACCESS;
+import static org.apache.linkis.cs.listener.event.enumeration.OperateType.ADD;
+import static org.apache.linkis.cs.listener.event.enumeration.OperateType.DELETE;
 
 @Component
 public class DefaultContextCache implements ContextCache, CSIDListener {
@@ -165,17 +166,7 @@ public class DefaultContextCache implements ContextCache, CSIDListener {
 
   @Override
   public void onCSIDAccess(ContextIDEvent contextIDEvent) {
-    ContextID contextID = contextIDEvent.getContextID();
-    try {
-      ContextIDValue contextIDValue = getContextIDValue(contextID);
-      ContextIDMetric contextIDMetric = contextIDValue.getContextIDMetric();
-
-      contextIDMetric.setLastAccessTime(System.currentTimeMillis());
-      contextIDMetric.addCount();
-      getContextCacheMetric().addCount();
-    } catch (CSErrorException e) {
-      logger.warn("Failed to deal CSIDAccess event csid is {}", contextID.getContextId());
-    }
+    getContextCacheMetric().addCount();
   }
 
   @Override
