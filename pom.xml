@@ -164,7 +164,6 @@
     <snakeyaml.version>1.33</snakeyaml.version>
 
     <!-- Java Byte Code Modification -->
-    <cglib.version>3.3.0</cglib.version>
     <asm-bom.version>9.3</asm-bom.version>
     <javassist.version>3.27.0-GA</javassist.version>
 
@@ -1173,11 +1172,6 @@
         <version>${asm-bom.version}</version>
         <type>pom</type>
         <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>cglib</groupId>
-        <artifactId>cglib</artifactId>
-        <version>${cglib.version}</version>
       </dependency>
       <dependency>
         <groupId>org.javassist</groupId>
