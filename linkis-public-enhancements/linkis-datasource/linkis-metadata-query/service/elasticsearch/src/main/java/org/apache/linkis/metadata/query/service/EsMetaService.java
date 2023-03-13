@@ -17,6 +17,7 @@
 
 package org.apache.linkis.metadata.query.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.linkis.datasourcemanager.common.util.json.Json;
 import org.apache.linkis.metadata.query.common.domain.MetaColumnInfo;
 import org.apache.linkis.metadata.query.common.service.AbstractDbMetaService;
@@ -33,9 +34,7 @@ public class EsMetaService extends AbstractDbMetaService<ElasticConnection> {
     String[] endPoints = new String[] {};
     Object urls = params.get(ElasticParamsMapper.PARAM_ES_URLS.getValue());
     if (!(urls instanceof List)) {
-      List<String> urlList = Json.fromJson(String.valueOf(urls), List.class, String.class);
-      assert urlList != null;
-      endPoints = urlList.toArray(endPoints);
+      endPoints = StringUtils.split(urls.toString(), ",");
     } else {
       endPoints = ((List<String>) urls).toArray(endPoints);
     }
