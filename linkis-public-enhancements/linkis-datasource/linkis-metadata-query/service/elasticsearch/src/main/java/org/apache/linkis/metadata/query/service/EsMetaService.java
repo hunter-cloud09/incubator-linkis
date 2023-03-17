@@ -17,11 +17,11 @@
 
 package org.apache.linkis.metadata.query.service;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.linkis.datasourcemanager.common.util.json.Json;
 import org.apache.linkis.metadata.query.common.domain.MetaColumnInfo;
 import org.apache.linkis.metadata.query.common.service.AbstractDbMetaService;
 import org.apache.linkis.metadata.query.common.service.MetadataConnection;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
