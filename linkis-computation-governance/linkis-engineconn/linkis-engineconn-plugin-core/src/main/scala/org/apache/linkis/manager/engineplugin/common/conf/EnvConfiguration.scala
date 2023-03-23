@@ -19,8 +19,6 @@ package org.apache.linkis.manager.engineplugin.common.conf
 
 import org.apache.linkis.common.conf.{ByteType, CommonVars, Configuration}
 
-import org.apache.commons.lang3.{JavaVersion, SystemUtils}
-
 object EnvConfiguration {
 
   val HIVE_CONF_DIR = CommonVars[String](
@@ -41,9 +39,12 @@ object EnvConfiguration {
   val ENGINE_CONN_CLASSPATH_FILES =
     CommonVars("wds.linkis.engineConn.files", "", "engineConn额外的配置文件")
 
-  val metaspaceSize = "-XX:MaxMetaspaceSize=256m -XX:MetaspaceSize=128m"
+  val MAX_METASPACE_SIZE = CommonVars("linkis.engineconn.metaspace.size.max", "256m")
 
-  val ENGINE_CONN_DEFAULT_JAVA_OPTS = CommonVars[String](
+  lazy val metaspaceSize =
+    s"-XX:MaxMetaspaceSize=${MAX_METASPACE_SIZE.getValue} -XX:MetaspaceSize=128m"
+
+  lazy val ENGINE_CONN_DEFAULT_JAVA_OPTS = CommonVars[String](
     "wds.linkis.engineConn.javaOpts.default",
     s"-XX:+UseG1GC ${metaspaceSize} " +
       s"-Xloggc:%s -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -Dwds.linkis.server.conf=linkis-engineconn.properties -Dwds.linkis.gateway.url=${Configuration.getGateWayURL()}"

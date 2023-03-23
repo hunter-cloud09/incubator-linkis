@@ -22,6 +22,8 @@ import org.apache.linkis.common.utils.SecurityUtils;
 import org.apache.linkis.metadata.query.common.domain.MetaColumnInfo;
 import org.apache.linkis.metadata.query.service.util.ConnectionUtils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.Closeable;
 import java.io.IOException;
 import java.sql.Connection;
@@ -226,7 +228,12 @@ public class SqlConnection implements Closeable {
     String url =
         String.format(
             SQL_CONNECT_URL.getValue(), connectMessage.host, connectMessage.port, database);
+    // deal with empty database
+    if (StringUtils.isBlank(database)) {
+      url = url.substring(0, url.length() - 1);
+    }
     url = ConnectionUtils.addUrlParams(url, connectMessage.extraParams);
+
     return DriverManager.getConnection(url, connectMessage.username, connectMessage.password);
   }
 

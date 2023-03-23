@@ -439,36 +439,35 @@ INSERT INTO linkis_ps_error_code (error_code,error_desc,error_regex,error_type) 
 -- ----------------------------
 -- Default Tokens
 -- ----------------------------
-INSERT INTO `linkis_mg_gateway_auth_token`(`token_name`,`legal_users`,`legal_hosts`,`business_owner`,`create_time`,`update_time`,`elapse_day`,`update_by`) VALUES ('QML-AUTH','*','*','BDP',curdate(),curdate(),-1,'LINKIS');
+INSERT INTO `linkis_mg_gateway_auth_token`(`token_name`,`legal_users`,`legal_hosts`,`business_owner`,`create_time`,`update_time`,`elapse_day`,`update_by`) VALUES (concat('QML-', MD5(RAND())),'*','*','BDP',curdate(),curdate(),-1,'LINKIS');
 INSERT INTO `linkis_mg_gateway_auth_token`(`token_name`,`legal_users`,`legal_hosts`,`business_owner`,`create_time`,`update_time`,`elapse_day`,`update_by`) VALUES ('BML-AUTH','*','*','BDP',curdate(),curdate(),-1,'LINKIS');
 INSERT INTO `linkis_mg_gateway_auth_token`(`token_name`,`legal_users`,`legal_hosts`,`business_owner`,`create_time`,`update_time`,`elapse_day`,`update_by`) VALUES ('WS-AUTH','*','*','BDP',curdate(),curdate(),-1,'LINKIS');
-INSERT INTO `linkis_mg_gateway_auth_token`(`token_name`,`legal_users`,`legal_hosts`,`business_owner`,`create_time`,`update_time`,`elapse_day`,`update_by`) VALUES ('dss-AUTH','*','*','BDP',curdate(),curdate(),-1,'LINKIS');
-INSERT INTO `linkis_mg_gateway_auth_token`(`token_name`,`legal_users`,`legal_hosts`,`business_owner`,`create_time`,`update_time`,`elapse_day`,`update_by`) VALUES ('QUALITIS-AUTH','*','*','BDP',curdate(),curdate(),-1,'LINKIS');
-INSERT INTO `linkis_mg_gateway_auth_token`(`token_name`,`legal_users`,`legal_hosts`,`business_owner`,`create_time`,`update_time`,`elapse_day`,`update_by`) VALUES ('EXCHANGIS-AUTH','*','*','BDP',curdate(),curdate(),-1,'LINKIS');
-INSERT INTO `linkis_mg_gateway_auth_token`(`token_name`,`legal_users`,`legal_hosts`,`business_owner`,`create_time`,`update_time`,`elapse_day`,`update_by`) VALUES ('VALIDATOR-AUTH','*','*','BDP',curdate(),curdate(),-1,'LINKIS');
-INSERT INTO `linkis_mg_gateway_auth_token`(`token_name`,`legal_users`,`legal_hosts`,`business_owner`,`create_time`,`update_time`,`elapse_day`,`update_by`) VALUES ('LINKISCLI-AUTH','*','*','BDP',curdate(),curdate(),-1,'LINKIS');
+INSERT INTO `linkis_mg_gateway_auth_token`(`token_name`,`legal_users`,`legal_hosts`,`business_owner`,`create_time`,`update_time`,`elapse_day`,`update_by`) VALUES (concat('DSS-', MD5(RAND())),'*','*','BDP',curdate(),curdate(),-1,'LINKIS');
+INSERT INTO `linkis_mg_gateway_auth_token`(`token_name`,`legal_users`,`legal_hosts`,`business_owner`,`create_time`,`update_time`,`elapse_day`,`update_by`) VALUES (concat('QUALITIS-', MD5(RAND())),'*','*','BDP',curdate(),curdate(),-1,'LINKIS');
+INSERT INTO `linkis_mg_gateway_auth_token`(`token_name`,`legal_users`,`legal_hosts`,`business_owner`,`create_time`,`update_time`,`elapse_day`,`update_by`) VALUES (concat('VALIDATOR-', MD5(RAND())),'*','*','BDP',curdate(),curdate(),-1,'LINKIS');
+INSERT INTO `linkis_mg_gateway_auth_token`(`token_name`,`legal_users`,`legal_hosts`,`business_owner`,`create_time`,`update_time`,`elapse_day`,`update_by`) VALUES (concat('LINKISCLI-', MD5(RAND())),'*','*','BDP',curdate(),curdate(),-1,'LINKIS');
 INSERT INTO `linkis_mg_gateway_auth_token`(`token_name`,`legal_users`,`legal_hosts`,`business_owner`,`create_time`,`update_time`,`elapse_day`,`update_by`) VALUES ('DSM-AUTH','*','*','BDP',curdate(),curdate(),-1,'LINKIS');
 INSERT INTO `linkis_mg_gateway_auth_token`(`token_name`,`legal_users`,`legal_hosts`,`business_owner`,`create_time`,`update_time`,`elapse_day`,`update_by`) VALUES ('LINKIS_CLI_TEST','*','*','BDP',curdate(),curdate(),-1,'LINKIS');
+INSERT INTO `linkis_mg_gateway_auth_token`(`token_name`,`legal_users`,`legal_hosts`,`business_owner`,`create_time`,`update_time`,`elapse_day`,`update_by`) VALUES ('EXCHANGIS-AUTH','*','*','BDP',curdate(),curdate(),-1,'LINKIS');
 
-INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`) VALUES ('kafka', 'kafka', 'kafka', '消息队列', '', 2);
-INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`) VALUES ('hive', 'hive数据库', 'hive', '大数据存储', '', 3);
+
+INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`, `description_en`, `option_en`, `classifier_en`) VALUES ('kafka', 'kafka', 'kafka', '消息队列', '', 2, 'Kafka', 'Kafka', 'Message Queue');
+INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`, `description_en`, `option_en`, `classifier_en`) VALUES ('hive', 'hive数据库', 'hive', '大数据存储', '', 3, 'Hive Database', 'Hive', 'Big Data storage');
+
 -- iceberg
-INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`) VALUES ('iceberg', 'iceberg数据库', 'iceberg', '大数据存储', '', 3);
--- es
-INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`) VALUES ('elasticsearch','elasticsearch数据源','es无结构化存储','分布式全文索引','',3);
-INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`) VALUES ('mongodb', 'mongodb', 'NoSQL文档存储', 'NoSQL', NULL, 3);
+INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`, `description_en`, `option_en`, `classifier_en`) VALUES ('iceberg', 'iceberg数据库', 'iceberg', '大数据存储', '', 3, 'iceberg Database', 'iceberg', 'Big Data storage');
 
 -- jdbc
-INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`) VALUES ('mysql', 'mysql数据库', 'mysql数据库', '关系型数据库', '', 3);
-INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`) VALUES ('oracle','oracle数据库','oracle','关系型数据库','',3);
-INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`) VALUES ('dm','达梦数据库','dm','关系型数据库','',3);
-INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`) VALUES ('kingbase','人大金仓数据库','kingbase','关系型数据库','',3);
-INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`) VALUES ('postgresql','postgresql数据库','postgresql','关系型数据库','',3);
-INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`) VALUES ('sqlserver','sqlserver数据库','sqlserver','关系型数据库','',3);
-INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`) VALUES ('db2','db2数据库','db2','关系型数据库','',3);
-INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`) VALUES ('greenplum','greenplum数据库','greenplum','关系型数据库','',3);
-INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`) VALUES ('doris','doris数据库','doris','olap','',4);
-INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`) VALUES ('clickhouse','clickhouse数据库','clickhouse','olap','',4);
+INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`, `description_en`, `option_en`, `classifier_en`) VALUES ('mysql', 'mysql数据库', 'mysql数据库', '关系型数据库', '', 3, 'Mysql Database', 'Mysql Database', 'Relational Database');
+INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`, `description_en`, `option_en`, `classifier_en`) VALUES ('oracle', 'oracle数据库', 'oracle', '关系型数据库', '', 3, 'Oracle Database', 'Oracle Relational Database', 'Relational Database');
+INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`, `description_en`, `option_en`, `classifier_en`) VALUES ('dm', '达梦数据库', 'dm', '关系型数据库', '', 3, 'Dameng Database', 'Dm', 'Relational Database');
+INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`, `description_en`, `option_en`, `classifier_en`) VALUES ('kingbase', '人大金仓数据库', 'kingbase', '关系型数据库', '', 3, 'Renmin Jincang Database', 'Kingbase', 'Relational Database');
+INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`, `description_en`, `option_en`, `classifier_en`) VALUES ('postgresql', 'postgresql数据库', 'postgresql', '关系型数据库', '', 3, 'Postgresql Database', 'Postgresql', 'Relational Database');
+INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`, `description_en`, `option_en`, `classifier_en`) VALUES ('sqlserver', 'sqlserver数据库', 'sqlserver', '关系型数据库', '', 3, 'Sqlserver Database', 'Sqlserver', 'Relational Database');
+INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`, `description_en`, `option_en`, `classifier_en`) VALUES ('db2', 'db2数据库', 'db2', '关系型数据库', '', 3, 'Db2 Database', 'Db2', 'Relational Database');
+INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`, `description_en`, `option_en`, `classifier_en`) VALUES ('greenplum', 'greenplum数据库', 'greenplum', '关系型数据库', '', 3, 'Greenplum Database', 'Greenplum', 'Relational Database');
+INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`, `description_en`, `option_en`, `classifier_en`) VALUES ('doris', 'doris数据库', 'doris', 'olap', '', 4, 'Doris Database', 'Doris', 'Olap');
+INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`, `description_en`, `option_en`, `classifier_en`) VALUES ('clickhouse', 'clickhouse数据库', 'clickhouse', 'olap', '', 4, 'Clickhouse Database', 'Clickhouse', 'Olap');
 
 
 select @data_source_type_id := id from `linkis_ps_dm_datasource_type` where `name` = 'mongodb';
@@ -486,9 +485,17 @@ INSERT INTO `linkis_ps_dm_datasource_type_key`
     (`data_source_type_id`, `key`, `name`, `name_en`, `default_value`, `value_type`, `scope`, `require`, `description`, `description_en`, `value_regex`, `ref_id`, `ref_value`, `data_source`, `update_time`, `create_time`)
 VALUES (@data_source_type_id, 'envId', '集群环境(Cluster env)', 'Cluster env', NULL, 'SELECT', NULL, 1, '集群环境(Cluster env)', 'Cluster env', NULL, NULL, NULL, @data_source, now(), now());
 
+select @data_source_type_id := id from `linkis_ps_dm_datasource_type` where `name` = 'kafka';
+SET @data_source=CONCAT('/data-source-manager/env-list/all/type/',@data_source_type_id);
+INSERT INTO `linkis_ps_dm_datasource_type_key`
+    (`data_source_type_id`, `key`, `name`, `name_en`, `default_value`, `value_type`, `scope`, `require`, `description`, `description_en`, `value_regex`, `ref_id`, `ref_value`, `data_source`, `update_time`, `create_time`)
+VALUES (@data_source_type_id, 'envId', '集群环境(Cluster env)', 'Cluster env', NULL, 'SELECT', NULL, 1, '集群环境(Cluster env)', 'Cluster env', NULL, NULL, NULL, @data_source, now(), now());
+
 select @data_source_type_id := id from `linkis_ps_dm_datasource_type` where `name` = 'iceberg';
 SET @data_source=CONCAT('/data-source-manager/env-list/all/type/',@data_source_type_id);
-INSERT INTO `linkis_ps_dm_datasource_type_key` (`data_source_type_id`, `key`, `name`, `name_en`, `default_value`, `value_type`, `scope`, `require`, `description`, `description_en`, `value_regex`, `ref_id`, `ref_value`, `data_source`, `update_time`, `create_time`) VALUES (@data_source_type_id, 'envId', '集群环境(Cluster env)', 'Cluster env', NULL, 'SELECT', NULL, 1, '集群环境(Cluster env)', 'Cluster env', NULL, NULL, NULL, @data_source, now(), now());
+INSERT INTO `linkis_ps_dm_datasource_type_key`
+    (`data_source_type_id`, `key`, `name`, `name_en`, `default_value`, `value_type`, `scope`, `require`, `description`, `description_en`, `value_regex`, `ref_id`, `ref_value`, `data_source`, `update_time`, `create_time`)
+VALUES (@data_source_type_id, 'envId', '集群环境(Cluster env)', 'Cluster env', NULL, 'SELECT', NULL, 1, '集群环境(Cluster env)', 'Cluster env', NULL, NULL, NULL, @data_source, now(), now());
 
 select @data_source_type_id := id from `linkis_ps_dm_datasource_type` where `name` = 'elasticsearch';
 INSERT INTO `linkis_ps_dm_datasource_type_key`
@@ -558,7 +565,7 @@ VALUES (@data_source_type_id, 'address', '地址', 'Address', NULL, 'TEXT', NULL
        (@data_source_type_id, 'params', '连接参数(Connection params)', 'Connection params', NULL, 'TEXT', NULL, 0, '输入JSON格式(Input JSON format): {"param":"value"}', 'Input JSON format: {"param":"value"}', NULL, NULL, NULL, NULL,  now(), now()),
        (@data_source_type_id, 'username', '用户名(Username)', 'Username', NULL, 'TEXT', NULL, 1, '用户名(Username)', 'Username', '^[0-9A-Za-z_-]+$', NULL, NULL, NULL,  now(), now()),
        (@data_source_type_id, 'password', '密码(Password)', 'Password', NULL, 'PASSWORD', NULL, 1, '密码(Password)', 'Password', '', NULL, NULL, NULL,  now(), now()),
-       (@data_source_type_id, 'databaseName', '数据库名(Database name)', 'Database name', NULL, 'TEXT', NULL, 0, '数据库名(Database name)', 'Database name', NULL, NULL, NULL, NULL,  now(), now());
+       (@data_source_type_id, 'instance', '实例名(instance)', 'Instance', NULL, 'TEXT', NULL, 1, '实例名(instance)', 'Instance', NULL, NULL, NULL, NULL,  now(), now());
 
 -- https://learn.microsoft.com/zh-cn/sql/connect/jdbc/building-the-connection-url?redirectedfrom=MSDN&view=sql-server-ver16
 select @data_source_type_id := id from `linkis_ps_dm_datasource_type` where `name` = 'sqlserver';
@@ -585,7 +592,7 @@ VALUES (@data_source_type_id, 'address', '地址', 'Address', NULL, 'TEXT', NULL
        (@data_source_type_id, 'params', '连接参数(Connection params)', 'Connection params', NULL, 'TEXT', NULL, 0, '输入JSON格式(Input JSON format): {"param":"value"}', 'Input JSON format: {"param":"value"}', NULL, NULL, NULL, NULL,  now(), now()),
        (@data_source_type_id, 'username', '用户名(Username)', 'Username', NULL, 'TEXT', NULL, 1, '用户名(Username)', 'Username', '^[0-9A-Za-z_-]+$', NULL, NULL, NULL,  now(), now()),
        (@data_source_type_id, 'password', '密码(Password)', 'Password', NULL, 'PASSWORD', NULL, 1, '密码(Password)', 'Password', '', NULL, NULL, NULL,  now(), now()),
-       (@data_source_type_id, 'databaseName', '数据库名(Database name)', 'Database name', NULL, 'TEXT', NULL, 0, '数据库名(Database name)', 'Database name', NULL, NULL, NULL, NULL,  now(), now());
+       (@data_source_type_id, 'instance', '实例名(instance)', 'Instance', NULL, 'TEXT', NULL, 1, '实例名(instance)', 'Instance', NULL, NULL, NULL, NULL,  now(), now());
 
 -- https://greenplum.docs.pivotal.io/6-1/datadirect/datadirect_jdbc.html#topic_ylk_pbx_2bb
 select @data_source_type_id := id from `linkis_ps_dm_datasource_type` where `name` = 'greenplum';
@@ -598,7 +605,7 @@ VALUES (@data_source_type_id, 'address', '地址', 'Address', NULL, 'TEXT', NULL
        (@data_source_type_id, 'params', '连接参数(Connection params)', 'Connection params', NULL, 'TEXT', NULL, 0, '输入JSON格式(Input JSON format): {"param":"value"}', 'Input JSON format: {"param":"value"}', NULL, NULL, NULL, NULL,  now(), now()),
        (@data_source_type_id, 'username', '用户名(Username)', 'Username', NULL, 'TEXT', NULL, 1, '用户名(Username)', 'Username', '^[0-9A-Za-z_-]+$', NULL, NULL, NULL,  now(), now()),
        (@data_source_type_id, 'password', '密码(Password)', 'Password', NULL, 'PASSWORD', NULL, 1, '密码(Password)', 'Password', '', NULL, NULL, NULL,  now(), now()),
-       (@data_source_type_id, 'databaseName', '数据库名(Database name)', 'Database name', NULL, 'TEXT', NULL, 0, '数据库名(Database name)', 'Database name', NULL, NULL, NULL, NULL,  now(), now());
+       (@data_source_type_id, 'instance', '实例名(instance)', 'Instance', NULL, 'TEXT', NULL, 1, '实例名(instance)', 'Instance', NULL, NULL, NULL, NULL,  now(), now());
 
 select @data_source_type_id := id from `linkis_ps_dm_datasource_type` where `name` = 'doris';
 INSERT INTO `linkis_ps_dm_datasource_type_key`
@@ -610,7 +617,7 @@ VALUES (@data_source_type_id, 'address', '地址', 'Address', NULL, 'TEXT', NULL
        (@data_source_type_id, 'params', '连接参数(Connection params)', 'Connection params', '{"useSSL":"false", "characterEncoding":"UTF-8"}', 'TEXT', NULL, 0, '输入JSON格式(Input JSON format): {"param":"value"}', 'Input JSON format: {"param":"value"}', NULL, NULL, NULL, NULL,  now(), now()),
        (@data_source_type_id, 'username', '用户名(Username)', 'Username', NULL, 'TEXT', NULL, 1, '用户名(Username)', 'Username', '^[0-9A-Za-z_-]+$', NULL, NULL, NULL,  now(), now()),
        (@data_source_type_id, 'password', '密码(Password)', 'Password', NULL, 'PASSWORD', NULL, 1, '密码(Password)', 'Password', '', NULL, NULL, NULL,  now(), now()),
-       (@data_source_type_id, 'databaseName', '数据库名(Database name)', 'Database name', NULL, 'TEXT', NULL, 0, '数据库名(Database name)', 'Database name', NULL, NULL, NULL, NULL,  now(), now());
+       (@data_source_type_id, 'instance', '实例名(instance)', 'Instance', NULL, 'TEXT', NULL, 1, '实例名(instance)', 'Instance', NULL, NULL, NULL, NULL,  now(), now());
 
 -- https://github.com/ClickHouse/clickhouse-jdbc/tree/master/clickhouse-jdbc
 select @data_source_type_id := id from `linkis_ps_dm_datasource_type` where `name` = 'clickhouse';
@@ -623,10 +630,20 @@ VALUES (@data_source_type_id, 'address', '地址', 'Address', NULL, 'TEXT', NULL
        (@data_source_type_id, 'params', '连接参数(Connection params)', 'Connection params', NULL, 'TEXT', NULL, 0, '输入JSON格式(Input JSON format): {"param":"value"}', 'Input JSON format: {"param":"value"}', NULL, NULL, NULL, NULL,  now(), now()),
        (@data_source_type_id, 'username', '用户名(Username)', 'Username', NULL, 'TEXT', NULL, 1, '用户名(Username)', 'Username', '^[0-9A-Za-z_-]+$', NULL, NULL, NULL,  now(), now()),
        (@data_source_type_id, 'password', '密码(Password)', 'Password', NULL, 'PASSWORD', NULL, 1, '密码(Password)', 'Password', '', NULL, NULL, NULL,  now(), now()),
-       (@data_source_type_id, 'databaseName', '数据库名(Database name)', 'Database name', NULL, 'TEXT', NULL, 0, '数据库名(Database name)', 'Database name', NULL, NULL, NULL, NULL,  now(), now());
+       (@data_source_type_id, 'instance', '实例名(instance)', 'Instance', NULL, 'TEXT', NULL, 1, '实例名(instance)', 'Instance', NULL, NULL, NULL, NULL,  now(), now());
 
 select @data_source_type_id := id from `linkis_ps_dm_datasource_type` where `name` = 'hive';
-INSERT INTO `linkis_ps_dm_datasource_env` (`env_name`, `env_desc`, `datasource_type_id`, `parameter`, `create_time`, `create_user`, `modify_time`, `modify_user`) VALUES ('测试环境SIT', '测试环境SIT', @data_source_type_id, '{"uris":"@HIVE_METASTORE_URIS", "hadoopConf":{"hive.metastore.execute.setugi":"true"}}',  now(), NULL,  now(), NULL);
+INSERT INTO `linkis_ps_dm_datasource_env`
+    (`env_name`, `env_desc`, `datasource_type_id`, `parameter`, `create_time`, `create_user`, `modify_time`, `modify_user`)
+VALUES ('测试环境SIT', '测试环境SIT', @data_source_type_id, '{"uris":"@HIVE_METASTORE_URIS", "hadoopConf":{"hive.metastore.execute.setugi":"true"}}',  now(), NULL,  now(), NULL);
+
+select @data_source_type_id := id from `linkis_ps_dm_datasource_type` where `name` = 'kafka';
+INSERT INTO `linkis_ps_dm_datasource_env`
+    (`env_name`, `env_desc`, `datasource_type_id`, `parameter`, `create_time`, `create_user`, `modify_time`, `modify_user`)
+VALUES ('kafka测试环境SIT', '开源测试环境SIT', @data_source_type_id, '{"uris":"localhost:9092"}',  now(), NULL,  now(), NULL);
 
 select @data_source_type_id := id from `linkis_ps_dm_datasource_type` where `name` = 'iceberg';
-INSERT INTO `linkis_ps_dm_datasource_env` (`env_name`, `env_desc`, `datasource_type_id`, `parameter`, `create_time`, `create_user`, `modify_time`, `modify_user`) VALUES ('测试环境iceberg', '测试环境iceberg', @data_source_type_id, '{"uris":"@HIVE_METASTORE_URIS", "hadoopConf":{"hive.metastore.execute.setugi":"true"}}', now(), NULL, now(), NULL);
+INSERT INTO `linkis_ps_dm_datasource_env`
+    (`env_name`, `env_desc`, `datasource_type_id`, `parameter`, `create_time`, `create_user`, `modify_time`, `modify_user`)
+VALUES ('测试环境iceberg', '测试环境iceberg', @data_source_type_id, '{"uris":"@HIVE_METASTORE_URIS", "hadoopConf":{"hive.metastore.execute.setugi":"true"}}', now(), NULL, now(), NULL);
+
