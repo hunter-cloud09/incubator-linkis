@@ -457,6 +457,9 @@ INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `cl
 -- iceberg
 INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`, `description_en`, `option_en`, `classifier_en`) VALUES ('iceberg', 'iceberg数据库', 'iceberg', '大数据存储', '', 3, 'iceberg Database', 'iceberg', 'Big Data storage');
 
+INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`, `description_en`, `option_en`, `classifier_en`) VALUES ('elasticsearch', 'elasticsearch数据源', 'es无结构化存储', '分布式全文索引', '', 3, 'Elasticsearch Datasource', 'Es No Structured Storage', 'Distributed Full-Text Indexing');
+INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`, `description_en`, `option_en`, `classifier_en`) VALUES ('mongodb', 'mongodb', 'NoSQL文档存储', 'NoSQL', null, 3, 'mongodb', 'NoSQL Document Storage', 'NOSQL');
+
 -- jdbc
 INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`, `description_en`, `option_en`, `classifier_en`) VALUES ('mysql', 'mysql数据库', 'mysql数据库', '关系型数据库', '', 3, 'Mysql Database', 'Mysql Database', 'Relational Database');
 INSERT INTO `linkis_ps_dm_datasource_type` (`name`, `description`, `option`, `classifier`, `icon`, `layers`, `description_en`, `option_en`, `classifier_en`) VALUES ('oracle', 'oracle数据库', 'oracle', '关系型数据库', '', 3, 'Oracle Database', 'Oracle Relational Database', 'Relational Database');
