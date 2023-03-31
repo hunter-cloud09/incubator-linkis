@@ -109,7 +109,7 @@
     <!-- bigdata -->
     <zookeeper.version>3.5.9</zookeeper.version>
     <curator.version>4.2.0</curator.version>
-    <hadoop.version>3.3.3</hadoop.version>
+    <hadoop.version>3.3.5</hadoop.version>
     <hadoop-hdfs-client.artifact>hadoop-hdfs-client</hadoop-hdfs-client.artifact>
     <hadoop-hdfs-client-shade.version>2.7.2</hadoop-hdfs-client-shade.version>
     <hbase.version>2.5.0</hbase.version>
@@ -141,13 +141,14 @@
 
     <!-- dbs -->
     <jedis.version>2.9.2</jedis.version>
-    <mybatis-plus.boot.starter.version>3.4.1</mybatis-plus.boot.starter.version>
+    <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
     <mysql.connector.version>8.0.28</mysql.connector.version>
-    <druid.version>1.1.22</druid.version>
+    <druid.version>1.2.16</druid.version>
 
     <!-- util -->
     <guava.version>31.1-jre</guava.version>
     <commons-collections.version>3.2.2</commons-collections.version>
+    <commons-fileupload.version>1.5</commons-fileupload.version>
     <commons-lang.version>2.6</commons-lang.version>
     <commons-lang3.version>3.12.0</commons-lang3.version>
     <commons-logging.version>1.2</commons-logging.version>
@@ -162,6 +163,9 @@
     <commons-cli.version>1.5.0</commons-cli.version>
     <jline.version>3.9.0</jline.version>
     <snakeyaml.version>1.33</snakeyaml.version>
+
+    <!-- crypto -->
+    <bouncycastle.version>1.70</bouncycastle.version>
 
     <!-- Java Byte Code Modification -->
     <asm-bom.version>9.3</asm-bom.version>
@@ -182,7 +186,8 @@
     <h2.version>1.4.200</h2.version>
 
     <!-- spring -->
-    <spring.version>5.2.22.RELEASE</spring.version>
+    <spring-framework.version>5.2.23.RELEASE</spring-framework.version>
+    <spring-security.version>5.3.13.RELEASE</spring-security.version>
     <spring.boot.version>2.3.12.RELEASE</spring.boot.version>
     <spring-netflix.version>2.2.9.RELEASE</spring-netflix.version>
     <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
@@ -335,6 +340,11 @@
         <groupId>commons-collections</groupId>
         <artifactId>commons-collections</artifactId>
         <version>${commons-collections.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-fileupload</groupId>
+        <artifactId>commons-fileupload</artifactId>
+        <version>${commons-fileupload.version}</version>
       </dependency>
       <dependency>
         <groupId>commons-lang</groupId>
@@ -771,6 +781,10 @@
             <artifactId>*</artifactId>
           </exclusion>
           <exclusion>
+            <groupId>com.github.pjfanning</groupId>
+            <artifactId>jersey-json</artifactId>
+          </exclusion>
+          <exclusion>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>*</artifactId>
           </exclusion>
@@ -1084,6 +1098,10 @@
             <artifactId>*</artifactId>
           </exclusion>
           <exclusion>
+            <groupId>com.github.pjfanning</groupId>
+            <artifactId>jersey-json</artifactId>
+          </exclusion>
+          <exclusion>
             <groupId>com.sun.jersey.jersey-test-framework</groupId>
             <artifactId>*</artifactId>
           </exclusion>
@@ -1166,6 +1184,18 @@
         </exclusions>
       </dependency>
 
+      <!-- crypto -->
+      <dependency>
+        <groupId>org.bouncycastle</groupId>
+        <artifactId>bcprov-jdk15on</artifactId>
+        <version>${bouncycastle.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.bouncycastle</groupId>
+        <artifactId>bcpkix-jdk15on</artifactId>
+        <version>${bouncycastle.version}</version>
+      </dependency>
+
       <dependency>
         <groupId>org.ow2.asm</groupId>
         <artifactId>asm-bom</artifactId>
@@ -1211,7 +1241,14 @@
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-framework-bom</artifactId>
-        <version>${spring.version}</version>
+        <version>${spring-framework.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-bom</artifactId>
+        <version>${spring-security.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -1274,6 +1311,17 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-boot-starter</artifactId>
+        <version>${mybatis-plus.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -1318,8 +1366,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-jdbc</artifactId>
+      <groupId>com.zaxxer</groupId>
+      <artifactId>HikariCP</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
