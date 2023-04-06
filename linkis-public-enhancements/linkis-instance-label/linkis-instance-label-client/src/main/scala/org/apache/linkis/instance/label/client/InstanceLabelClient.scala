@@ -66,9 +66,11 @@ class InstanceLabelClient extends Logging {
       getSender().ask(request) match {
         case resp: InsLabelQueryResponse =>
           val labelList = new util.ArrayList[Label[_]]()
-          resp.getLabelList.asScala.foreach(pair =>
-            labelList.add(labelBuilderFactory.createLabel[Label[_]](pair.getKey, pair.getValue))
-          )
+          if (null != resp.getLabelList && !resp.getLabelList.isEmpty) {
+            resp.getLabelList.asScala.foreach(pair =>
+              labelList.add(labelBuilderFactory.createLabel[Label[_]](pair.getKey, pair.getValue))
+            )
+          }
           labelList
         case o =>
           logger.error(s"Invalid response ${BDPJettyServerHelper.gson
