@@ -18,8 +18,8 @@
 
 
 -- 变量：
-SET @SPARK_LABEL="spark-2.4.3";
-SET @HIVE_LABEL="hive-2.3.3";
+SET @SPARK_LABEL="spark-3.2.1";
+SET @HIVE_LABEL="hive-3.1.3";
 SET @PYTHON_LABEL="python-python2";
 SET @PIPELINE_LABEL="pipeline-*";
 SET @JDBC_LABEL="jdbc-4";
@@ -109,13 +109,13 @@ insert into `linkis_cg_manager_label` (`label_key`, `label_value`, `label_featur
 insert into `linkis_cg_manager_label` (`label_key`, `label_value`, `label_feature`, `label_value_size`, `update_time`, `create_time`) VALUES ('combined_userCreator_engineType',@PIPELINE_ALL, 'OPTIONAL', 2, now(), now());
 insert into `linkis_cg_manager_label` (`label_key`, `label_value`, `label_feature`, `label_value_size`, `update_time`, `create_time`) VALUES ('combined_userCreator_engineType',@JDBC_ALL, 'OPTIONAL', 2, now(), now());
 
--- Custom correlation engine (e.g. spark-2.4.3) and configKey value
+-- Custom correlation engine (e.g. spark) and configKey value
 -- Global Settings
 insert into `linkis_ps_configuration_key_engine_relation` (`config_key_id`, `engine_type_label_id`)
 (select config.id as `config_key_id`, label.id AS `engine_type_label_id` FROM linkis_ps_configuration_config_key config
 INNER JOIN linkis_cg_manager_label label ON config.engine_conn_type is null and label.label_value = "*-*,*-*");
 
--- spark(Here choose to associate all spark type Key values with spark2.4.3)
+-- spark(Here choose to associate all spark type Key values with spark)
 insert into `linkis_ps_configuration_key_engine_relation` (`config_key_id`, `engine_type_label_id`)
 (select config.id as `config_key_id`, label.id AS `engine_type_label_id` FROM linkis_ps_configuration_config_key config
 INNER JOIN linkis_cg_manager_label label ON config.engine_conn_type = 'spark' and label.label_value = @SPARK_ALL);

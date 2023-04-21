@@ -82,7 +82,7 @@ HADOOP_CONF_DIR=${HADOOP_CONF_DIR:-"/appcom/config/hadoop-config"}
 HADOOP_KERBEROS_ENABLE=${HADOOP_KERBEROS_ENABLE:-"false"}
 HADOOP_KEYTAB_PATH=${HADOOP_KEYTAB_PATH:-"/appcom/keytab/"}
 ## Hadoop env version
-HADOOP_VERSION=${HADOOP_VERSION:-"3.3.3"}
+HADOOP_VERSION=${HADOOP_VERSION:-"3.3.5"}
 
 #Hive
 HIVE_HOME=${HIVE_HOME:-"/appcom/Install/hive"}

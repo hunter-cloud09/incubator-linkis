@@ -104,7 +104,7 @@
     </snapshotRepository>
   </distributionManagement>
   <properties>
-    <revision>1.3.2</revision>
+    <revision>1.4.0-SNAPSHOT</revision>
 
     <!-- bigdata -->
     <zookeeper.version>3.5.9</zookeeper.version>
@@ -115,15 +115,34 @@
     <hbase.version>2.5.0</hbase.version>
     <hive.version>3.1.3</hive.version>
     <spark.version>3.2.1</spark.version>
+    <spark.hadoop.groupid>org.apache.hadoop</spark.hadoop.groupid>
+    <spark.hadoop-common.artifactId>hadoop-common</spark.hadoop-common.artifactId>
+    <spark.hadoop-hdfs.artifactId>hadoop-hdfs</spark.hadoop-hdfs.artifactId>
+    <spark.hadoop.version>${hadoop.version}</spark.hadoop.version>
+    <spark.hadoop.scope>provided</spark.hadoop.scope>
+
+    <flink.version>1.12.7</flink.version>
     <iceberg.version>0.13.2</iceberg.version>
+
+    <io_file.version>1.0</io_file.version>
+    <jdbc.version>4</jdbc.version>
+    <trino.version>371</trino.version>
+    <openlookeng.version>1.5.0</openlookeng.version>
+    <pipeline.version>1</pipeline.version>
+    <presto.version>0.234</presto.version>
+    <python.version>python3</python.version>
+    <seatunnel.version>2.1.2</seatunnel.version>
+    <shell.version>1</shell.version>
+    <sqoop.version>1.4.6</sqoop.version>
+    <elasticsearch.version>7.6.2</elasticsearch.version>
 
     <!-- marshalling -->
     <gson.version>2.8.9</gson.version>
     <jackson-bom.version>2.13.4.20221013</jackson-bom.version>
-    <json4s.version>3.7.0-M11</json4s.version>
     <xstream.core.version>1.4.20</xstream.core.version>
     <woodstox.version>6.4.0</woodstox.version>
     <jettision.version>1.5.3</jettision.version>
+    <jsonpath.version>2.7.0</jsonpath.version>
 
     <protobuf.version>3.16.3</protobuf.version>
     <jersey.version>1.19.4</jersey.version>
@@ -220,11 +239,12 @@
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
+    <maven-shade-plugin.version>3.3.0</maven-shade-plugin.version>
+    <maven-helper-plugin.version>3.2.0</maven-helper-plugin.version>
     <scala-maven-plugin.version>4.7.1</scala-maven-plugin.version>
     <spotless-maven-plugin.version>2.24.1</spotless-maven-plugin.version>
     <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
     <jacoco.skip>false</jacoco.skip>
-
   </properties>
 
   <dependencyManagement>
@@ -435,6 +455,11 @@
 
       <!-- json -->
       <dependency>
+        <groupId>com.jayway.jsonpath</groupId>
+        <artifactId>json-path</artifactId>
+        <version>${jsonpath.version}</version>
+      </dependency>
+      <dependency>
         <groupId>com.google.code.gson</groupId>
         <artifactId>gson</artifactId>
         <version>${gson.version}</version>
@@ -447,30 +472,14 @@
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>org.json4s</groupId>
-        <artifactId>json4s-core_${scala.binary.version}</artifactId>
-        <version>${json4s.version}</version>
+        <groupId>org.codehaus.jackson</groupId>
+        <artifactId>jackson-core-asl</artifactId>
+        <version>1.9.13</version>
       </dependency>
       <dependency>
-        <groupId>org.json4s</groupId>
-        <artifactId>json4s-jackson_${scala.binary.version}</artifactId>
-        <version>${json4s.version}</version>
-        <exclusions>
-          <exclusion>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>*</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>org.json4s</groupId>
-        <artifactId>json4s-ast_${scala.binary.version}</artifactId>
-        <version>${json4s.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.json4s</groupId>
-        <artifactId>json4s-scalap_${scala.binary.version}</artifactId>
-        <version>${json4s.version}</version>
+        <groupId>org.codehaus.jackson</groupId>
+        <artifactId>jackson-mapper-asl</artifactId>
+        <version>1.9.13</version>
       </dependency>
 
       <dependency>
@@ -649,6 +658,10 @@
           <exclusion>
             <groupId>org.apache.hive</groupId>
             <artifactId>hive-shims</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-hdfs</artifactId>
           </exclusion>
           <exclusion>
             <groupId>org.apache.hbase</groupId>
@@ -1007,7 +1020,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-reload4j</artifactId>
           </exclusion>
-
           <exclusion>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
@@ -1069,6 +1081,10 @@
         <version>${hadoop.version}</version>
         <exclusions>
           <!-- for hadoop 3.3.3 -->
+          <exclusion>
+            <groupId>ch.qos.reload4j</groupId>
+            <artifactId>reload4j</artifactId>
+          </exclusion>
           <exclusion>
             <groupId>ch.qos.reload4j</groupId>
             <artifactId>reload4j</artifactId>
@@ -1164,6 +1180,15 @@
           <exclusion>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
+          </exclusion>
+          <!-- for hadoop 3.3.3 -->
+          <exclusion>
+            <groupId>ch.qos.reload4j</groupId>
+            <artifactId>reload4j</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-reload4j</artifactId>
           </exclusion>
           <exclusion>
             <groupId>jline</groupId>
@@ -1724,13 +1749,10 @@
   </build>
 
   <profiles>
-    <!-- hadoop version: mvn validate -Phadoop-3.3 ,when used with spark2.x ,please add -Pspark-2.4-hadoop-3.3 together, More details please check SPARK-23534   -->
     <profile>
       <id>hadoop-3.3</id>
       <properties>
-        <hadoop.version>3.3.3</hadoop.version>
-        <curator.version>4.2.0</curator.version>
-        <hadoop-hdfs-client.artifact>hadoop-hdfs-client</hadoop-hdfs-client.artifact>
+        <!-- Default hive profile. Uses global properties. -->
       </properties>
     </profile>
     <!-- hadoop version: mvn validate -Phadoop-2.7  -->
@@ -1745,40 +1767,19 @@
     <profile>
       <id>spark-3.2</id>
       <properties>
-        <json4s.version>3.7.0-M11</json4s.version>
-        <spark.version>3.2.1</spark.version>
-      </properties>
-    </profile>
-    <profile>
-      <id>spark-2.4</id>
-      <properties>
-        <spark.version>2.4.3</spark.version>
-        <json4s.version>3.5.3</json4s.version>
-      </properties>
-    </profile>
-    <!-- hive-3.1  -->
-    <profile>
-      <id>hive-3.1</id>
-      <properties>
         <!-- Default hive profile. Uses global properties. -->
       </properties>
     </profile>
+    <!-- spark2.4 use hadoop2.7.2 by default mvn validate -Pspark-2.4  -->
     <profile>
-      <id>hive-2.3</id>
+      <id>spark-2.4</id>
       <properties>
-        <hive.version>2.3.3</hive.version>
-      </properties>
-    </profile>
-    <profile>
-      <id>scala-2.12</id>
-      <properties>
-        <scala.version>2.12.17</scala.version>
-        <scala.binary.version>2.12</scala.binary.version>
-      </properties>
-    </profile>
-    <profile>
-      <id>scala-2.11</id>
-      <properties>
+        <spark.hadoop.groupid>org.apache.linkis</spark.hadoop.groupid>
+        <spark.hadoop-common.artifactId>linkis-hadoop-hdfs-client-shade</spark.hadoop-common.artifactId>
+        <spark.hadoop-hdfs.artifactId>linkis-hadoop-hdfs-client-shade</spark.hadoop-hdfs.artifactId>
+        <spark.hadoop.version>${project.version}</spark.hadoop.version>
+        <spark.hadoop.scope>compile</spark.hadoop.scope>
+        <spark.version>2.4.3</spark.version>
         <scala.version>2.11.12</scala.version>
         <scala.binary.version>2.11</scala.binary.version>
       </properties>

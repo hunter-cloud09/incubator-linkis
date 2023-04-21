@@ -27,7 +27,6 @@
   <artifactId>linkis-engineplugin-python</artifactId>
 
   <properties>
-    <python.version>python3</python.version>
     <maven.deploy.skip>true</maven.deploy.skip>
     <maven.install.skip>true</maven.install.skip>
   </properties>
@@ -90,12 +89,6 @@
     <dependency>
       <groupId>org.scala-lang</groupId>
       <artifactId>scala-reflect</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.json4s</groupId>
-      <artifactId>json4s-jackson_${scala.binary.version}</artifactId>
       <scope>provided</scope>
     </dependency>
 

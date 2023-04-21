@@ -36,7 +36,7 @@ abstract class AbstractEngineConnBmlResourceGenerator extends EngineConnBmlResou
   if (!new File(getEngineConnsHome).exists) {
     throw new EngineConnPluginErrorException(
       CANNOT_HOME_PATH_EC.getErrorCode,
-      CANNOT_HOME_PATH_EC.getErrorDesc
+      MessageFormat.format(CANNOT_HOME_PATH_EC.getErrorDesc, getEngineConnsHome)
     )
   }
 
@@ -96,7 +96,7 @@ abstract class AbstractEngineConnBmlResourceGenerator extends EngineConnBmlResou
     if (!engineConnPackageHome.exists()) {
       throw new EngineConnPluginErrorException(
         CANNOT_HOME_PATH_DIST.getErrorCode,
-        CANNOT_HOME_PATH_DIST.getErrorDesc
+        MessageFormat.format(CANNOT_HOME_PATH_DIST.getErrorDesc, engineConnPackageHome.getPath)
       )
     }
   }
