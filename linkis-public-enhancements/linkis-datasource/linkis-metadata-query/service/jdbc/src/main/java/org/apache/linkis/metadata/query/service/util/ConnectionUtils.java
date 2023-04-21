@@ -28,7 +28,7 @@ public class ConnectionUtils {
 
   public static String addUrlParams(
       String url, Map<String, Object> extraParams, String connectStr, String splitStr) {
-    if (extraParams.isEmpty()) {
+    if (extraParams == null || extraParams.isEmpty()) {
       return url;
     } else {
       return url + connectStr + getExtraParamsString(extraParams, splitStr);

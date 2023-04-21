@@ -213,15 +213,13 @@ public class SqlConnection implements Closeable {
         String.format(SQL_CONNECT_URL.getValue(), connectMessage.host, connectMessage.port);
     url = ConnectionUtils.addUrlParams(url, connectMessage.extraParams);
     try {
-      //            return DriverManager.getConnection(url, connectMessage.username,
-      // connectMessage.password);
       Properties prop = new Properties();
       prop.put("user", connectMessage.username);
       prop.put("password", connectMessage.password);
       prop.put("remarksReporting", "true");
       return DriverManager.getConnection(url, prop);
     } catch (Exception e) {
-      e.printStackTrace();
+      LOG.error(e.getMessage(), e);
       throw e;
     }
   }
