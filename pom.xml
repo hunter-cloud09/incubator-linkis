@@ -245,6 +245,23 @@
     <spotless-maven-plugin.version>2.24.1</spotless-maven-plugin.version>
     <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
     <jacoco.skip>false</jacoco.skip>
+
+    <!-- for JDK-17 test-->
+    <extraJavaTestArgs>-XX:+IgnoreUnrecognizedVMOptions
+      --add-opens=java.base/java.lang=ALL-UNNAMED
+      --add-opens=java.base/java.lang.invoke=ALL-UNNAMED
+      --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+      --add-opens=java.base/java.io=ALL-UNNAMED
+      --add-opens=java.base/java.net=ALL-UNNAMED
+      --add-opens=java.base/java.nio=ALL-UNNAMED
+      --add-opens=java.base/java.util=ALL-UNNAMED
+      --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+      --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED
+      --add-opens=java.base/sun.nio.ch=ALL-UNNAMED
+      --add-opens=java.base/sun.nio.cs=ALL-UNNAMED
+      --add-opens=java.base/sun.security.action=ALL-UNNAMED
+      --add-opens=java.base/sun.util.calendar=ALL-UNNAMED
+      -Djdk.reflect.useDirectMethodHandle=false</extraJavaTestArgs>
   </properties>
 
   <dependencyManagement>
@@ -1814,9 +1831,8 @@
             <configuration>
               <forkCount>3</forkCount>
               <reuseForks>true</reuseForks>
-              <argLine>--add-opens java.base/java.util=ALL-UNNAMED
-                --add-opens java.base/java.nio=ALL-UNNAMED
-                --add-opens java.base/java.lang=ALL-UNNAMED</argLine>
+              <argLine>-XX:MaxMetaspaceSize=2g ${extraJavaTestArgs}
+                -Dio.netty.tryReflectionSetAccessible=true</argLine>
             </configuration>
           </plugin>
         </plugins>
