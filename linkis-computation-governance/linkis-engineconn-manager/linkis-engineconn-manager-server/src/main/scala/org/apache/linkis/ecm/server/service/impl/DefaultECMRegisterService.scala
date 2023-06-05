@@ -17,6 +17,7 @@
 
 package org.apache.linkis.ecm.server.service.impl
 
+import org.apache.linkis.common.conf.Configuration
 import org.apache.linkis.common.utils.{Logging, Utils}
 import org.apache.linkis.ecm.core.listener.{ECMEvent, ECMEventListener}
 import org.apache.linkis.ecm.server.conf.ECMConfiguration._
@@ -30,6 +31,7 @@ import org.apache.linkis.manager.common.protocol.em.{
   StopEMRequest
 }
 import org.apache.linkis.manager.label.constant.LabelKeyConstant
+import org.apache.linkis.manager.label.entity.SerializableLabel
 import org.apache.linkis.rpc.Sender
 
 import java.util
@@ -57,6 +59,11 @@ class DefaultECMRegisterService extends ECMRegisterService with ECMEventListener
       "alias",
       ENGINE_CONN_MANAGER_SPRING_NAME
     )
+
+    if (Configuration.IS_MULTIPLE_YARN_CLUSTER.getValue.asInstanceOf[Boolean]) {
+      labels.asScala += LabelKeyConstant.YARN_CLUSTER_KEY ->
+        (ECM_YARN_CLUSTER_TYPE + "_" + ECM_YARN_CLUSTER_NAME)
+    }
     // TODO: group  by key
     labels
   }
@@ -98,9 +105,11 @@ class DefaultECMRegisterService extends ECMRegisterService with ECMEventListener
     logger.info("start register ecm")
     val response = Sender.getSender(MANAGER_SERVICE_NAME).ask(request)
     response match {
-      case RegisterEMResponse(isSuccess, msg) =>
-        if (!isSuccess) {
-          logger.error(s"Failed to register info to linkis manager, reason: $msg")
+      case registerEMResponse: RegisterEMResponse =>
+        if (!registerEMResponse.getIsSuccess) {
+          logger.error(
+            s"Failed to register info to linkis manager, reason: ${registerEMResponse.getMsg}"
+          )
           System.exit(1)
         }
       case _ =>

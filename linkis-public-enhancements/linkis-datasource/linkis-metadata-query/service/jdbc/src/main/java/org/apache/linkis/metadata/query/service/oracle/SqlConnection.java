@@ -19,12 +19,11 @@ package org.apache.linkis.metadata.query.service.oracle;
 
 import org.apache.linkis.common.conf.CommonVars;
 import org.apache.linkis.metadata.query.common.domain.MetaColumnInfo;
+import org.apache.linkis.metadata.query.service.AbstractSqlConnection;
 import org.apache.linkis.metadata.query.service.util.ConnectionUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.Closeable;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -42,7 +41,7 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SqlConnection implements Closeable {
+public class SqlConnection extends AbstractSqlConnection {
   private static final Logger LOG = LoggerFactory.getLogger(SqlConnection.class);
 
   private static final CommonVars<String> SQL_DRIVER_CLASS =
@@ -57,9 +56,7 @@ public class SqlConnection implements Closeable {
       CommonVars.apply(
           "wds.linkis.server.mdm.service.oracle.service.url", "jdbc:oracle:thin:@//%s:%s/%s");
 
-  private Connection conn;
-
-  private ConnectMessage connectMessage;
+  private String serviceName;
 
   public SqlConnection(
       String host,
@@ -70,11 +67,8 @@ public class SqlConnection implements Closeable {
       String serviceName,
       Map<String, Object> extraParams)
       throws ClassNotFoundException, SQLException {
-    connectMessage = new ConnectMessage(host, port, username, password, extraParams);
-    conn = getDBConnection(connectMessage, sid, serviceName);
-    // Try to create statement
-    Statement statement = conn.createStatement();
-    statement.close();
+    super(host, port, username, password, sid, extraParams);
+    this.serviceName = serviceName;
   }
 
   public List<String> getAllDatabases() throws SQLException {
@@ -113,6 +107,12 @@ public class SqlConnection implements Closeable {
     }
   }
 
+  @Override
+  public Connection getDBConnection(ConnectMessage connectMessage, String database)
+      throws ClassNotFoundException, SQLException {
+    return getDBConnection(connectMessage, database, serviceName);
+  }
+
   public List<MetaColumnInfo> getColumns(String schemaname, String table)
       throws SQLException, ClassNotFoundException {
     List<MetaColumnInfo> columns = new ArrayList<>();
@@ -131,6 +131,7 @@ public class SqlConnection implements Closeable {
         MetaColumnInfo info = new MetaColumnInfo();
         info.setIndex(i);
         info.setLength(meta.getColumnDisplaySize(i));
+        info.setNullable((meta.isNullable(i) == ResultSetMetaData.columnNullable));
         info.setName(meta.getColumnName(i));
         info.setType(meta.getColumnTypeName(i));
         if (primaryKeys.contains(meta.getColumnName(i))) {
@@ -152,23 +153,6 @@ public class SqlConnection implements Closeable {
   }
 
   /**
-   * Get primary keys // * @param connection connection
-   *
-   * @param table table name
-   * @return
-   * @throws SQLException
-   */
-  private List<String> getPrimaryKeys(String table) throws SQLException {
-    ResultSet rs = null;
-    List<String> primaryKeys = new ArrayList<>();
-    DatabaseMetaData dbMeta = conn.getMetaData();
-    rs = dbMeta.getPrimaryKeys(null, null, table);
-    while (rs.next()) {
-      primaryKeys.add(rs.getString("column_name"));
-    }
-    return primaryKeys;
-  }
-  /**
    * Get Column Comment
    *
    * @param table table name
@@ -185,34 +169,6 @@ public class SqlConnection implements Closeable {
       columnComment.put(rs.getString("COlUMN_NAME"), rs.getString("REMARKS"));
     }
     return columnComment;
-  }
-
-  /**
-   * close database resource
-   *
-   * @param connection connection
-   * @param statement statement
-   * @param resultSet result set
-   */
-  private void closeResource(Connection connection, Statement statement, ResultSet resultSet) {
-    try {
-      if (null != resultSet && !resultSet.isClosed()) {
-        resultSet.close();
-      }
-      if (null != statement && !statement.isClosed()) {
-        statement.close();
-      }
-      if (null != connection && !connection.isClosed()) {
-        connection.close();
-      }
-    } catch (SQLException e) {
-      LOG.warn("Fail to release resource [" + e.getMessage() + "]", e);
-    }
-  }
-
-  @Override
-  public void close() throws IOException {
-    closeResource(conn, null, null);
   }
 
   /**
@@ -239,6 +195,7 @@ public class SqlConnection implements Closeable {
     }
 
     url = ConnectionUtils.addUrlParams(url, connectMessage.extraParams);
+
     Properties prop = new Properties();
     prop.put("user", connectMessage.username);
     prop.put("password", connectMessage.password);
@@ -246,29 +203,30 @@ public class SqlConnection implements Closeable {
     return DriverManager.getConnection(url, prop);
   }
 
-  /** Connect message */
-  private static class ConnectMessage {
-    private String host;
+  public String getSqlConnectUrl() {
+    return SQL_CONNECT_URL.getValue();
+  }
 
-    private Integer port;
-
-    private String username;
-
-    private String password;
-
-    private Map<String, Object> extraParams;
-
-    public ConnectMessage(
-        String host,
-        Integer port,
-        String username,
-        String password,
-        Map<String, Object> extraParams) {
-      this.host = host;
-      this.port = port;
-      this.username = username;
-      this.password = password;
-      this.extraParams = extraParams;
+  @Override
+  public String generateJdbcDdlSql(String database, String table) {
+    String columnSql =
+        String.format(
+            "SELECT DBMS_METADATA.GET_DDL('TABLE', '%s', '%s') AS DDL  FROM DUAL ",
+            table, database);
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    String ddl = "";
+    try {
+      ps = conn.prepareStatement(columnSql);
+      rs = ps.executeQuery();
+      if (rs.next()) {
+        ddl = rs.getString("DDL");
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    } finally {
+      closeResource(null, ps, rs);
     }
+    return ddl;
   }
 }

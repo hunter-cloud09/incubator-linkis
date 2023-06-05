@@ -19,12 +19,10 @@ package org.apache.linkis.metadata.query.service.kingbase;
 
 import org.apache.linkis.common.conf.CommonVars;
 import org.apache.linkis.metadata.query.common.domain.MetaColumnInfo;
+import org.apache.linkis.metadata.query.service.AbstractSqlConnection;
 import org.apache.linkis.metadata.query.service.util.ConnectionUtils;
 
-import java.io.Closeable;
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,7 +36,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SqlConnection implements Closeable {
+public class SqlConnection extends AbstractSqlConnection {
 
   private static final Logger LOG = LoggerFactory.getLogger(SqlConnection.class);
 
@@ -50,10 +48,6 @@ public class SqlConnection implements Closeable {
           "wds.linkis.server.mdm.service.kingbase.url",
           "jdbc:kingbase8://%s:%s/%s?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8");
 
-  private Connection conn;
-
-  private ConnectMessage connectMessage;
-
   public SqlConnection(
       String host,
       Integer port,
@@ -62,11 +56,7 @@ public class SqlConnection implements Closeable {
       String database,
       Map<String, Object> extraParams)
       throws ClassNotFoundException, SQLException {
-    connectMessage = new ConnectMessage(host, port, username, password, extraParams);
-    conn = getDBConnection(connectMessage, database);
-    // Try to create statement
-    Statement statement = conn.createStatement();
-    statement.close();
+    super(host, port, username, password, database, extraParams);
   }
 
   public List<String> getAllDatabases() throws SQLException {
@@ -83,8 +73,6 @@ public class SqlConnection implements Closeable {
       closeResource(null, stmt, rs);
     }
     return dataBaseName;
-    //        throw new UnsupportedOperationException("kingbase数据库不能像mysql show
-    // databases来获取，应该是存在某个地方来获取的");
   }
 
   public List<String> getAllTables(String schema) throws SQLException {
@@ -111,7 +99,8 @@ public class SqlConnection implements Closeable {
   public List<MetaColumnInfo> getColumns(String database, String table)
       throws SQLException, ClassNotFoundException {
     List<MetaColumnInfo> columns = new ArrayList<>();
-    String columnSql = "SELECT * FROM " + database + "." + table + " WHERE 1 = 2";
+    String columnSql =
+        "SELECT * FROM " + String.format("\"%s\"", database) + "." + table + " WHERE 1 = 2";
     PreparedStatement ps = null;
     ResultSet rs = null;
     ResultSetMetaData meta = null;
@@ -124,6 +113,8 @@ public class SqlConnection implements Closeable {
       for (int i = 1; i < columnCount + 1; i++) {
         MetaColumnInfo info = new MetaColumnInfo();
         info.setIndex(i);
+        info.setLength(meta.getColumnDisplaySize(i));
+        info.setNullable((meta.isNullable(i) == ResultSetMetaData.columnNullable));
         info.setName(meta.getColumnName(i));
         info.setType(meta.getColumnTypeName(i));
         if (primaryKeys.contains(meta.getColumnName(i))) {
@@ -137,58 +128,21 @@ public class SqlConnection implements Closeable {
     return columns;
   }
 
-  private List<String> getPrimaryKeys(String table) throws SQLException {
-    ResultSet rs = null;
-    List<String> primaryKeys = new ArrayList<>();
-    DatabaseMetaData dbMeta = conn.getMetaData();
-    rs = dbMeta.getPrimaryKeys(null, null, table);
-    while (rs.next()) {
-      primaryKeys.add(rs.getString("column_name"));
-    }
-    return primaryKeys;
-  }
-
-  /**
-   * close database resource
-   *
-   * @param connection connection
-   * @param statement statement
-   * @param resultSet result set
-   */
-  private void closeResource(Connection connection, Statement statement, ResultSet resultSet) {
-    try {
-      if (null != resultSet && !resultSet.isClosed()) {
-        resultSet.close();
-      }
-      if (null != statement && !statement.isClosed()) {
-        statement.close();
-      }
-      if (null != connection && !connection.isClosed()) {
-        connection.close();
-      }
-    } catch (SQLException e) {
-      LOG.warn("Fail to release resource [" + e.getMessage() + "]", e);
-    }
-  }
-
-  @Override
-  public void close() throws IOException {
-    closeResource(conn, null, null);
-  }
-
   /**
    * @param connectMessage
    * @param database
    * @return
    * @throws ClassNotFoundException
    */
-  private Connection getDBConnection(ConnectMessage connectMessage, String database)
+  public Connection getDBConnection(ConnectMessage connectMessage, String database)
       throws ClassNotFoundException, SQLException {
     Class.forName(SQL_DRIVER_CLASS.getValue());
     String url =
         String.format(
             SQL_CONNECT_URL.getValue(), connectMessage.host, connectMessage.port, database);
+
     url = ConnectionUtils.addUrlParams(url, connectMessage.extraParams);
+
     try {
       return DriverManager.getConnection(url, connectMessage.username, connectMessage.password);
     } catch (Exception e) {
@@ -197,29 +151,7 @@ public class SqlConnection implements Closeable {
     }
   }
 
-  /** Connect message */
-  private static class ConnectMessage {
-    private String host;
-
-    private Integer port;
-
-    private String username;
-
-    private String password;
-
-    private Map<String, Object> extraParams;
-
-    public ConnectMessage(
-        String host,
-        Integer port,
-        String username,
-        String password,
-        Map<String, Object> extraParams) {
-      this.host = host;
-      this.port = port;
-      this.username = username;
-      this.password = password;
-      this.extraParams = extraParams;
-    }
+  public String getSqlConnectUrl() {
+    return SQL_CONNECT_URL.getValue();
   }
 }

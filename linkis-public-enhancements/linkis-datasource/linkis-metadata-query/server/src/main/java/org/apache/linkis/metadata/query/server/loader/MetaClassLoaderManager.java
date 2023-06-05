@@ -20,12 +20,15 @@ package org.apache.linkis.metadata.query.server.loader;
 import org.apache.linkis.common.conf.CommonVars;
 import org.apache.linkis.common.conf.Configuration;
 import org.apache.linkis.common.exception.ErrorException;
+import org.apache.linkis.datasourcemanager.common.exception.JsonErrorException;
+import org.apache.linkis.datasourcemanager.common.util.json.Json;
 import org.apache.linkis.metadata.query.common.cache.CacheConfiguration;
 import org.apache.linkis.metadata.query.common.exception.MetaRuntimeException;
 import org.apache.linkis.metadata.query.common.service.AbstractCacheMetaService;
 import org.apache.linkis.metadata.query.common.service.BaseMetadataService;
 import org.apache.linkis.metadata.query.server.utils.MetadataUtils;
 
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -53,6 +56,19 @@ public class MetaClassLoaderManager {
   private final Map<String, ClassLoader> classLoaders = new ConcurrentHashMap<>();
 
   private final Map<String, MetaServiceInstance> metaServiceInstances = new ConcurrentHashMap<>();
+
+  private static Map<String, String> databaseRelationship = getDatabaseRelationship();
+
+  private static Map<String, String> getDatabaseRelationship() {
+    try {
+      return Json.fromJson(
+          CacheConfiguration.QUERY_DATABASE_RELATIONSHIP.getValue(), HashMap.class);
+    } catch (JsonErrorException e) {
+      LOG.warn(
+          "databaseRelationship parse exception,please check [linkis.server.mdq.query.database.relationship] parameter");
+      return new HashMap<>();
+    }
+  }
 
   public static CommonVars<String> LIB_DIR =
       CommonVars.apply(
@@ -134,9 +150,23 @@ public class MetaClassLoaderManager {
                       MessageFormat.format(ERROR_IN_CREATING.getErrorDesc(), finalDsType), null);
                 }
                 String expectClassName = null;
+
                 if (finalDsType.length() > 0) {
+                  String converDsType = finalDsType;
+                  try {
+                    if (MapUtils.isNotEmpty(databaseRelationship)
+                        && databaseRelationship.containsKey(finalDsType)) {
+                      String value = MapUtils.getString(databaseRelationship, finalDsType);
+                      if (StringUtils.isNotBlank(value)
+                          && CacheConfiguration.JDBC_RELATIONSHIP_LIST.getValue().contains(value)) {
+                        converDsType = value;
+                      }
+                    }
+                  } catch (Exception e) {
+                    LOG.warn("dsType conver failed: {}", finalDsType);
+                  }
                   String prefix =
-                      finalDsType.substring(0, 1).toUpperCase() + finalDsType.substring(1);
+                      converDsType.substring(0, 1).toUpperCase() + converDsType.substring(1);
                   expectClassName = String.format(META_CLASS_NAME, prefix);
                 }
                 Class<? extends BaseMetadataService> metaServiceClass =

@@ -106,6 +106,7 @@
       <artifactId>kingbase8</artifactId>
       <version>${kingbase8.version}</version>
     </dependency>
+
   </dependencies>
 
   <build>

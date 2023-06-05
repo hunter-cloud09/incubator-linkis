@@ -35,7 +35,6 @@ asm-tree-9.3.jar
 aspectjweaver-1.9.6.jar
 audience-annotations-0.5.0.jar
 avatica-1.11.0.jar
-avro-1.7.4.jar
 avro-1.7.7.jar
 avro-1.8.2.jar
 aws-java-sdk-core-1.11.792.jar
@@ -64,7 +63,11 @@ classgraph-4.1.7.jar
 classmate-1.5.1.jar
 clickhouse-jdbc-0.3.2-patch11.jar
 commons-beanutils-1.9.4.jar
+<<<<<<< HEAD
 commons-cli-1.5.0.jar
+=======
+commons-cli-1.3.1.jar
+>>>>>>> dev-1.4.0
 commons-codec-1.10.jar
 commons-codec-1.14.jar
 commons-collections-3.2.2.jar
@@ -123,6 +126,7 @@ feign-form-3.8.0.jar
 feign-form-spring-3.8.0.jar
 feign-hystrix-10.12.jar
 feign-slf4j-10.12.jar
+<<<<<<< HEAD
 findbugs-annotations-1.3.9-1.jar
 flatbuffers-1.2.0-3f79e055.jar
 flink-annotations-1.12.7.jar
@@ -140,6 +144,25 @@ flink-optimizer_2.12-1.12.7.jar
 flink-queryable-state-client-java-1.12.7.jar
 flink-runtime_2.12-1.12.7.jar
 flink-scala_2.12-1.12.7.jar
+=======
+flatbuffers-1.2.0-3f79e055.jar
+flink-annotations-1.12.2.jar
+flink-clients_2.12-1.12.2.jar
+flink-connector-base-1.12.2.jar
+flink-connector-files-1.12.2.jar
+flink-connector-hive_2.12-1.12.2.jar
+flink-connector-kafka_2.12-1.12.2.jar
+flink-core-1.12.2.jar
+flink-file-sink-common-1.12.2.jar
+flink-hadoop-fs-1.12.2.jar
+flink-java-1.12.2.jar
+flink-json-1.12.2.jar
+flink-metrics-core-1.12.2.jar
+flink-optimizer_2.12-1.12.2.jar
+flink-queryable-state-client-java-1.12.2.jar
+flink-runtime_2.12-1.12.2.jar
+flink-scala_2.12-1.12.2.jar
+>>>>>>> dev-1.4.0
 flink-shaded-asm-7-7.1-12.0.jar
 flink-shaded-guava-18.0-12.0.jar
 flink-shaded-jackson-2.10.1-12.0.jar
@@ -168,16 +191,22 @@ guice-4.0.jar
 guice-4.1.0.jar
 guice-4.2.2.jar
 guice-assistedinject-3.0.jar
-guice-servlet-3.0.jar
 guice-servlet-4.0.jar
 hadoop-aliyun-3.3.4.jar
 hadoop-annotations-2.7.2.jar
+<<<<<<< HEAD
 hadoop-annotations-3.3.5.jar
 hadoop-auth-3.3.5.jar
 hadoop-client-3.3.5.jar
+=======
+hadoop-annotations-3.3.4.jar
+hadoop-auth-3.3.4.jar
+hadoop-client-3.3.4.jar
+>>>>>>> dev-1.4.0
 hadoop-common-2.7.2.jar
 hadoop-common-3.3.5.jar
 hadoop-hdfs-2.7.2.jar
+<<<<<<< HEAD
 hadoop-hdfs-client-3.3.5.jar
 hadoop-mapreduce-client-common-3.3.5.jar
 hadoop-mapreduce-client-core-2.7.2.jar
@@ -191,6 +220,19 @@ hadoop-yarn-client-3.3.5.jar
 hadoop-yarn-common-3.3.5.jar
 hadoop-yarn-registry-2.7.2.jar
 hadoop-yarn-registry-3.3.5.jar
+=======
+hadoop-hdfs-client-3.3.4.jar
+hadoop-mapreduce-client-common-3.3.4.jar
+hadoop-mapreduce-client-core-3.3.4.jar
+hadoop-mapreduce-client-jobclient-3.3.4.jar
+hadoop-registry-3.3.4.jar
+hadoop-shaded-guava-1.1.1.jar
+hadoop-shaded-protobuf_3_7-1.1.1.jar
+hadoop-yarn-api-3.3.4.jar
+hadoop-yarn-client-3.3.4.jar
+hadoop-yarn-common-3.3.4.jar
+hadoop-yarn-registry-3.3.4.jar
+>>>>>>> dev-1.4.0
 hibernate-validator-5.1.2.Final.jar
 hibernate-validator-6.1.7.Final.jar
 hive-classification-3.1.3.jar
@@ -289,7 +331,7 @@ jdbi3-core-3.4.0.jar
 jdbi3-sqlobject-3.4.0.jar
 jdo-api-3.0.1.jar
 jdom2-2.0.6.jar
-jedis-2.9.2.jar
+jedis-3.9.0.jar
 jersey-apache-client4-1.19.4.jar
 jersey-client-1.19.4.jar
 jersey-client-2.23.1.jar
@@ -394,7 +436,10 @@ micrometer-core-1.5.14.jar
 micrometer-registry-prometheus-1.5.14.jar
 minlog-1.3.0.jar
 mongo-java-driver-3.12.8.jar
+<<<<<<< HEAD
 mssql-jdbc-7.4.1.jre8.jar
+=======
+>>>>>>> dev-1.4.0
 mybatis-3.5.7.jar
 mybatis-plus-3.4.3.4.jar
 mybatis-plus-annotation-3.4.3.4.jar
@@ -402,7 +447,10 @@ mybatis-plus-boot-starter-3.4.3.4.jar
 mybatis-plus-core-3.4.3.4.jar
 mybatis-plus-extension-3.4.3.4.jar
 mybatis-spring-2.0.6.jar
+<<<<<<< HEAD
 mysql-connector-java-8.0.28.jar
+=======
+>>>>>>> dev-1.4.0
 netflix-commons-util-0.3.0.jar
 netflix-eventbus-0.3.0.jar
 netflix-infix-0.3.0.jar
@@ -446,7 +494,10 @@ nimbus-jose-jwt-8.19.jar
 nio-multipart-parser-1.1.0.jar
 nio-stream-storage-1.1.3.jar
 objenesis-2.1.jar
+<<<<<<< HEAD
 ojdbc8-19.3.0.0.jar
+=======
+>>>>>>> dev-1.4.0
 okhttp-3.14.9.jar
 okhttp-urlconnection-3.14.9.jar
 okio-1.17.2.jar
@@ -455,8 +506,11 @@ opencsv-2.3.jar
 opentracing-api-0.33.0.jar
 opentracing-noop-0.33.0.jar
 opentracing-util-0.33.0.jar
+<<<<<<< HEAD
 oraclepki-19.3.0.0.jar
 orai18n-19.3.0.0.jar
+=======
+>>>>>>> dev-1.4.0
 orc-core-1.5.8.jar
 orc-core-1.7.2-nohive.jar
 orc-shims-1.5.8.jar
@@ -468,6 +522,7 @@ oshi-core-6.2.1.jar
 pagehelper-5.3.2.jar
 paranamer-2.3.jar
 paranamer-2.8.jar
+<<<<<<< HEAD
 parquet-avro-1.12.2.jar
 parquet-column-1.12.2.jar
 parquet-common-1.12.2.jar
@@ -476,6 +531,9 @@ parquet-format-structures-1.12.2.jar
 parquet-hadoop-1.12.2.jar
 parquet-hadoop-bundle-1.10.0.jar
 parquet-jackson-1.12.2.jar
+=======
+parquet-hadoop-bundle-1.10.0.jar
+>>>>>>> dev-1.4.0
 poi-5.2.3.jar
 poi-ooxml-5.2.3.jar
 poi-ooxml-lite-5.2.3.jar
@@ -531,10 +589,17 @@ sketches-core-0.9.0.jar
 slf4j-api-1.7.36.jar
 slice-0.38.jar
 snakeyaml-1.33.jar
+<<<<<<< HEAD
 snappy-java-1.0.4.1.jar
 snappy-java-1.1.7.7.jar
 snappy-java-1.1.8.2.jar
 snappy-java-1.1.8.3.jar
+=======
+snappy-java-1.1.4.jar
+snappy-java-1.1.7.7.jar
+snappy-java-1.1.8.2.jar
+spark-redis_2.12-2.6.0.jar
+>>>>>>> dev-1.4.0
 spring-aop-5.2.23.RELEASE.jar
 spring-beans-5.2.23.RELEASE.jar
 spring-boot-2.3.12.RELEASE.jar
@@ -582,7 +647,11 @@ spring-jcl-5.2.23.RELEASE.jar
 spring-jdbc-5.2.23.RELEASE.jar
 spring-plugin-core-2.0.0.RELEASE.jar
 spring-plugin-metadata-2.0.0.RELEASE.jar
+<<<<<<< HEAD
 spring-security-crypto-5.3.13.RELEASE.jar
+=======
+spring-security-crypto-5.7.5.jar
+>>>>>>> dev-1.4.0
 spring-security-rsa-1.0.9.RELEASE.jar
 spring-tx-5.2.23.RELEASE.jar
 spring-web-5.2.23.RELEASE.jar
@@ -597,6 +666,10 @@ springfox-spring-webmvc-2.10.5.jar
 springfox-swagger-common-2.10.5.jar
 springfox-swagger2-2.10.5.jar
 sqlline-1.3.0.jar
+<<<<<<< HEAD
+=======
+sqoop-1.4.6-hadoop200.jar
+>>>>>>> dev-1.4.0
 ssl-config-core_2.12-0.3.7.jar
 stats-0.191.jar
 stax2-api-4.2.1.jar
@@ -637,4 +710,8 @@ zookeeper-3.5.9.jar
 zookeeper-jute-3.5.9.jar
 zstd-jni-1.4.4-7.jar
 zstd-jni-1.4.5-6.jar
+<<<<<<< HEAD
 zstd-jni-1.4.9-1.jar
+=======
+postgresql-42.2.20
+>>>>>>> dev-1.4.0

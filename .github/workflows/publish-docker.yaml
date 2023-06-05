@@ -25,13 +25,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.17.3]
+        node-version: [16.0.0]
     timeout-minutes: 90
     env:
       TAG: ${{ github.sha }}
       SKIP_TEST: true
       HUB: ghcr.io/apache/linkis
-      LINKIS_VERSION: 1.4.0
+      LINKIS_VERSION: 1.4.0-SNAPSHOT
     steps:
     - name: Checkout
       uses: actions/checkout@v2
