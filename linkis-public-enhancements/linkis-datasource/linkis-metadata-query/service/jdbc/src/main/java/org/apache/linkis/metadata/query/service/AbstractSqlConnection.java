@@ -17,6 +17,13 @@
 
 package org.apache.linkis.metadata.query.service;
 
+import org.apache.linkis.metadata.query.common.domain.GenerateSqlInfo;
+import org.apache.linkis.metadata.query.common.domain.MetaColumnInfo;
+import org.apache.linkis.metadata.query.common.service.GenerateSqlTemplate;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.Closeable;
 import java.io.IOException;
 import java.sql.*;
@@ -24,11 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.linkis.metadata.query.common.domain.GenerateSqlInfo;
-import org.apache.linkis.metadata.query.common.domain.MetaColumnInfo;
-import org.apache.linkis.metadata.query.common.service.GenerateSqlTemplate;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

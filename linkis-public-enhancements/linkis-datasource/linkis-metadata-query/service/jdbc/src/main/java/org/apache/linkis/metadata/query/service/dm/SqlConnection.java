@@ -17,6 +17,13 @@
 
 package org.apache.linkis.metadata.query.service.dm;
 
+import org.apache.linkis.common.conf.CommonVars;
+import org.apache.linkis.metadata.query.common.domain.MetaColumnInfo;
+import org.apache.linkis.metadata.query.service.AbstractSqlConnection;
+import org.apache.linkis.metadata.query.service.util.ConnectionUtils;
+
+import org.apache.commons.lang3.StringUtils;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -30,11 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.linkis.common.conf.CommonVars;
-import org.apache.linkis.metadata.query.common.domain.MetaColumnInfo;
-import org.apache.linkis.metadata.query.service.AbstractSqlConnection;
-import org.apache.linkis.metadata.query.service.util.ConnectionUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -169,8 +172,7 @@ public class SqlConnection extends AbstractSqlConnection {
       throws ClassNotFoundException, SQLException {
     Class.forName(SQL_DRIVER_CLASS.getValue());
     String url =
-        String.format(
-            SQL_CONNECT_URL.getValue(), connectMessage.host, connectMessage.port);
+        String.format(SQL_CONNECT_URL.getValue(), connectMessage.host, connectMessage.port);
     url = ConnectionUtils.addUrlParams(url, connectMessage.extraParams);
     try {
       Properties prop = new Properties();

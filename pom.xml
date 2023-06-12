@@ -108,7 +108,7 @@
     <!-- bigdata -->
     <zookeeper.version>3.5.9</zookeeper.version>
     <curator.version>4.2.0</curator.version>
-    <hadoop.version>3.3.4</hadoop.version>
+    <hadoop.version>3.3.5</hadoop.version>
     <hadoop-hdfs-client.artifact>hadoop-hdfs-client</hadoop-hdfs-client.artifact>
     <hbase.version>2.5.3</hbase.version>
     <hive.version>3.1.3</hive.version>
@@ -122,6 +122,7 @@
 
     <flink.version>1.12.7</flink.version>
     <iceberg.version>0.13.2</iceberg.version>
+    <parquet.version>1.12.2</parquet.version>
 
     <io_file.version>1.0</io_file.version>
     <jdbc.version>4</jdbc.version>
@@ -168,6 +169,7 @@
     <jedis.version>3.9.0</jedis.version>
     <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
     <mysql.connector.version>8.0.28</mysql.connector.version>
+    <mysql.connector.scope>compile</mysql.connector.scope>
     <postgresql.connector.version>42.2.20</postgresql.connector.version>
     <druid.version>1.2.16</druid.version>
 
@@ -186,7 +188,7 @@
 
     <commons-fileupload.version>1.5</commons-fileupload.version>
     <commons-net.version>3.9.0</commons-net.version>
-    <commons-cli.version>1.3.1</commons-cli.version>
+    <commons-cli.version>1.5.0</commons-cli.version>
     <jline.version>3.9.0</jline.version>
 
     <bouncycastle.version>1.70</bouncycastle.version>
@@ -197,7 +199,7 @@
     <cglib.version>3.3.0</cglib.version>
 
     <!-- log -->
-    <slf4j.version>1.7.30</slf4j.version>
+    <slf4j.version>1.7.36</slf4j.version>
     <log4j2.version>2.17.2</log4j2.version>
 
     <!-- jakarta -->
@@ -372,7 +374,7 @@
         <groupId>mysql</groupId>
         <artifactId>mysql-connector-java</artifactId>
         <version>${mysql.connector.version}</version>
-        <scope>test</scope>
+        <scope>${mysql.connector.scope}</scope>
       </dependency>
       <dependency>
         <groupId>org.postgresql</groupId>
@@ -1605,6 +1607,7 @@
               <exclude>CONTRIBUTING.md</exclude>
               <exclude>CONTRIBUTING_CN.md</exclude>
               <exclude>README.md</exclude>
+              <exclude>.gitmodules</exclude>
               <exclude>**/META-INF/**</exclude>
               <exclude>.github/**</exclude>
               <exclude>compiler/**</exclude>

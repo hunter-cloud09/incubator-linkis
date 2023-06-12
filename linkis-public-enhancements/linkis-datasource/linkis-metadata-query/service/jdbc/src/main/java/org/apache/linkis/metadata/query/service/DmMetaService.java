@@ -17,11 +17,6 @@
 
 package org.apache.linkis.metadata.query.service;
 
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.linkis.datasourcemanager.common.util.json.Json;
 import org.apache.linkis.metadata.query.common.domain.GenerateSqlInfo;
 import org.apache.linkis.metadata.query.common.domain.MetaColumnInfo;
@@ -30,6 +25,13 @@ import org.apache.linkis.metadata.query.common.service.AbstractDbMetaService;
 import org.apache.linkis.metadata.query.common.service.MetadataConnection;
 import org.apache.linkis.metadata.query.service.conf.SqlParamsMapper;
 import org.apache.linkis.metadata.query.service.dm.SqlConnection;
+
+import org.apache.commons.lang3.StringUtils;
+
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class DmMetaService extends AbstractDbMetaService<SqlConnection> {
   @Override

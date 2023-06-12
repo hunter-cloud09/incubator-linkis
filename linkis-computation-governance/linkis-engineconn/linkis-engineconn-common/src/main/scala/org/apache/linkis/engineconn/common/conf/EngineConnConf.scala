@@ -71,6 +71,11 @@ object EngineConnConf {
     "(Starting|Started|Submitting|Submitted|Activating|Activated).{1,200}(application_\\d{13}_\\d+)"
   )
 
+  val SQOOP_ENGINE_CONN_YARN_APP_ID_PARSE_REGEX = CommonVars(
+    "wds.linkis.sqoop.engine.yarn.app.id.parse.regex",
+    "(12|23): {1,200}(application_\\d{13}_\\d+)"
+  )
+
   val HIVE_ENGINE_CONN_YARN_APP_ID_PARSE_REGEX =
     CommonVars("wds.linkis.hive.engine.yarn.app.id.parse.regex", "(application_\\d{13}_\\d+)")
 

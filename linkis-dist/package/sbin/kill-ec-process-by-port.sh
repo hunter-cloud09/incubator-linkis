@@ -13,32 +13,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-#
-
-WORK_DIR=`cd $(dirname $0); pwd -P`
-
-. ${WORK_DIR}/common.sh
-
-set -e
-
-USING_KIND=${1:-false}
-LDH_VERSION=${LDH_VERSION-${LINKIS_IMAGE_TAG}}
-echo "# LDH version: ${LINKIS_IMAGE_TAG}"
-
-# load image
-if [[ "X${USING_KIND}" == "Xtrue" ]]; then
-  echo "# Loading LDH image ..."
-  kind load docker-image linkis-ldh:${LINKIS_IMAGE_TAG} --name ${KIND_CLUSTER_NAME}
+port=$1
+shellDir=`dirname $0`
+workDir=`cd ${shellDir}/..;pwd`
+if [ "$LINKIS_HOME" = "" ]
+then
+  LINKIS_HOME=$workDir
 fi
-
-# deploy LDH
-echo "# Deploying LDH ..."
-set +e
-x=`kubectl get ns ldh 2> /dev/null`
-set -e
-if [[ "X${x}" == "X" ]]; then
-  kubectl create ns ldh
+pid=`ps -ef | grep server.port=$port | grep  EngineConnServer | awk '{print $2}'`
+echo "`date '+%Y-%m-%d %H:%M:%S'` Get port $port pid is $pid"
+if [ "$pid" != "" ]
+then
+  sh $LINKIS_HOME/sbin/kill-process-by-pid.sh $pid
 fi
-kubectl apply -n ldh -f ${RESOURCE_DIR}/ldh/configmaps
-
-LDH_VERSION=${LDH_VERSION} envsubst < ${RESOURCE_DIR}/ldh/ldh.yaml | kubectl apply -n ldh -f -
