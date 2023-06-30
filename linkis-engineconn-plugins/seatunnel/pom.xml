@@ -29,6 +29,7 @@
   <properties>
     <maven.deploy.skip>true</maven.deploy.skip>
     <maven.install.skip>true</maven.install.skip>
+    <seatunnel.version>2.3.1</seatunnel.version>
   </properties>
 
   <dependencies>
@@ -84,7 +85,17 @@
 
     <dependency>
       <groupId>org.apache.seatunnel</groupId>
-      <artifactId>seatunnel-core-spark</artifactId>
+      <artifactId>seatunnel-engine-core</artifactId>
+      <version>${seatunnel.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.hazelcast</groupId>
+      <artifactId>hazelcast</artifactId>
+      <version>5.3.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.seatunnel</groupId>
+      <artifactId>seatunnel-starter</artifactId>
       <version>${seatunnel.version}</version>
       <exclusions>
         <exclusion>
@@ -95,7 +106,7 @@
     </dependency>
     <dependency>
       <groupId>org.apache.seatunnel</groupId>
-      <artifactId>seatunnel-core-flink-sql</artifactId>
+      <artifactId>seatunnel-spark-2-starter</artifactId>
       <version>${seatunnel.version}</version>
       <exclusions>
         <exclusion>
@@ -106,7 +117,7 @@
     </dependency>
     <dependency>
       <groupId>org.apache.seatunnel</groupId>
-      <artifactId>seatunnel-core-flink</artifactId>
+      <artifactId>seatunnel-flink-13-starter</artifactId>
       <version>${seatunnel.version}</version>
       <exclusions>
         <exclusion>
@@ -115,7 +126,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-
   </dependencies>
 
   <build>
