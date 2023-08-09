@@ -120,7 +120,10 @@
     <spark.hadoop.version>${hadoop.version}</spark.hadoop.version>
     <spark.hadoop.scope>provided</spark.hadoop.scope>
 
-    <flink.version>1.12.7</flink.version>
+    <flink.version>1.16.2</flink.version>
+    <libfb303.version>0.9.3</libfb303.version>
+    <minlog.version>1.3.0</minlog.version>
+
     <iceberg.version>0.13.2</iceberg.version>
     <parquet.version>1.12.2</parquet.version>
 
